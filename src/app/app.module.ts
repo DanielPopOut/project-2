@@ -7,6 +7,8 @@ import { HomeComponent } from './home/home.component';
 import { NewEventComponent } from './new-event/new-event.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CardElementComponent } from './card-element/card-element.component';
+import { FormsModule } from '@angular/forms';
+import { EventComponentComponent } from './event-component/event-component.component';
 
 
 @NgModule({
@@ -14,10 +16,12 @@ import { CardElementComponent } from './card-element/card-element.component';
     AppComponent,
     HomeComponent,
     NewEventComponent,
-    CardElementComponent
+    CardElementComponent,
+    EventComponentComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule
   ],
   providers: [],
