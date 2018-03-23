@@ -1,0 +1,22 @@
+
+.research-bar {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.test {
+  display: fixed;
+  align-items: center;
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+}
+
+.test-container {
+  display: ;
+}
+
+::placeholder { /* Most modern browsers support this now. */
+  color: #959292;
+}
