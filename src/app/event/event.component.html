@@ -1,3 +1,96 @@
-<p>
-  event works!
-</p>
+<div class="container">
+    <div class="event_infos_container">
+        <div class="event_date">{{event.date | date:'medium'}}</div>
+        <h2 class="event_name">{{event.name}}</h2>
+        <h5 class="event_place card-text">{{event.place}}</h5>
+        <h5 class="event_host">Chez {{event.host_name}}</h5>
+        <div class="buttons_container">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#guestListModal">Join</button>
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    New
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a *ngFor="let cardType of cardTypeList" class="dropdown-item" data-toggle="modal"
+                       data-target="#newCardNameModal" (click)="afficher(cardType.type)">
+                        {{cardType.name}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <div class="card_container">
+
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="guestListModal" tabindex="-1" role="dialog" aria-labelledby="guestListModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Who are you</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>Guests list</h4>
+                <div>
+                    <!--Ici j'affiche le nom de l'hote et ensuite tous les invités-->
+                    <button class="btn btn-primary btn-guest"
+                            (click)="chooseName(event.host_name)" [class.active]="event.host_name===userName">
+                        {{ event.host_name }}
+                    </button>
+                    <button *ngFor="let guest of event.guests" class="btn btn-primary btn-guest"
+                            (click)="chooseName(guest)" [class.active]="guest===userName">
+                        {{ guest }}
+                    </button>
+                </div>
+                <hr>
+                <h4>New ?</h4>
+                <div class="new-guest-div">
+                    <input type="text" class="form-control" id="inputName" placeholder="Your name" #newGuestName>
+                    <button class="btn btn-primary" (click)="addNewGuest(newGuestName.value)">Join</button>
+                </div>
+                <hr>
+                <div class="chosen-name-div btn">
+                    You are {{userName}}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal choix nom carte -->
+<div class="modal fade" id="newCardNameModal" tabindex="-1" role="dialog" aria-labelledby="newCardNameModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="cardNameLabel">Titre de la carte</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-name-div">
+                    <input type="text" class="form-control" id="inputCardName" placeholder="Card Name" #newCardName>
+                    <button class="btn btn-primary" (click)="createNewCard(newCardName.value)">Join</button>
+                </div>
+                <hr>
+                <div class="chosen-name-div btn">
+                    You are {{userName}}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

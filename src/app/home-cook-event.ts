@@ -6,5 +6,5 @@ export class HomeCookEvent {
   public description: string;
   public host_name: string;
   public mail;
-  public guest: any[];
+  public guests: string[];
 }

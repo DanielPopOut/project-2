@@ -1,0 +1,25 @@
+.event_infos_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.btn-guest {
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-bottom: 5px;
+}
+
+.chosen-name-div {
+    width: 100%;
+}
+
+.new-guest-div, .buttons_container, .card-name-div {
+    display: flex;
+    flex-direction: row;
+}
+
+.buttons_container .btn {
+    margin-right: 5px;
+}
