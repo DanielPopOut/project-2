@@ -1,4 +1,5 @@
 export class HomeCookEvent {
+  public id: string;
   public name: string;
   public place: string;
   public date: string;

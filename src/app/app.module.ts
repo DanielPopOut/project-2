@@ -8,7 +8,8 @@ import { NewEventComponent } from './new-event/new-event.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CardElementComponent } from './card-element/card-element.component';
 import { FormsModule } from '@angular/forms';
-import { EventComponentComponent } from './event-component/event-component.component';
+import { EventService } from './event.service';
+import { EventComponent } from './event/event.component';
 
 
 @NgModule({
@@ -17,14 +18,14 @@ import { EventComponentComponent } from './event-component/event-component.compo
     HomeComponent,
     NewEventComponent,
     CardElementComponent,
-    EventComponentComponent
+    EventComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [EventService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

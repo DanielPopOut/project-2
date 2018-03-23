@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeCookEvent } from '../home-cook-event';
+import { EventService } from '../event.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-event',
@@ -8,8 +10,9 @@ import { HomeCookEvent } from '../home-cook-event';
 })
 export class NewEventComponent implements OnInit {
   public model;
+  public test_model = {host_name: "eqerezq", name: "ezQVINPNPEZf", place: "nIEZPFNIPEA", date: "2018-03-30T12:42", mail: "feafeafea"}
 
-  constructor() { }
+  constructor(private eventService: EventService, private router: Router ) { }
 
   ngOnInit() {
     this.model = new HomeCookEvent()
@@ -17,6 +20,9 @@ export class NewEventComponent implements OnInit {
 
   public onSubmit() {
     console.log(this.model);
+    if(this.eventService.createNewEvent(this.model)) {
+      this.router.navigate(['event']);
+    }
   }
 
 }

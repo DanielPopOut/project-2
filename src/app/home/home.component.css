@@ -6,7 +6,7 @@
 }
 
 .test {
-  display: fixed;
+  display: flex;
   align-items: center;
   position: absolute;
   bottom: 30px;
@@ -14,7 +14,7 @@
 }
 
 .test-container {
-  display: ;
+  display: flex; /* ??? */
 }
 
 ::placeholder { /* Most modern browsers support this now. */
