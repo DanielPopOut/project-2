@@ -12,6 +12,7 @@ import { EventService } from './event.service';
 import { EventComponent } from './event/event.component';
 import { GuestComponent } from './guest/guest.component';
 import { CardCreationComponent } from './card-creation/card-creation.component';
+import { CardComponent } from './card/card.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { CardCreationComponent } from './card-creation/card-creation.component';
     CardElementComponent,
     EventComponent,
     GuestComponent,
-    CardCreationComponent
+    CardCreationComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,

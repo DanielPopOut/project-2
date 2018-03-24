@@ -1,3 +1,36 @@
-<p>
-  card-creation works!
-</p>
+<div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        New
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a *ngFor="let cardType of cardTypeList" class="dropdown-item" data-toggle="modal"
+           data-target="#newCardNameModal" (click)="setTypeCardToCreate(cardType)">
+            {{cardType.name}}
+        </a>
+    </div>
+</div>
+
+
+<!-- Modal choix nom carte -->
+<div class="modal fade" id="newCardNameModal" tabindex="-1" role="dialog" aria-labelledby="newCardNameModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="cardNameLabel">Titre de la carte</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-name-div">
+                    <input type="text" class="form-control" id="inputCardName" placeholder="Card Name" #newCardName>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" (click)="createNewCard(newCardName.value)" data-dismiss="modal">New
+                    Card
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
