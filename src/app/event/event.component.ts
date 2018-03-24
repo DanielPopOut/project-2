@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../event.service';
 import { HomeCookEvent } from '../home-cook-event';
+import { HomeCookCard } from '../home-cook-card';
 
 @Component({
     selector: 'app-event',
@@ -11,7 +12,9 @@ export class EventComponent implements OnInit {
     public event: HomeCookEvent;
     public userName: string;
     public errorNameMessage: string;
-    public cardTypeList = [{name:"Question-Card", type:0}, {name:"One-Vote-Card",type:1},{name:"Multiple-Vote-Card",type:2} ];
+    public cardTypeList = [new HomeCookCard("Question-Card", 0), new HomeCookCard("One-Vote-Card", 1), new HomeCookCard("Multiple-Vote-Card", 2)];
+    public cardTypeToCreate;
+    public cardToCreate: HomeCookCard;
 
     constructor(private eventService: EventService) {
         this.eventService.mock();
@@ -30,22 +33,27 @@ export class EventComponent implements OnInit {
 
     public addNewGuest(newGuestName: string): void {
         console.log(newGuestName);
-        let validNewName: boolean;
-        let errorMessage:  string;
-        [validNewName, errorMessage] = this.eventService.addNewGuest(newGuestName);
-        if(!validNewName){
-            console.log(errorMessage);
+        let validNewName: [boolean, string];
+        validNewName = this.eventService.addNewGuest(newGuestName);
+        if (!validNewName[0]) {
+            console.log(validNewName[1]);
         } else {
-            this.userName =  newGuestName;
+            this.userName = newGuestName;
         }
     }
 
-    public afficher(s: String) {
-        console.log(s);
+    public setTypeCardToCreate(homeCookCardToCreate: HomeCookCard) {
+        console.log('type defined ' + homeCookCardToCreate.type);
+        this.cardToCreate = new HomeCookCard("", homeCookCardToCreate.type );
     }
 
-    public createNewCard(value: String) {
-
-
+    public createNewCard(cardToCreateName: string): void {
+        this.cardToCreate.name = cardToCreateName;
+        console.log(this.cardToCreate);
+        let validCardName: [boolean, string];
+        validCardName = this.eventService.createNewCard(this.cardToCreate);
+        if (!validCardName[0]) {
+            console.log(validCardName[1]);
+        }
     }
 }

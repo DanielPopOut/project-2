@@ -1,3 +1,5 @@
+import { HomeCookCard } from './home-cook-card';
+
 export class HomeCookEvent {
   public id: string;
   public name: string;
@@ -7,4 +9,5 @@ export class HomeCookEvent {
   public host_name: string;
   public mail;
   public guests: string[];
+  public cards: HomeCookCard [];
 }
