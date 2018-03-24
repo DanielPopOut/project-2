@@ -10,6 +10,8 @@ import { CardElementComponent } from './card-element/card-element.component';
 import { FormsModule } from '@angular/forms';
 import { EventService } from './event.service';
 import { EventComponent } from './event/event.component';
+import { GuestComponent } from './guest/guest.component';
+import { CardCreationComponent } from './card-creation/card-creation.component';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { EventComponent } from './event/event.component';
     HomeComponent,
     NewEventComponent,
     CardElementComponent,
-    EventComponent
+    EventComponent,
+    GuestComponent,
+    CardCreationComponent
   ],
   imports: [
     BrowserModule,
