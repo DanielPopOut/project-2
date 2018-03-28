@@ -13,6 +13,8 @@ import { EventComponent } from './event/event.component';
 import { GuestComponent } from './guest/guest.component';
 import { CardCreationComponent } from './card-creation/card-creation.component';
 import { CardComponent } from './card/card.component';
+import { CardElementService } from './card-element.service';
+import { CardElementListFilterPipe } from './card-element-list-filter.pipe';
 
 
 @NgModule({
@@ -24,14 +26,15 @@ import { CardComponent } from './card/card.component';
     EventComponent,
     GuestComponent,
     CardCreationComponent,
-    CardComponent
+    CardComponent,
+    CardElementListFilterPipe
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule
   ],
-  providers: [EventService],
+  providers: [EventService, CardElementService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

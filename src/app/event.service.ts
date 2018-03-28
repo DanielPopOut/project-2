@@ -14,7 +14,7 @@ export class EventService {
         mail: "dnaioeno@gmail.com",
         description: "Ce sera du lourd !!!",
         guests: ['Maxime', 'Amandine', 'Prunelle', 'Theo', 'Ash'],
-        cards: [new HomeCookCard("Question-Card", 0), new HomeCookCard("One-Vote-Card", 1), new HomeCookCard("Multiple-Vote-Card", 2)]
+        cards: [new HomeCookCard("0", "Question-Card", 0), new HomeCookCard('1', "One-Vote-Card", 1), new HomeCookCard('2',"Multiple-Vote-Card", 2)]
     };
     public username: string;
 
@@ -24,6 +24,13 @@ export class EventService {
     //Prend le faux évènement créé plus haut
     public mock() {
         this.event = this.fakeEvent;
+    }
+
+    public testUsername(): boolean {
+        if(!this.username) {
+            return false;
+        }
+        return true;
     }
 
     public createNewEvent(homeCookEvent: HomeCookEvent): boolean {
@@ -75,7 +82,10 @@ export class EventService {
     public createNewCard(cardToCreate: HomeCookCard): [boolean, string] {
         let x = this.validCardName(cardToCreate.name);
         if (x[0]) {
-            this.event.cards.push(cardToCreate);
+            let newEventList = this.event.cards.slice();
+            newEventList.push(cardToCreate);
+            // this.event.cards.push(cardToCreate);
+            this.event.cards = newEventList;
             return [true, ''];
         }
         return x;

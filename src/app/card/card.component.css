@@ -1,0 +1,20 @@
+.card-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card {
+    height: 100%;
+}
+
+
+.card-element-container1 {
+    flex: 1;
+    margin: 1px 5px;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}

@@ -1,3 +1,18 @@
-<p>
-  card-element works!
-</p>
+<div class="card-element-container" [style.border-color]="color" (mouseenter)="showInfos(false)" (mouseleave)="showInfos(true)" [style.color]="color" >
+    <div [hidden]="!showInfosBoolean" >
+        {{cardElement.title}}
+    </div>
+    <div class="card-element-options-container " [hidden]="showInfosBoolean"  >
+        <div class="card-element-option" (click)="unvoteForCard()">
+            <span class="glyphicon glyphicon-minus"></span>
+            {{cardElement.voters.length}}
+        </div>
+        <div class="card-element-option">
+            See Informations
+            <span class="glyphicon glyphicon-book"></span>
+        </div>
+        <div class="card-element-option" (click)="voteForCard()">
+            <span class="glyphicon glyphicon-plus"></span>
+        </div>
+    </div>
+</div>

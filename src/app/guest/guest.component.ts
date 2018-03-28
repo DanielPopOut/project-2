@@ -21,7 +21,8 @@ export class GuestComponent implements OnInit {
 
     public chooseName(guest: string): void {
         this.userName = guest;
-        console.log("username" + this.userName);
+        this.eventService.username = guest;
+        console.log("new user " + this.userName);
     }
 
     public addNewGuest(newGuestName: string): void {

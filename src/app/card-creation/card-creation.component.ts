@@ -9,23 +9,24 @@ import { EventService } from '../event.service';
 })
 export class CardCreationComponent implements OnInit {
     public cardToCreate: HomeCookCard;
-    public cardTypeList = [new HomeCookCard("Question-Card", 0), new HomeCookCard("One-Vote-Card", 1), new HomeCookCard("Multiple-Vote-Card", 2)];
-
+    public cardTypeList = [new HomeCookCard("0", "Question-Card", 0), new HomeCookCard('1', "One-Vote-Card", 1), new HomeCookCard('2', "Multiple-Vote-Card", 2)];
+    public cardToCreateName: string;
 
     constructor(private eventService: EventService) {
-
     }
 
     ngOnInit() {
+        this.cardToCreate = new HomeCookCard("", "", 0);
     }
 
     public setTypeCardToCreate(homeCookCardToCreate: HomeCookCard) {
         console.log('type defined ' + homeCookCardToCreate.type);
-        this.cardToCreate = new HomeCookCard("", homeCookCardToCreate.type);
+        this.cardToCreate = new HomeCookCard("5", "", homeCookCardToCreate.type);
     }
 
     public createNewCard(cardToCreateName: string): void {
         this.cardToCreate.name = cardToCreateName;
+        this.cardToCreateName = "lalala";
         console.log(this.cardToCreate);
         let validCardName: [boolean, string];
         validCardName = this.eventService.createNewCard(this.cardToCreate);

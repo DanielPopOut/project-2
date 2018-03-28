@@ -1,3 +1,18 @@
-<p>
-  card works!
-</p>
+<div class="card">
+    <div class="card-header">
+        <div>{{card.name}}</div>
+        <span class="glyphicon glyphicon-plus" data-toggle="modal" data-target="#newCardElementModal"
+              aria-hidden="true" (click)="setTypeCardElementToCreate(card)"></span>
+    </div>
+    <div class="card-body">
+        <div class="card-element-container1" *ngFor="let cardElement of (cardElementService.cardElementList | cardElementListFilter: card.id) ">
+            <!--<div *ngIf="card.id === cardElement.card_id">-->
+                <app-card-element [cardElement]="cardElement"></app-card-element>
+            <!--</div>-->
+        </div>
+
+
+    </div>
+</div>
+
+
