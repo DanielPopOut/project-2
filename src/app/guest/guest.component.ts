@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { EventService } from '../event.service';
 import { HomeCookEvent } from '../home-cook-event';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'app-guest',
@@ -11,12 +12,19 @@ export class GuestComponent implements OnInit {
 
     public event: HomeCookEvent;
     public userName: string;
+    private subscription: Subscription;
+    @ViewChild('newGuestName') newGuestNameInput: ElementRef;
+    @ViewChild('buttonModal') buttonModal: ElementRef;
+
 
     constructor(private eventService: EventService) {
+        eventService.nonConnected$.subscribe(bool => {
+            this.showConnexionModal();
+        });
     }
 
     ngOnInit() {
-        this.event = this.eventService.event
+        this.event = this.eventService.event;
     }
 
     public chooseName(guest: string): void {
@@ -34,5 +42,15 @@ export class GuestComponent implements OnInit {
         } else {
             this.userName = newGuestName;
         }
+    }
+
+    public newGuestNameInputFocus(): void {
+        setTimeout(() => {
+            this.newGuestNameInput.nativeElement.focus();
+        }, 500);
+    }
+
+    public showConnexionModal() : void {
+         this.buttonModal.nativeElement.click();
     }
 }

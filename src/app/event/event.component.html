@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container " [style.height]="isContainerWidthSmall() ? '100%' : 'initial' ">
     <div class="event_infos_container">
         <div class="event_date">{{event.date | date:'medium'}}</div>
         <h2 class="event_name">{{event.name}}</h2>
@@ -7,39 +7,49 @@
         <div class="buttons_container">
             <app-guest></app-guest>
             <app-card-creation></app-card-creation>
+            <button [style.display]="'none'" data-toggle="modal" data-target="#newCardElementModal" #buttonHiddenCardElementModal></button>
         </div>
+        <div *ngIf="eventService.isUserNameValid(); else elseBlock">Connected as {{eventService.username}}</div>
+        <ng-template #elseBlock>Not connected</ng-template>
+        <div *ngIf="isContainerWidthSmall()">Card {{cardNumberToShow + 1}} / {{event.cards.length}}</div>
     </div>
 
-    <hr>
-    <div class="card_container container">
-        <div class="row">
-            <div *ngFor="let card of event.cards" class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 card-container-div">
-                <app-card [card]="card"></app-card>
+    <div class="card_container" (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')" (touchmove)="swipe($event, 'move')"
+         (window:resize)="onResize($event)">
+        <div class="row" [style.height]="isContainerWidthSmall() ? '100%' : 'initial' ">
+            <div *ngFor="let card of event.cards" class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 card-container-div"
+                 [style.display]="shouldCardBeHidden(card.id)">
+                <app-card [card]="card" (onNewElementClick)="onNewElementClick($event)"></app-card>
             </div>
         </div>
     </div>
+
 </div>
 
 
-
 <!-- Modal choix nom carte -->
-<div class="modal fade" id="newCardElementModal" tabindex="-1" role="dialog" aria-labelledby="newCardElementModalLabel">
+<div class="modal fade" id="newCardElementModal" tabindex="-1" role="dialog" aria-labelledby="newCardElementModalLabel"
+     #newCardElementModal>
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="cardNameLabel">Ajout element</h4>
+                <h4 class="modal-title" id="cardNameLabel">Add element</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="card-name-div">
-                    <input [(ngModel)]="newCardElementName" name="newCardElementName" type="text" class="form-control" id="inputCardName" placeholder="Card Element Name" #newCardElementNameInput>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" (click)="createNewCardElement(newCardElementNameInput.value)" data-dismiss="modal">New
-                    Card
-                </button>
+                <form>
+                    <div class="card-name-div">
+                        <input autofocus [(ngModel)]="newCardElementName" name="newCardElementName" type="text"
+                               class="form-control" id="inputCardName" placeholder="Card Element Name"
+                               #newCardElementNameInput>
+                        <button class="btn btn-primary"
+                                (click)="createNewCardElement(event.id, newCardElementNameInput.value)"
+                                data-dismiss="modal">New
+                            Element
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

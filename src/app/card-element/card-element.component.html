@@ -1,15 +1,21 @@
-<div class="card-element-container" [style.border-color]="color" (mouseenter)="showInfos(false)" (mouseleave)="showInfos(true)" [style.color]="color" >
-    <div [hidden]="!showInfosBoolean" >
-        {{cardElement.title}}
-    </div>
-    <div class="card-element-options-container " [hidden]="showInfosBoolean"  >
+<div class="card-element-container"  [style.color]="color">
+    <!--(mouseenter)="showInfos(false)" [style.border-color]="color"-->
+    <!--(mouseleave)="showInfos(true)" -->
+    <!--[style.color]="color">-->
+
+    <div class="card-element-options-container ">
+        <!--<div class="card-element-options-container " [hidden]="showInfosBoolean" >-->
         <div class="card-element-option" (click)="unvoteForCard()">
             <span class="glyphicon glyphicon-minus"></span>
-            {{cardElement.voters.length}}
         </div>
-        <div class="card-element-option">
-            See Informations
-            <span class="glyphicon glyphicon-book"></span>
+        <div class="card-element-option card-center" (click)="showCardDetails()">
+            <div class="div-scroll">{{cardElement.title}}</div>
+            <div>
+                <span>{{cardElement.voters.length}}</span> <span class="glyphicon glyphicon-user"></span>
+                <span>{{cardElementService.getTotalVotersNumber(cardElement.id)}}</span>
+                <span class="glyphicon glyphicon-ok"></span>
+                <span class="font-weight-bold">({{getUserNumberVotes()}})</span>
+            </div>
         </div>
         <div class="card-element-option" (click)="voteForCard()">
             <span class="glyphicon glyphicon-plus"></span>

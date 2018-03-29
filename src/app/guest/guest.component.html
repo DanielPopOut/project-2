@@ -1,11 +1,11 @@
-<button class="btn btn-primary" data-toggle="modal" data-target="#guestListModal">Join</button>
+<button class="btn btn-primary" (click)="newGuestNameInputFocus()" data-toggle="modal" data-target="#guestListModal" #buttonModal>Join</button>
 
 <!-- Modal -->
 <div class="modal fade" id="guestListModal" tabindex="-1" role="dialog" aria-labelledby="guestListModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Who are you</h4>
+                <h4 class="modal-title" id="myModalLabel">Who are you ?</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -24,17 +24,18 @@
                 </div>
                 <hr>
                 <h4>New ?</h4>
-                <div class="new-guest-div">
-                    <input type="text" class="form-control" id="inputName" placeholder="Your name" #newGuestName>
-                    <button class="btn btn-primary" (click)="addNewGuest(newGuestName.value)">Join</button>
-                </div>
+
+                <form>
+                    <div class="new-guest-div">
+                        <input type="text" class="form-control" id="inputName" placeholder="Your name" #newGuestName>
+                        <button class="btn btn-primary" (click)="addNewGuest(newGuestName.value)" data-dismiss="modal">Join</button>
+                    </div>
+                </form>
+
                 <hr>
-                <div class="chosen-name-div btn">
+                <div class="chosen-name-div">
                     You are {{userName}}
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

@@ -3,3 +3,14 @@
     margin-right: 3px;
     margin-bottom: 5px;
 }
+
+.chosen-name-div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.new-guest-div {
+    display: flex;
+    flex-direction: row;
+}

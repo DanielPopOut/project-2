@@ -1,0 +1,4 @@
+.card-name-div {
+    display: flex;
+    flex-direction: row;
+}

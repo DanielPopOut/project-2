@@ -5,16 +5,21 @@
 
 .card {
     height: 100%;
+    min-height: 200px;
 }
 
 
 .card-element-container1 {
     flex: 1;
-    margin: 1px 5px;
 }
 
 .card-body {
     display: flex;
     flex-direction: column;
     height: 100%;
+}
+
+.class-fill {
+    height: 100%;
+    width: 100%;
 }

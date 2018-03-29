@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HomeCookEvent } from './home-cook-event';
 import { HomeCookCard } from './home-cook-card';
+import { CardElement } from './card-element';
+import { Subject } from 'rxjs/Subject';
+import { Voter } from './voter';
 
 @Injectable()
 export class EventService {
@@ -14,11 +17,16 @@ export class EventService {
         mail: "dnaioeno@gmail.com",
         description: "Ce sera du lourd !!!",
         guests: ['Maxime', 'Amandine', 'Prunelle', 'Theo', 'Ash'],
-        cards: [new HomeCookCard("0", "Question-Card", 0), new HomeCookCard('1', "One-Vote-Card", 1), new HomeCookCard('2',"Multiple-Vote-Card", 2)]
+        cards: [new HomeCookCard("0", "Entrée", 0), new HomeCookCard('1', "Plat", 1), new HomeCookCard('2', "Boissons", 2)]
     };
     public username: string;
+    public cardElementToShowDetails: CardElement;
+    private nonConnected = new Subject<boolean>();
+    public nonConnected$ = this.nonConnected.asObservable();
+    public savedCardElementList: CardElement[];
 
     constructor() {
+        this.mock();
     }
 
     //Prend le faux évènement créé plus haut
@@ -26,8 +34,10 @@ export class EventService {
         this.event = this.fakeEvent;
     }
 
-    public testUsername(): boolean {
-        if(!this.username) {
+    public isUserNameValid(): boolean {
+        if (!this.username) {
+            return false;
+        }else if (this.username.trim().length < 1){
             return false;
         }
         return true;
@@ -44,9 +54,11 @@ export class EventService {
 
     public validGuestName(name: string): [boolean, string] {
         console.log(name + ' valid name ' + this.event.guests.indexOf(name));
-        if (!name) {
+        if (!name.trim()) {
             return [false, 'Name length > 0 plz'];
-        } else if (this.event.guests.indexOf(name) > -1) {
+        } else if (this.event.guests.indexOf(name.trim()) > -1) {
+            return [false, 'This name is already taken'];
+        } else if (this.event.host_name === name.trim()){
             return [false, 'This name is already taken'];
         }
         return [true, ''];
@@ -66,12 +78,7 @@ export class EventService {
         if (!name) {
             return [false, 'Name length > 0 plz'];
         }
-        for (let card in this.event.cards) {
-            console.log(card + ' ' + this.event.cards[card].name);
-        }
         for (let card of this.event.cards) {
-            console.log(card.name + ' vs ' + name );
-            console.log( card.name === name);
             if (card.name === name) {
                 return [false, 'This name is already taken'];
             }
@@ -89,5 +96,13 @@ export class EventService {
             return [true, ''];
         }
         return x;
+    }
+
+    public setCardDetails(cardElement: CardElement) {
+        this.cardElementToShowDetails = cardElement;
+    }
+
+    public userInvalidEvent(bool: boolean) {
+        this.nonConnected.next(bool);
     }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HomeCookCard } from '../home-cook-card';
 import { CardElementService } from '../card-element.service';
 
@@ -10,6 +10,7 @@ import { CardElementService } from '../card-element.service';
 export class CardComponent implements OnInit {
 
     @Input() private card: HomeCookCard;
+    @Output() onNewElementClick = new EventEmitter<HomeCookCard>();
 
     constructor(private cardElementService: CardElementService) {
     }
@@ -17,8 +18,7 @@ export class CardComponent implements OnInit {
     ngOnInit() {
     }
 
-    public setTypeCardElementToCreate() {
-        this.cardElementService.setCardElementToCreate(this.card);
+    public newElementButtonClick() : void {
+        this.onNewElementClick.emit(this.card);
     }
-
 }

@@ -3,6 +3,8 @@
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
+    border-bottom: 1px solid #eceeef;
+    margin-bottom: 8px;
 }
 
 .btn-guest {
@@ -11,17 +13,23 @@
     margin-bottom: 5px;
 }
 
-.chosen-name-div {
-    width: 100%;
-}
-
-.new-guest-div, .buttons_container, .card-name-div {
+.buttons_container, .card-name-div {
     display: flex;
     flex-direction: row;
 }
 
-.buttons_container .btn {
+.buttons_container * {
     margin-right: 5px;
+}
+
+.card_container {
+    flex: 1;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .card-container-div {

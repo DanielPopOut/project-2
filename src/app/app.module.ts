@@ -15,6 +15,7 @@ import { CardCreationComponent } from './card-creation/card-creation.component';
 import { CardComponent } from './card/card.component';
 import { CardElementService } from './card-element.service';
 import { CardElementListFilterPipe } from './card-element-list-filter.pipe';
+import { CardElementDetailsComponent } from './card-element-details/card-element-details.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { CardElementListFilterPipe } from './card-element-list-filter.pipe';
     GuestComponent,
     CardCreationComponent,
     CardComponent,
-    CardElementListFilterPipe
+    CardElementListFilterPipe,
+    CardElementDetailsComponent
   ],
   imports: [
     BrowserModule,
