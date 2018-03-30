@@ -1,7 +1,7 @@
 
-<div class="card border-dark bg-dark mb-3">
-    <div class="card-header">{{card.name}}
-        <span class="glyphicon glyphicon-plus" (click)="newElementButtonClick()"></span>
+<div class="card bg-light  mb-3">
+    <div class="card-header">{{card.name}} ({{cardNumberToShow}})
+        <div (click)="newElementButtonClick()"><i class="fab fa-elementor fa-lg" ></i></div>
     </div>
     <ul class="list-group list-group-flush class-fill">
         <li class="card-element-container1 list-group-item"

@@ -3,14 +3,13 @@
   display: flex;
   align-items: center;
   height: 100%;
+    position: relative;
 }
 
-.test {
-  display: flex;
-  align-items: center;
+.new-event-button {
   position: absolute;
   bottom: 30px;
-  right: 30px;
+  right: 15px;
 }
 
 .test-container {
@@ -18,5 +17,5 @@
 }
 
 ::placeholder { /* Most modern browsers support this now. */
-  color: #959292;
+  color: #0275d8;
 }

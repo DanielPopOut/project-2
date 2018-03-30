@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HomeCookCard } from '../home-cook-card';
 import { CardElementService } from '../card-element.service';
+import { EventService } from '../event.service';
 
 @Component({
     selector: 'app-card',
@@ -10,9 +11,10 @@ import { CardElementService } from '../card-element.service';
 export class CardComponent implements OnInit {
 
     @Input() private card: HomeCookCard;
+    @Input() private cardNumberToShow: string;
     @Output() onNewElementClick = new EventEmitter<HomeCookCard>();
 
-    constructor(private cardElementService: CardElementService) {
+    constructor(private cardElementService: CardElementService, private eventService: EventService) {
     }
 
     ngOnInit() {
@@ -21,4 +23,5 @@ export class CardComponent implements OnInit {
     public newElementButtonClick() : void {
         this.onNewElementClick.emit(this.card);
     }
+
 }

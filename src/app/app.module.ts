@@ -16,6 +16,7 @@ import { CardComponent } from './card/card.component';
 import { CardElementService } from './card-element.service';
 import { CardElementListFilterPipe } from './card-element-list-filter.pipe';
 import { CardElementDetailsComponent } from './card-element-details/card-element-details.component';
+import { UserService } from './user.service';
 
 
 @NgModule({
@@ -36,7 +37,7 @@ import { CardElementDetailsComponent } from './card-element-details/card-element
     FormsModule,
     AppRoutingModule
   ],
-  providers: [EventService, CardElementService],
+  providers: [EventService, CardElementService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

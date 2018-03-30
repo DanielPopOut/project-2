@@ -1,25 +1,37 @@
 <div class="container " [style.height]="isContainerWidthSmall() ? '100%' : 'initial' ">
     <div class="event_infos_container">
         <div class="event_date">{{event.date | date:'medium'}}</div>
-        <h2 class="event_name">{{event.name}}</h2>
+        <div class="title_add_card_container" [style.display]="'flex'">
+            <div class="event_name">{{event.name}}</div>
+            <app-card-creation></app-card-creation>
+        </div>
         <h5 class="event_place card-text">{{event.place}}</h5>
         <h5 class="event_host">Chez {{event.host_name}}</h5>
-        <div class="buttons_container">
-            <app-guest></app-guest>
-            <app-card-creation></app-card-creation>
-            <button [style.display]="'none'" data-toggle="modal" data-target="#newCardElementModal" #buttonHiddenCardElementModal></button>
-        </div>
-        <div *ngIf="eventService.isUserNameValid(); else elseBlock">Connected as {{eventService.username}}</div>
-        <ng-template #elseBlock>Not connected</ng-template>
-        <div *ngIf="isContainerWidthSmall()">Card {{cardNumberToShow + 1}} / {{event.cards.length}}</div>
-    </div>
+        <app-guest></app-guest>
 
-    <div class="card_container" (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')" (touchmove)="swipe($event, 'move')"
+        <button [style.display]="'none'" data-toggle="modal" data-target="#newCardElementModal"
+                #buttonHiddenCardElementModal></button>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a *ngFor="let card of event.cards;" class="nav-item nav-link active" (click)="setIdCardToShow(card.id)"> {{card.name}}</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="card_container" (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')"
+         (touchmove)="swipe($event, 'move')"
          (window:resize)="onResize($event)">
         <div class="row" [style.height]="isContainerWidthSmall() ? '100%' : 'initial' ">
             <div *ngFor="let card of event.cards" class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 card-container-div"
                  [style.display]="shouldCardBeHidden(card.id)">
-                <app-card [card]="card" (onNewElementClick)="onNewElementClick($event)"></app-card>
+                <app-card [card]="card" [cardNumberToShow]="textCardNumber"
+                          (onNewElementClick)="onNewElementClick($event)"></app-card>
             </div>
         </div>
     </div>

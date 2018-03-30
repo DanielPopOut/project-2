@@ -22,8 +22,8 @@ export class EventService {
     public username: string;
     public cardElementToShowDetails: CardElement;
     private nonConnected = new Subject<boolean>();
-    public nonConnected$ = this.nonConnected.asObservable();
     public savedCardElementList: CardElement[];
+    public innerWidth: number;
 
     constructor() {
         this.mock();
@@ -34,14 +34,6 @@ export class EventService {
         this.event = this.fakeEvent;
     }
 
-    public isUserNameValid(): boolean {
-        if (!this.username) {
-            return false;
-        }else if (this.username.trim().length < 1){
-            return false;
-        }
-        return true;
-    }
 
     public createNewEvent(homeCookEvent: HomeCookEvent): boolean {
         //TODO envoi requete vers server
@@ -52,27 +44,7 @@ export class EventService {
         return true
     }
 
-    public validGuestName(name: string): [boolean, string] {
-        console.log(name + ' valid name ' + this.event.guests.indexOf(name));
-        if (!name.trim()) {
-            return [false, 'Name length > 0 plz'];
-        } else if (this.event.guests.indexOf(name.trim()) > -1) {
-            return [false, 'This name is already taken'];
-        } else if (this.event.host_name === name.trim()){
-            return [false, 'This name is already taken'];
-        }
-        return [true, ''];
-    }
 
-    public addNewGuest(newGuestName: string): [boolean, string] {
-        if (!this.validGuestName(newGuestName)[0])
-            return this.validGuestName(newGuestName);
-        //TODO envoie requete vers server
-
-        this.fakeEvent.guests.push(newGuestName);
-        this.username = newGuestName;
-        return [true, ''];
-    }
 
     public validCardName(name: string): [boolean, string] {
         if (!name) {
@@ -102,7 +74,8 @@ export class EventService {
         this.cardElementToShowDetails = cardElement;
     }
 
-    public userInvalidEvent(bool: boolean) {
-        this.nonConnected.next(bool);
+    public isContainerWidthSmall(): boolean {
+        return this.innerWidth < 576;
     }
+
 }

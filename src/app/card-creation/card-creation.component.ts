@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { HomeCookCard } from '../home-cook-card';
 import { EventService } from '../event.service';
+import { UserService } from '../user.service';
 
 @Component({
     selector: 'app-card-creation',
@@ -13,8 +14,10 @@ export class CardCreationComponent implements OnInit {
     public cardToCreateName: string;
 
     @ViewChild('newCardNameInput') newCardNameInput: ElementRef;
+    @ViewChild('buttonHiddenCardModal') buttonHiddenCardModal: ElementRef;
 
-    constructor(private eventService: EventService, private renderer2: Renderer2) {
+
+    constructor(private eventService: EventService, private userService: UserService) {
     }
 
     ngOnInit() {
@@ -25,8 +28,13 @@ export class CardCreationComponent implements OnInit {
         console.log('type defined ' + homeCookCardToCreate.type);
         this.newCardNameInput.nativeElement.focus();
         this.cardToCreate = new HomeCookCard("5", "", homeCookCardToCreate.type);
-        // let onElement = this.renderer2.selectRootElement('#newCardNameInput');
-        // onElement.focus();
+        if (this.userService.isUserNameValid()){
+            this.showModal();
+        }
+    }
+
+    public showModal() : void {
+        this.buttonHiddenCardModal.nativeElement.click();
         this.newCardNameInputFocus();
     }
 
@@ -50,8 +58,8 @@ export class CardCreationComponent implements OnInit {
 
     public checkUserNameValid(): void {
         console.log("ici");
-        if(!this.eventService.isUserNameValid()){
-            this.eventService.userInvalidEvent(true);
+        if(!this.userService.isUserNameValid()){
+            this.userService.showConnexionFormEvent(true);
             console.log("ici2");
         }
     }

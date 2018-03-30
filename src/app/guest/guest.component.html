@@ -1,4 +1,8 @@
-<button class="btn btn-primary" (click)="newGuestNameInputFocus()" data-toggle="modal" data-target="#guestListModal" #buttonModal>Join</button>
+<button class="btn btn-primary"  [class]=" userService.isUserNameValid()? ' btn btn-outline-dark' : ' btn btn-outline-primary'" (click)="newGuestNameInputFocus()" data-toggle="modal" data-target="#guestListModal" #buttonModal>
+    <span *ngIf=" userService.isUserNameValid(); else elseBlock">Connected as {{userService.username}}</span>
+    <ng-template #elseBlock><div>Not connected <i class="fas fa-user-plus fa-lg"></i></div></ng-template>
+
+</button>
 
 <!-- Modal -->
 <div class="modal fade" id="guestListModal" tabindex="-1" role="dialog" aria-labelledby="guestListModalLabel">

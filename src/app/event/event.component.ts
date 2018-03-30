@@ -3,6 +3,7 @@ import { EventService } from '../event.service';
 import { HomeCookEvent } from '../home-cook-event';
 import { CardElementService } from '../card-element.service';
 import { HomeCookCard } from '../home-cook-card';
+import { UserService } from '../user.service';
 
 @Component({
     selector: 'app-event',
@@ -19,22 +20,28 @@ export class EventComponent implements OnInit {
     private swipeTime?: number;
     private innerWidth: number;
     private oldCardNumber: number;
+    public textCardNumber: string;
 
-    constructor(private eventService: EventService, private cardElementService: CardElementService) {
+    constructor(private eventService: EventService, private cardElementService: CardElementService, private userService: UserService) {
         this.innerWidth = (window.screen.width);
-
+        this.eventService.innerWidth = window.screen.width;
     }
 
     ngOnInit() {
         this.newCardElementName = "";
         this.event = this.eventService.event;
         this.cardNumberToShow = 0;
+        this.updateCardText();
         setTimeout(() => {
             if (this.eventService.savedCardElementList) {
                 this.cardElementService.restoreCardElementList();
             }
         }, 150);
 
+    }
+
+    public updateCardText() {
+        this.textCardNumber = (this.cardNumberToShow+1).toString() + '/' + this.event.cards.length.toString();
     }
 
     public openNewCardElementModal(): void {
@@ -47,8 +54,8 @@ export class EventComponent implements OnInit {
     }
 
     public onNewElementClick(card: HomeCookCard): void {
-        if (!this.eventService.isUserNameValid()) {
-            this.eventService.userInvalidEvent(true);
+        if (!this.userService.isUserNameValid()) {
+            this.userService.showConnexionFormEvent(true);
             return;
         } else {
             this.openNewCardElementModal();
@@ -81,17 +88,15 @@ export class EventComponent implements OnInit {
             cardNumber += this.event.cards.length;
         }
         this.cardNumberToShow = cardNumber % this.event.cards.length;
+        this.updateCardText();
     }
 
     public cardToShowPlusOne(): void {
-        this.cardNumberToShow = (this.cardNumberToShow + 1) % this.event.cards.length;
+        this.setCardToShowValue(this.cardNumberToShow + 1);
     }
 
     public cardToShowMinusOne(): void {
-        this.cardNumberToShow = this.cardNumberToShow - 1;
-        if (this.cardNumberToShow < 0) {
-            this.cardNumberToShow = this.event.cards.length - 1;
-        }
+        this.setCardToShowValue(this.cardNumberToShow - 1);
     }
 
     swipe(e: TouchEvent, when: string): void {
@@ -127,7 +132,7 @@ export class EventComponent implements OnInit {
             const intervalsSize = (this.innerWidth / this.event.cards.length)*9/10 ;
             const intervalsNumber = Math.round(direction[0]/intervalsSize);
 
-            if (duration > 500 && (Math.abs(direction[0]) > intervalsSize)) { //Horizontal enough
+            if (duration > 1000 ) { //Horizontal enough
                 this.setCardToShowValue(this.oldCardNumber + intervalsNumber);
             }
         }
@@ -136,5 +141,6 @@ export class EventComponent implements OnInit {
 
     public onResize($event: Event): void {
         this.innerWidth = (window.screen.width);
+        this.eventService.innerWidth = window.screen.width;
     }
 }

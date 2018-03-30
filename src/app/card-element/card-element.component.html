@@ -11,10 +11,10 @@
         <div class="card-element-option card-center" (click)="showCardDetails()">
             <div class="div-scroll">{{cardElement.title}}</div>
             <div>
-                <span>{{cardElement.voters.length}}</span> <span class="glyphicon glyphicon-user"></span>
+                <span>{{cardElement.voters.length}}</span> <i class="fas fa-users"></i>
                 <span>{{cardElementService.getTotalVotersNumber(cardElement.id)}}</span>
                 <span class="glyphicon glyphicon-ok"></span>
-                <span class="font-weight-bold">({{getUserNumberVotes()}})</span>
+                <span class="font-weight-bold">({{getUserNumberVotes()}})</span> <i class="fas fa-user-circle"></i>
             </div>
         </div>
         <div class="card-element-option" (click)="voteForCard()">

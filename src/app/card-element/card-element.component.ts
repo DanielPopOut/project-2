@@ -3,6 +3,7 @@ import { CardElement } from '../card-element';
 import { CardElementService } from '../card-element.service';
 import { EventService } from '../event.service';
 import { Router } from "@angular/router";
+import { UserService } from '../user.service';
 
 @Component({
     selector: 'app-card-element',
@@ -15,7 +16,8 @@ export class CardElementComponent implements OnInit {
     public color: string;
     @Input() cardElement: CardElement;
 
-    constructor(private cardElementService: CardElementService, private eventService: EventService, private router: Router) {
+    constructor(private cardElementService: CardElementService, private eventService: EventService,
+                private userService: UserService, private router: Router) {
     }
 
     ngOnInit() {
@@ -29,18 +31,18 @@ export class CardElementComponent implements OnInit {
     }
 
     public voteForCard(): void {
-        if (this.eventService.isUserNameValid()) {
-            this.cardElementService.voteForCardElement(this.cardElement.id, this.eventService.username);
+        if (this.userService.isUserNameValid()) {
+            this.cardElementService.voteForCardElement(this.cardElement.id, this.userService.username);
         } else {
-            this.eventService.userInvalidEvent(true);
+            this.userService.showConnexionFormEvent(true);
         }
     }
 
     public unvoteForCard(): void {
-        if (this.eventService.isUserNameValid()) {
-            this.cardElementService.unvoteForCardElement(this.cardElement.id, this.eventService.username);
+        if (this.userService.isUserNameValid()) {
+            this.cardElementService.unvoteForCardElement(this.cardElement.id, this.userService.username);
         } else {
-            this.eventService.userInvalidEvent(true);
+            this.userService.showConnexionFormEvent(true);
         }
     }
 
@@ -63,7 +65,7 @@ export class CardElementComponent implements OnInit {
     }
 
     public getUserNumberVotes(): string {
-        let voter = this.cardElementService.cardElementContainsVoter(this.cardElement, this.eventService.username);
+        let voter = this.cardElementService.cardElementContainsVoter(this.cardElement, this.userService.username);
 
         // let numberVotes = this.cardElement.voters.filter(voter => voter.name === this.eventService.username).length;
         return voter == null ? '0' : voter.nbVotes.toString();

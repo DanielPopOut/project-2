@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { EventService } from '../event.service';
 import { HomeCookEvent } from '../home-cook-event';
 import { Subscription } from 'rxjs/Subscription';
+import { UserService } from '../user.service';
 
 @Component({
     selector: 'app-guest',
@@ -17,8 +18,8 @@ export class GuestComponent implements OnInit {
     @ViewChild('buttonModal') buttonModal: ElementRef;
 
 
-    constructor(private eventService: EventService) {
-        eventService.nonConnected$.subscribe(bool => {
+    constructor(private eventService: EventService, private userService: UserService) {
+        this.userService.nonConnected$.subscribe(bool => {
             this.showConnexionModal();
         });
     }
@@ -29,18 +30,18 @@ export class GuestComponent implements OnInit {
 
     public chooseName(guest: string): void {
         this.userName = guest;
-        this.eventService.username = guest;
+        this.userService.username = guest;
         console.log("new user " + this.userName);
     }
 
     public addNewGuest(newGuestName: string): void {
         console.log(newGuestName);
         let validNewName: [boolean, string];
-        validNewName = this.eventService.addNewGuest(newGuestName);
-        if (!validNewName[0]) {
-            console.log(validNewName[1]);
-        } else {
+        validNewName = this.userService.addNewGuest(newGuestName);
+        if (validNewName[0]) {
             this.userName = newGuestName;
+        } else {
+            console.log(validNewName[1]);
         }
     }
 
