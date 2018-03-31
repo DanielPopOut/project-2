@@ -24,6 +24,7 @@ export class EventService {
     private nonConnected = new Subject<boolean>();
     public savedCardElementList: CardElement[];
     public innerWidth: number;
+    public cardIdToShow: string;
 
     constructor() {
         this.mock();

@@ -21,6 +21,7 @@ export class EventComponent implements OnInit {
     private innerWidth: number;
     private oldCardNumber: number;
     public textCardNumber: string;
+    private cardIdToShow: string;
 
     constructor(private eventService: EventService, private cardElementService: CardElementService, private userService: UserService) {
         this.innerWidth = (window.screen.width);
@@ -70,13 +71,25 @@ export class EventComponent implements OnInit {
         }, 500);
     }
 
-    public shouldCardBeHidden(card_id): string {
+    public shouldCardBeHidden(card: HomeCookCard): string {
         if (this.isContainerWidthSmall()) {
-            if (card_id !== this.event.cards[this.cardNumberToShow].id) {
+            if (card.id !== this.event.cards[this.cardNumberToShow].id) {
                 return "none";
             }
         }
         return "initial";
+    }
+
+    public setIdCardToShow(card: HomeCookCard) : void {
+        this.eventService.cardIdToShow = card.id;
+        for (let i in this.event.cards){
+            if(this.event.cards[i].id=== this.eventService.cardIdToShow){
+                this.cardNumberToShow = parseFloat(i);
+                return;
+            }
+        }
+        this.cardNumberToShow = 0;
+        return
     }
 
     public isContainerWidthSmall(): boolean {
@@ -118,7 +131,7 @@ export class EventComponent implements OnInit {
                 && Math.abs(direction[0]) > Math.abs(direction[1] * 3)) { //Horizontal enough
                 const swipe = direction[0] < 0 ? 'next' : 'previous';
                 //Do whatever you want with swipe
-                if ('next') {
+                if ('previous') {
                     this.cardToShowPlusOne();
                 } else {
                     this.cardToShowMinusOne();

@@ -4,3 +4,8 @@ html, body {
     width: 100%;
     background-color: #f9f9f9;
 }
+
+
+.entire-width {
+    width: 100%;
+}
