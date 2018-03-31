@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand sticky-top navbar-dark bg-dark">
+    <div class="first-line-navbar">
+        <span class="navbar-brand">{{event.name}}</span>
+        <app-guest></app-guest>
+        <div class="dropdown" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-ellipsis-v"></i>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                <app-card-creation></app-card-creation>
+                <a class="dropdown-item" href="#">Nouvel Evenement</a>
+            </div>
+        </div>
+    </div>
+    <!--Button unused here....-->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse entire-width" id="navbarNavAltMarkup">
+        <div class="navbar-nav entire-width">
+            <a *ngFor="let card of event.cards;" class="nav-item nav-link" (click)="setIdCardToShow(card)">
+                {{card.name}}</a>
+        </div>
+    </div>
+</nav>
