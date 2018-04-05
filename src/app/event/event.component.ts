@@ -13,7 +13,6 @@ import { UserService } from '../user.service';
 export class EventComponent implements OnInit {
     public event: HomeCookEvent;
     public newCardElementName: string;
-    public cardNumberToShow: number;
     @ViewChild('newCardElementNameInput') newCardElementNameInput: ElementRef;
     @ViewChild('buttonHiddenCardElementModal') buttonHiddenCardElementModal: ElementRef;
     private swipeCoord?: [number, number];
@@ -21,32 +20,31 @@ export class EventComponent implements OnInit {
     private innerWidth: number;
     private oldCardNumber: number;
     public textCardNumber: string;
-    private cardIdToShow: string;
 
     constructor(private eventService: EventService, private cardElementService: CardElementService, private userService: UserService) {
-        this.innerWidth = (window.screen.width);
+        // this.innerWidth = (window.screen.width);
         this.eventService.innerWidth = window.screen.width;
     }
 
     ngOnInit() {
         this.newCardElementName = "";
         this.event = this.eventService.event;
-        this.cardNumberToShow = 0;
+        //this.eventService.cardNumberToShow = this.eventService.cardNumberToShow;
         this.updateCardText();
         setTimeout(() => {
             if (this.eventService.savedCardElementList) {
                 this.cardElementService.restoreCardElementList();
             }
         }, 150);
-
     }
 
     public updateCardText() {
-        this.textCardNumber = (this.cardNumberToShow+1).toString() + '/' + this.event.cards.length.toString();
+        this.textCardNumber = (this.eventService.cardNumberToShow+1).toString() + '/' + this.event.cards.length.toString();
     }
 
     public openNewCardElementModal(): void {
         this.buttonHiddenCardElementModal.nativeElement.click();
+        this.newCardElementNameInputFocus();
     }
 
     public createNewCardElement(event_id: string, name: string): void {
@@ -54,14 +52,12 @@ export class EventComponent implements OnInit {
         this.newCardElementName = "";
     }
 
-    public onNewElementClick(card: HomeCookCard): void {
+    public checkUsernameAndOpenCardElementModal(card: HomeCookCard): void {
         if (!this.userService.isUserNameValid()) {
             this.userService.showConnexionFormEvent(true);
-            return;
         } else {
-            this.openNewCardElementModal();
             this.cardElementService.setCardElementToCreate(card);
-            this.newCardElementNameInputFocus();
+            this.openNewCardElementModal();
         }
     }
 
@@ -72,44 +68,28 @@ export class EventComponent implements OnInit {
     }
 
     public shouldCardBeHidden(card: HomeCookCard): string {
-        if (this.isContainerWidthSmall()) {
-            if (card.id !== this.event.cards[this.cardNumberToShow].id) {
+        if (this.eventService.isContainerWidthSmall()) {
+            if (card._id !== this.event.cards[this.eventService.cardNumberToShow]._id) {
                 return "none";
             }
         }
         return "initial";
     }
 
-    public setIdCardToShow(card: HomeCookCard) : void {
-        this.eventService.cardIdToShow = card.id;
-        for (let i in this.event.cards){
-            if(this.event.cards[i].id=== this.eventService.cardIdToShow){
-                this.cardNumberToShow = parseFloat(i);
-                return;
-            }
-        }
-        this.cardNumberToShow = 0;
-        return
-    }
-
-    public isContainerWidthSmall(): boolean {
-        return this.innerWidth < 576;
-    }
-
     public setCardToShowValue(cardNumber: number): void {
         if (cardNumber < 0) {
             cardNumber += this.event.cards.length;
         }
-        this.cardNumberToShow = cardNumber % this.event.cards.length;
+        this.eventService.setCardNumberToShow(cardNumber % this.event.cards.length);
         this.updateCardText();
     }
 
     public cardToShowPlusOne(): void {
-        this.setCardToShowValue(this.cardNumberToShow + 1);
+        this.setCardToShowValue(this.eventService.cardNumberToShow + 1);
     }
 
     public cardToShowMinusOne(): void {
-        this.setCardToShowValue(this.cardNumberToShow - 1);
+        this.setCardToShowValue(this.eventService.cardNumberToShow - 1);
     }
 
     swipe(e: TouchEvent, when: string): void {
@@ -119,7 +99,7 @@ export class EventComponent implements OnInit {
         if (when === 'start') {
             this.swipeCoord = coord;
             this.swipeTime = time;
-            this.oldCardNumber = this.cardNumberToShow;
+            this.oldCardNumber = this.eventService.cardNumberToShow;
         }
 
         else if (when === 'end') {

@@ -68,3 +68,13 @@
 .card-container-div {
     margin-bottom: 5px;
 }
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.addCardElementDiv {
+    margin: auto;
+    font-size: 1.2rem;
+}

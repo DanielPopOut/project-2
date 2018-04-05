@@ -26,21 +26,9 @@ export class CardElementComponent implements OnInit {
         this.color = this.getRandomColor();
     }
 
-    public showInfos(bool: boolean): void {
-        this.showInfosBoolean = bool;
-    }
-
-    public voteForCard(): void {
+    public checkUsernameValidAndVoteForCard(): void {
         if (this.userService.isUserNameValid()) {
-            this.cardElementService.voteForCardElement(this.cardElement.id, this.userService.username);
-        } else {
-            this.userService.showConnexionFormEvent(true);
-        }
-    }
-
-    public unvoteForCard(): void {
-        if (this.userService.isUserNameValid()) {
-            this.cardElementService.unvoteForCardElement(this.cardElement.id, this.userService.username);
+            this.cardElementService.voteForCardElement(this.cardElement._id, this.userService.username);
         } else {
             this.userService.showConnexionFormEvent(true);
         }
@@ -57,19 +45,14 @@ export class CardElementComponent implements OnInit {
     }
 
     public showCardDetails(): void {
-        console.log('ici');
         this.eventService.setCardDetails(this.cardElement);
         this.cardElementService.saveCardElementList();
-
         this.router.navigate(['card-details']);
     }
 
-    public getUserNumberVotes(): string {
+    public getUserNumberVotes(): number {
         let voter = this.cardElementService.cardElementContainsVoter(this.cardElement, this.userService.username);
-
         // let numberVotes = this.cardElement.voters.filter(voter => voter.name === this.eventService.username).length;
-        return voter == null ? '0' : voter.nbVotes.toString();
+        return voter == null ? 0 : voter.nbVotes;
     }
-
-
 }

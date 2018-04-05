@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { HomeCookCard } from '../home-cook-card';
 import { EventService } from '../event.service';
 import { UserService } from '../user.service';
@@ -10,7 +10,7 @@ import { UserService } from '../user.service';
 })
 export class CardCreationComponent implements OnInit {
     public cardToCreate: HomeCookCard;
-    public cardTypeList = [new HomeCookCard("0", "Question-Card", 0), new HomeCookCard('1', "One-Vote-Card", 1), new HomeCookCard('2', "Multiple-Vote-Card", 2)];
+    // public cardTypeList = [new HomeCookCard("0", "Question-Card", 0), new HomeCookCard('1', "One-Vote-Card", 1), new HomeCookCard('2', "Multiple-Vote-Card", 2)];
     public cardToCreateName: string;
 
     @ViewChild('newCardNameInput') newCardNameInput: ElementRef;
@@ -18,29 +18,24 @@ export class CardCreationComponent implements OnInit {
 
 
     constructor(private eventService: EventService, private userService: UserService) {
+        this.eventService.newCardSubject$.subscribe(bool => {
+            this.showModal();
+        });
     }
 
     ngOnInit() {
         this.cardToCreate = new HomeCookCard("", "", 0);
     }
 
-    public setTypeCardToCreate(homeCookCardToCreate: HomeCookCard) {
-        console.log('type defined ' + homeCookCardToCreate.type);
-        this.newCardNameInput.nativeElement.focus();
-        this.cardToCreate = new HomeCookCard("5", "", homeCookCardToCreate.type);
-        if (this.userService.isUserNameValid()){
-            this.showModal();
-        }
-    }
-
     public showModal() : void {
+        this.cardToCreate = new HomeCookCard("5", "", 0);
         this.buttonHiddenCardModal.nativeElement.click();
         this.newCardNameInputFocus();
     }
 
     public createNewCard(cardToCreateName: string): void {
         this.cardToCreate.name = cardToCreateName;
-        this.cardToCreate.id = Math.floor(Math.random() * 16).toString();
+        this.cardToCreate._id = Math.floor(Math.random() * 16).toString();
         this.cardToCreateName = "lalala";
         console.log(this.cardToCreate);
         let validCardName: [boolean, string];
@@ -54,14 +49,6 @@ export class CardCreationComponent implements OnInit {
         setTimeout(() => {
             this.newCardNameInput.nativeElement.focus();
         }, 500)
-    }
-
-    public checkUserNameValid(): void {
-        console.log("ici");
-        if(!this.userService.isUserNameValid()){
-            this.userService.showConnexionFormEvent(true);
-            console.log("ici2");
-        }
     }
 
 }

@@ -1,7 +1,7 @@
 import { Voter } from './voter';
 
 export class CardElement {
-    public id: string;
+    public _id: string;
     public title: string;
     public type: number;
     public event_id: string;
@@ -12,7 +12,7 @@ export class CardElement {
 
 
     constructor(id: string, title: string, type: number, event_id: string, card_id: string, added_by: string, voterLimit: number = -1) {
-        this.id = id;
+        this._id = id;
         this.title = title;
         this.type = type;
         this.event_id = event_id;
@@ -22,8 +22,4 @@ export class CardElement {
         this.voters = [];
     }
 
-
-    public mangerBobob(): void {
-        this.voterLimit+=1;
-    }
 }

@@ -1,24 +1,29 @@
-<div class="card-element-container"  [style.color]="color">
+<div class="card-element-container" [style.color]="color">
     <!--(mouseenter)="showInfos(false)" [style.border-color]="color"-->
     <!--(mouseleave)="showInfos(true)" -->
     <!--[style.color]="color">-->
 
-    <div class="card-element-options-container ">
+    <div class="card-element-options-container " (click)="checkUsernameValidAndVoteForCard()">
         <!--<div class="card-element-options-container " [hidden]="showInfosBoolean" >-->
-        <div class="card-element-option" (click)="unvoteForCard()">
-            <span class="glyphicon glyphicon-minus"></span>
+        <div class="card-element-option">
         </div>
-        <div class="card-element-option card-center" (click)="showCardDetails()">
-            <div class="div-scroll">{{cardElement.title}}</div>
-            <div>
-                <span>{{cardElement.voters.length}}</span> <i class="fas fa-users"></i>
-                <span>{{cardElementService.getTotalVotersNumber(cardElement.id)}}</span>
-                <span class="glyphicon glyphicon-ok"></span>
-                <span class="font-weight-bold">({{getUserNumberVotes()}})</span> <i class="fas fa-user-circle"></i>
+        <div class="card-element-option card-center" >
+            <div >
+                <div class="div-scroll">{{cardElement.title}}</div>
+                <div (click)="showCardDetails()">
+                    <span>{{cardElement.voters.length}}</span> <i class="fas fa-users"></i>
+                    <!--<span>{{cardElementService.getTotalVotersNumber(cardElement._id)}}</span>
+                    <span class="glyphicon glyphicon-ok"></span>
+                    <span class="font-weight-bold">({{getUserNumberVotes()}})</span> <i class="fas fa-user-circle"></i>-->
+                </div>
             </div>
         </div>
-        <div class="card-element-option" (click)="voteForCard()">
-            <span class="glyphicon glyphicon-plus"></span>
+        <div class="card-element-option">
+            <span [ngSwitch]="getUserNumberVotes()">
+                <!--<span *ngSwitchCase="0">...</span>-->
+                <span *ngSwitchCase="1"><i class="far fa-check-circle fa-2x btn-outline-success"></i></span>
+                <span *ngSwitchCase="2"><i class="fas fa-times-circle fa-2x btn-outline-danger"></i></span>
+            </span>
         </div>
     </div>
 </div>

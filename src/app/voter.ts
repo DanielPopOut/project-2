@@ -8,12 +8,7 @@ export class Voter {
         this.nbVotes = nbVotes;
     }
 
-    public addVote(): void {
-        this.nbVotes += 1;
-    }
-
-    public removeVote(): void {
-        this.nbVotes -= 1;
-        this.nbVotes = this.nbVotes > 0 ? this.nbVotes : 0;
+    public vote(): void {
+        this.nbVotes = (this.nbVotes + 1)%3;
     }
 }

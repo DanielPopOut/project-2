@@ -1,18 +1,7 @@
-<div class="dropdown dropright">
-    <div class="" id="dropdownMenuButton"
-         data-toggle="dropdown" aria-expanded="false" (click)="checkUserNameValid()">
-        <i class="far fa-plus-square"></i>
-    </div>
 
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" >
-        <a *ngFor="let cardType of cardTypeList" class="dropdown-item" (click)="setTypeCardToCreate(cardType)" [class.disabled]="!userService.isUserNameValid()">
-            {{cardType.name}}
-        </a>
-    </div>
+<button type="button" data-toggle="modal" data-target="#newCardNameModal"
+            #buttonHiddenCardModal [style.display]="'none'">  </button>
 
-    <button [style.display]="'none'" data-toggle="modal" data-target="#newCardNameModal"
-            #buttonHiddenCardModal></button>
-</div>
 
 
 <!-- Modal choix nom carte -->

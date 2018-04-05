@@ -22,8 +22,8 @@ describe('EventService', () => {
     expect(service.createNewEvent(new HomeCookEvent())).toBe(true);
   });
 
-  it('should return event with id 12345678910', () => {
+  it('should return event with _id 12345678910', () => {
     service.createNewEvent(new HomeCookEvent());
-    expect(service.event.id).toContain("12345678910");
+    expect(service.event._id).toContain("12345678910");
   });
 });

@@ -1,12 +1,12 @@
 
 <div class="card bg-light  mb-3">
-    <div class="card-header">{{card.name}} ({{cardNumberToShow}})
-        <div (click)="newElementButtonClick()"><i class="fab fa-elementor fa-lg" ></i></div>
+    <div class="card-header" [style.display]="!eventService.isContainerWidthSmall() ? 'inherit' : 'none'">{{card.name}} ({{cardNumberToShow}})
+        <div (click)="newElementButtonClick()"><i class="fas fa-plus " ></i></div>
     </div>
     <ul class="list-group list-group-flush class-fill">
         <li class="card-element-container1 list-group-item"
-            *ngFor="let cardElement of (cardElementService.cardElementList | cardElementListFilter: card.id) ">
-            <!--<div *ngIf="card.id === cardElement.card_id">-->
+            *ngFor="let cardElement of (cardElementService.cardElementList | cardElementListFilter: card._id) ">
+            <!--<div *ngIf="card._id === cardElement.card_id">-->
             <app-card-element [cardElement]="cardElement" class="class-fill"></app-card-element>
             <!--</div>-->
         </li>

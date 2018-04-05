@@ -28,7 +28,7 @@ export class UserService {
     }
 
     public addNewGuest(newGuestName: string): [boolean, string] {
-        if (!this.validGuestName(newGuestName)[0])  {
+        if (!this.validGuestName(newGuestName)[0]) {
             return this.validGuestName(newGuestName);
         }
         //TODO envoie requete vers server

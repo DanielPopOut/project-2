@@ -1,6 +1,12 @@
-<button class="btn btn-primary"  [class]=" userService.isUserNameValid()? ' btn btn-outline-dark' : ' btn btn-outline-primary'" (click)="newGuestNameInputFocus()" data-toggle="modal" data-target="#guestListModal" #buttonModal>
-    <span *ngIf=" userService.isUserNameValid(); else elseBlock">Connected as {{userService.username}}</span>
-    <ng-template #elseBlock><div>Not connected <i class="fas fa-user-plus fa-lg"></i></div></ng-template>
+<button
+    [class]=" userService.isUserNameValid()? ' btn btn-outline-light connexion-button' : ' btn btn-outline-primary connexion-button'"
+    [style.display]="'none'"
+    (click)="newGuestNameInputFocus()" data-toggle="modal" data-target="#guestListModal" #buttonModal>
+    <div *ngIf=" userService.isUserNameValid(); else elseBlock"><span
+        class="padding-right">{{userService.username}}</span> <i class="fas fa-sync"></i></div>
+    <ng-template #elseBlock>
+        <div>Not connected <i class="fas fa-user-plus fa-lg"></i></div>
+    </ng-template>
 
 </button>
 
@@ -32,7 +38,9 @@
                 <form>
                     <div class="new-guest-div">
                         <input type="text" class="form-control" id="inputName" placeholder="Your name" #newGuestName>
-                        <button class="btn btn-primary" (click)="addNewGuest(newGuestName.value)" data-dismiss="modal">Join</button>
+                        <button class="btn btn-primary" (click)="addNewGuest(newGuestName.value)" data-dismiss="modal">
+                            Join
+                        </button>
                     </div>
                 </form>
 

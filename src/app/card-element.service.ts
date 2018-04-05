@@ -24,29 +24,27 @@ export class CardElementService {
     public setCardElementToCreate(card: HomeCookCard): void {
         this.cardElementToCreate = new CardElement("", "", null, "", "", "");
         this.cardElementToCreate.type = card.type;
-        this.cardElementToCreate.card_id = card.id;
+        this.cardElementToCreate.card_id = card._id;
     }
 
     public newCardElement(eventId: string, title: string): void {
         this.cardElementToCreate.event_id = eventId;
         this.cardElementToCreate.title = title;
-        console.log("before", this.cardElementList);
         // this.cardElementList.push(this.cardElementToCreate);
         this.cardElementList.push(this.cardElementToCreate);
-        console.log("after", this.cardElementList);
         this.cardElementList = this.cardElementList.slice();
     }
 
     public voteForCardElement(cardId: string, voterName: string): void {
-        let cardElement = this.cardElementList.find(card => card.id === cardId);
+        let cardElement = this.cardElementList.find(card => card._id === cardId);
         let voter = this.cardElementContainsVoter(cardElement, voterName);
         if (voter) {
-            voter.addVote();
+            voter.vote();
         } else {
             voter = new Voter(voterName, 1);
             cardElement.voters.push(voter);
         }
-        this.sortCardElementList();
+        // this.sortCardElementList();
     }
 
     public cardElementContainsVoter(cardElement: CardElement, voterName: string): Voter {
@@ -54,15 +52,6 @@ export class CardElementService {
             if (voter.name === voterName) return voter;
         }
         return null;
-    }
-
-    public unvoteForCardElement(cardId: string, voterName: string): void {
-        let cardElement = this.cardElementList.find(card => card.id === cardId);
-        let voter = this.cardElementContainsVoter(cardElement, voterName);
-        if (voter) {
-            voter.removeVote();
-        }
-        this.sortCardElementList();
     }
 
     public sortCardElementList(): void {
@@ -81,7 +70,7 @@ export class CardElementService {
     }
 
     public getTotalVotersNumber(cardId: string): number {
-        const cardElement = this.cardElementList.find(card => card.id === cardId);
+        const cardElement = this.cardElementList.find(card => card._id === cardId);
         let totalVotersNumber = 0;
         for (let voter of cardElement.voters) {
             totalVotersNumber += voter.nbVotes;
@@ -89,15 +78,6 @@ export class CardElementService {
         return totalVotersNumber;
     }
 
-
-    public addVote(voter: Voter): void {
-        voter.nbVotes += 1;
-    }
-
-    public removeVote(voter: Voter): void {
-        voter.nbVotes -= 1;
-        voter.nbVotes = voter.nbVotes > 0 ? voter.nbVotes : 0;
-    }
 
     public saveCardElementList() : void {
         this.eventService.savedCardElementList = this.cardElementList.slice();

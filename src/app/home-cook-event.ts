@@ -1,7 +1,7 @@
 import { HomeCookCard } from './home-cook-card';
 
 export class HomeCookEvent {
-  public id: string;
+  public _id: string;
   public name: string;
   public place: string;
   public date: string;

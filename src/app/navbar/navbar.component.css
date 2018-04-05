@@ -27,3 +27,7 @@
     left: inherit;
     right: 0;
 }
+
+.connexion-button {
+    font-size: 1.2rem;
+}

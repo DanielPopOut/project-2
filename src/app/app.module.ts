@@ -18,28 +18,34 @@ import { CardElementListFilterPipe } from './card-element-list-filter.pipe';
 import { CardElementDetailsComponent } from './card-element-details/card-element-details.component';
 import { UserService } from './user.service';
 import { NavbarComponent } from './navbar/navbar.component';
+import { TestComponent } from './test/test.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ServerService } from './server.service';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    NewEventComponent,
-    CardElementComponent,
-    EventComponent,
-    GuestComponent,
-    CardCreationComponent,
-    CardComponent,
-    CardElementListFilterPipe,
-    CardElementDetailsComponent,
-    NavbarComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule
-  ],
-  providers: [EventService, CardElementService, UserService],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        HomeComponent,
+        NewEventComponent,
+        CardElementComponent,
+        EventComponent,
+        GuestComponent,
+        CardCreationComponent,
+        CardComponent,
+        CardElementListFilterPipe,
+        CardElementDetailsComponent,
+        NavbarComponent,
+        TestComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        AppRoutingModule,
+        HttpClientModule
+    ],
+    providers: [EventService, CardElementService, UserService, ServerService],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

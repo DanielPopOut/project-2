@@ -25,14 +25,22 @@ export class EventService {
     public savedCardElementList: CardElement[];
     public innerWidth: number;
     public cardIdToShow: string;
+    public cardNumberToShow: number;
+    private newCardSubject = new Subject<boolean>();
+    public newCardSubject$ = this.newCardSubject.asObservable();
 
     constructor() {
         this.mock();
+        this.setCardNumberToShow(0);
     }
-
     //Prend le faux évènement créé plus haut
     public mock() {
         this.event = this.fakeEvent;
+    }
+
+    public setCardNumberToShow(number: number) : void {
+        this.cardNumberToShow = number;
+        this.cardIdToShow = this.event.cards[number]._id;
     }
 
 
@@ -77,6 +85,10 @@ export class EventService {
 
     public isContainerWidthSmall(): boolean {
         return this.innerWidth < 576;
+    }
+
+    public showNewCardModal() : void {
+            this.newCardSubject.next(true);
     }
 
 }

@@ -11,6 +11,16 @@
 }
 
 .new-guest-div {
-    display: flex;
-    flex-direction: row;
+     display: flex;
+     flex-direction: row;
+ }
+
+.padding-right {
+    padding-right: 5px;
+}
+
+
+
+#guestListModal {
+    color: #000000;
 }
