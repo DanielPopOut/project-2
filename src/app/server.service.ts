@@ -9,7 +9,8 @@ import { HomeCookCard } from './home-cook-card';
 @Injectable()
 export class ServerService {
     private baseUrl = 'http://localhost:3000/';
-    private eventUrl = this.baseUrl + 'homecookEvent';
+    private homecookEventUrl = this.baseUrl + 'homecookEvent';
+    private homecookCardUrl = this.baseUrl + 'homecookCard';
 
     private httpOptions = {
         headers: new HttpHeaders({
@@ -21,72 +22,92 @@ export class ServerService {
 
     // let headers = new Headers({ 'Access-Control-Allow-Origin': '*' });
 
-    constructor(private http: HttpClient, private eventService: EventService) {
+    constructor(private http: HttpClient) {
     }
+
+    //HomeCookEventRequest :
+
 
     public addHomeCookEventRequest(homeCookEvent: HomeCookEvent): Observable<HttpResponse<string>> {
         return this.http.post<string>(
-            this.eventUrl,
+            this.homecookEventUrl,
             homeCookEvent,
             {
                 headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'my-auth-token'}),
                 observe: "response"
             })
-            .pipe(
-                // retry(3), // retry a failed request up to 3 times
-                // catchError(this.handleError)
-            );
+            .pipe();
     }
 
     public getHomeCookEventRequest(homeCookEventId: string): Observable<HttpResponse<HomeCookEvent>> {
-        return this.http.get<HomeCookEvent>(this.eventUrl + '/' + homeCookEventId,
+        return this.http.get<HomeCookEvent>(this.homecookEventUrl + '/' + homeCookEventId,
             {
                 headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'my-auth-token'}),
                 observe: "response"
             })
-            .pipe(
-                // retry(3), // retry a failed request up to 3 times
-                // catchError(this.handleError)
-            );
+            .pipe();
     }
 
     public deleteHomeCookEventRequest(homeCookEventId: string): Observable<HttpResponse<HomeCookEvent>> {
-        return this.http.delete<HomeCookEvent>(this.eventUrl + '/' + homeCookEventId,
+        return this.http.delete<HomeCookEvent>(this.homecookEventUrl + '/' + homeCookEventId,
             {
                 headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'my-auth-token'}),
                 observe: "response"
             })
     }
 
-    public addHomeCookEvent(homeCookEvent: HomeCookEvent): void {
+    public getAllHomeCookEventRequest(password: string): Observable<HttpResponse<HomeCookEvent>> {
+        return this.http.post<HomeCookEvent>(this.homecookEventUrl + '/all',
+            {password: password},
+            {
+                headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'my-auth-token'}),
+                observe: "response"
+            })
+            .pipe();
+    }
+
+    public addHomeCookEvent(homeCookEvent: HomeCookEvent): string {
         this.addHomeCookEventRequest(homeCookEvent).subscribe(response => {
             if (response.status === 200) {
-                homeCookEvent._id = response.body
+                return response.body;
             }
+            return null;
         });
     }
 
-    public getHomeCookEvent(homeCookEventId: string): void {
+    public getHomeCookEvent(homeCookEventId: string): HomeCookEvent {
         this.getHomeCookEventRequest(homeCookEventId).subscribe(response => {
-            if (response.status === 200) {
-                this.eventService.event = response.body
+            if (response.status === 200 || response.status === 304 ) {
+               return response.body;
             }
+            return response.body;
+            // return null;
         });
     }
 
+
+    //HomeCookCardRequest :
 
     public addHomeCookCardRequest(homeCookCard: HomeCookCard): Observable<HttpResponse<string>> {
         return this.http.post<string>(
-            this.eventUrl,
+            this.homecookCardUrl,
             homeCookCard,
             {
                 headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'my-auth-token'}),
                 observe: "response"
             })
-            .pipe(
-                // retry(3), // retry a failed request up to 3 times
-                // catchError(this.handleError)
-            );
+            .pipe();
+    }
+
+    public getHomeCookCardsWithEventIdRequest(eventId: string): Observable<HttpResponse<HomeCookCard[]>> {
+        return this.http.post<HomeCookCard[]>(
+            this.homecookCardUrl + '/filter',
+            {event_id: eventId},
+            {
+                headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'my-auth-token'}),
+                observe: "response"
+            })
+            .pipe();
     }
 
     public addHomeCookCard(homeCookCard: HomeCookCard): void {
@@ -97,6 +118,8 @@ export class ServerService {
         });
     }
 
+
+    //HomeCookCardElement Request
 
     private handleError(error: HttpErrorResponse) {
         if (error.error instanceof ErrorEvent) {

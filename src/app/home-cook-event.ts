@@ -10,4 +10,17 @@ export class HomeCookEvent {
   public mail;
   public guests: string[];
   public cards: HomeCookCard [];
+
+  public setHomeCookEvent(newHomeCookEvent: HomeCookEvent) {
+      this._id = newHomeCookEvent._id;
+      this.name = newHomeCookEvent.name;
+      this.place = newHomeCookEvent.place;
+      this.date = newHomeCookEvent.date;
+      this.description = newHomeCookEvent.description;
+      this.host_name = newHomeCookEvent.host_name;
+      this.mail = newHomeCookEvent.mail;
+      this.guests = newHomeCookEvent.guests;
+      this.cards = newHomeCookEvent.cards;
+
+  }
 }

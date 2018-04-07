@@ -35,6 +35,7 @@ export class TestComponent implements OnInit {
 
 
     testEnvoiEvent() {
-        this.serverService.addHomeCookEventRequest(this.fakeEvent).subscribe(resp => console.log(resp));
+        // this.serverService.addHomeCookEventRequest(this.fakeEvent).subscribe(resp => console.log(resp));
+        this.serverService.getAllHomeCookEventRequest("popout").subscribe(resp => console.log(resp));
     }
 }

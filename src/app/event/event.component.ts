@@ -22,7 +22,7 @@ export class EventComponent implements OnInit {
     public textCardNumber: string;
 
     constructor(private eventService: EventService, private cardElementService: CardElementService, private userService: UserService) {
-        // this.innerWidth = (window.screen.width);
+        this.innerWidth = (window.screen.width);
         this.eventService.innerWidth = window.screen.width;
     }
 
@@ -69,7 +69,8 @@ export class EventComponent implements OnInit {
 
     public shouldCardBeHidden(card: HomeCookCard): string {
         if (this.eventService.isContainerWidthSmall()) {
-            if (card._id !== this.event.cards[this.eventService.cardNumberToShow]._id) {
+            console.log(this.eventService.cardNumberToShow);
+            if (this.eventService.cardNumberToShow !== null && card._id !== this.event.cards[this.eventService.cardNumberToShow]._id) {
                 return "none";
             }
         }
@@ -106,12 +107,12 @@ export class EventComponent implements OnInit {
             const direction = [coord[0] - this.swipeCoord[0], coord[1] - this.swipeCoord[1]];
             const duration = time - this.swipeTime;
 
-            if (duration < 1000 //Rapid
+            if (duration < 600 //Rapid
                 && (Math.abs(direction[0]) > 30) //Long enough
                 && Math.abs(direction[0]) > Math.abs(direction[1] * 3)) { //Horizontal enough
                 const swipe = direction[0] < 0 ? 'next' : 'previous';
                 //Do whatever you want with swipe
-                if ('previous') {
+                if (swipe === 'next') {
                     this.cardToShowPlusOne();
                 } else {
                     this.cardToShowMinusOne();
@@ -125,7 +126,7 @@ export class EventComponent implements OnInit {
             const intervalsSize = (this.innerWidth / this.event.cards.length)*9/10 ;
             const intervalsNumber = Math.round(direction[0]/intervalsSize);
 
-            if (duration > 1000 ) { //Horizontal enough
+            if (duration > 600 ) { //Horizontal enough
                 this.setCardToShowValue(this.oldCardNumber + intervalsNumber);
             }
         }

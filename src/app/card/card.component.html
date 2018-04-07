@@ -1,6 +1,7 @@
 
 <div class="card bg-light  mb-3">
-    <div class="card-header" [style.display]="!eventService.isContainerWidthSmall() ? 'inherit' : 'none'">{{card.name}} ({{cardNumberToShow}})
+    <div class="card-header" [style.display]="!eventService.isContainerWidthSmall() ? 'inherit' : 'none'">{{card.name}}
+        <!--({{cardNumberToShow}})-->
         <div (click)="newElementButtonClick()"><i class="fas fa-plus " ></i></div>
     </div>
     <ul class="list-group list-group-flush class-fill">

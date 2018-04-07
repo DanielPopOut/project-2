@@ -2,6 +2,7 @@ import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '
 import { HomeCookCard } from '../home-cook-card';
 import { EventService } from '../event.service';
 import { UserService } from '../user.service';
+import { ServerService } from '../server.service';
 
 @Component({
     selector: 'app-card-creation',
@@ -11,44 +12,50 @@ import { UserService } from '../user.service';
 export class CardCreationComponent implements OnInit {
     public cardToCreate: HomeCookCard;
     // public cardTypeList = [new HomeCookCard("0", "Question-Card", 0), new HomeCookCard('1', "One-Vote-Card", 1), new HomeCookCard('2', "Multiple-Vote-Card", 2)];
-    public cardToCreateName: string;
 
     @ViewChild('newCardNameInput') newCardNameInput: ElementRef;
     @ViewChild('buttonHiddenCardModal') buttonHiddenCardModal: ElementRef;
 
 
-    constructor(private eventService: EventService, private userService: UserService) {
+    constructor(private eventService: EventService, private userService: UserService, private serverService: ServerService) {
         this.eventService.newCardSubject$.subscribe(bool => {
             this.showModal();
         });
     }
 
     ngOnInit() {
-        this.cardToCreate = new HomeCookCard("", "", 0);
+        this.cardToCreate = new HomeCookCard(undefined, "", 0, this.eventService.event._id);
     }
 
     public showModal() : void {
-        this.cardToCreate = new HomeCookCard("5", "", 0);
+        this.cardToCreate = new HomeCookCard(undefined, "", 0, this.eventService.event._id);
         this.buttonHiddenCardModal.nativeElement.click();
         this.newCardNameInputFocus();
     }
 
     public createNewCard(cardToCreateName: string): void {
         this.cardToCreate.name = cardToCreateName;
-        this.cardToCreate._id = Math.floor(Math.random() * 16).toString();
-        this.cardToCreateName = "lalala";
         console.log(this.cardToCreate);
-        let validCardName: [boolean, string];
-        validCardName = this.eventService.createNewCard(this.cardToCreate);
-        if (!validCardName[0]) {
-            console.log(validCardName[1]);
-        }
+        this.addHomeCookCard(this.cardToCreate);
     }
 
     public newCardNameInputFocus(): void {
         setTimeout(() => {
             this.newCardNameInput.nativeElement.focus();
         }, 500)
+    }
+
+    public addHomeCookCard(homeCookCard: HomeCookCard): void {
+        this.serverService.addHomeCookCardRequest(homeCookCard).subscribe(response => {
+            if (response.status === 200) {
+                homeCookCard._id = response.body
+                let validCardName: [boolean, string];
+                validCardName = this.eventService.createNewCard(this.cardToCreate);
+                if (!validCardName[0]) {
+                    console.log(validCardName[1]);
+                }
+            }
+        });
     }
 
 }

@@ -12,9 +12,8 @@ const routes: Routes = [
   {path: 'newevent', component: NewEventComponent},
   {path: 'event', component: EventComponent},
   {path: 'card', component: CardElementComponent},
-  {path: 'card-details', component: CardElementDetailsComponent}
+  {path: 'card-details', component: CardElementDetailsComponent},
   {path: 'test', component: TestComponent}
-
 ];
 
 @NgModule({

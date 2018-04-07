@@ -41,4 +41,13 @@ export class NavbarComponent implements OnInit {
             return;
         }
     }
+
+    public newCardElementClick() {
+        if (this.userService.isUserNameValid()){
+            this.eventService.checkUsernameAndOpenCardElementModal();
+        }else {
+            this.userService.showConnexionFormEvent(true);
+            return;
+        }
+    }
 }
