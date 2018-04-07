@@ -21,6 +21,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { TestComponent } from './test/test.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ServerService } from './server.service';
+import { CardElementModalComponent } from './card-element-modal/card-element-modal.component';
+import { ModalsService } from './modals.service';
 
 
 @NgModule({
@@ -36,7 +38,8 @@ import { ServerService } from './server.service';
         CardElementListFilterPipe,
         CardElementDetailsComponent,
         NavbarComponent,
-        TestComponent
+        TestComponent,
+        CardElementModalComponent
     ],
     imports: [
         BrowserModule,
@@ -44,7 +47,7 @@ import { ServerService } from './server.service';
         AppRoutingModule,
         HttpClientModule
     ],
-    providers: [EventService, CardElementService, UserService, ServerService],
+    providers: [EventService, CardElementService, UserService, ServerService, ModalsService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

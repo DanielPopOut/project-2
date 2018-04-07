@@ -4,6 +4,7 @@ import { HomeCookEvent } from '../home-cook-event';
 import { CardElementService } from '../card-element.service';
 import { HomeCookCard } from '../home-cook-card';
 import { UserService } from '../user.service';
+import { ModalsService } from '../modals.service';
 
 @Component({
     selector: 'app-event',
@@ -15,13 +16,14 @@ export class EventComponent implements OnInit {
     public newCardElementName: string;
     @ViewChild('newCardElementNameInput') newCardElementNameInput: ElementRef;
     @ViewChild('buttonHiddenCardElementModal') buttonHiddenCardElementModal: ElementRef;
+    public textCardNumber: string;
     private swipeCoord?: [number, number];
     private swipeTime?: number;
     private innerWidth: number;
     private oldCardNumber: number;
-    public textCardNumber: string;
 
-    constructor(private eventService: EventService, private cardElementService: CardElementService, private userService: UserService) {
+    constructor(private eventService: EventService, private cardElementService: CardElementService,
+                private userService: UserService, private modalsService: ModalsService) {
         this.innerWidth = (window.screen.width);
         this.eventService.innerWidth = window.screen.width;
     }
@@ -39,37 +41,15 @@ export class EventComponent implements OnInit {
     }
 
     public updateCardText() {
-        this.textCardNumber = (this.eventService.cardNumberToShow+1).toString() + '/' + this.event.cards.length.toString();
+        this.textCardNumber = (this.eventService.cardNumberToShow + 1).toString() + '/' + this.event.cards.length.toString();
     }
 
-    public openNewCardElementModal(): void {
-        this.buttonHiddenCardElementModal.nativeElement.click();
-        this.newCardElementNameInputFocus();
-    }
-
-    public createNewCardElement(event_id: string, name: string): void {
-        this.cardElementService.newCardElement(event_id, name);
-        this.newCardElementName = "";
-    }
-
-    public checkUsernameAndOpenCardElementModal(card: HomeCookCard): void {
-        if (!this.userService.isUserNameValid()) {
-            this.userService.showConnexionFormEvent(true);
-        } else {
-            this.cardElementService.setCardElementToCreate(card);
-            this.openNewCardElementModal();
-        }
-    }
-
-    public newCardElementNameInputFocus(): void {
-        setTimeout(() => {
-            this.newCardElementNameInput.nativeElement.focus();
-        }, 500);
+    public newCardElementClick(card: HomeCookCard): void {
+        this.modalsService.showNewCardElementModal(card);
     }
 
     public shouldCardBeHidden(card: HomeCookCard): string {
         if (this.eventService.isContainerWidthSmall()) {
-            console.log(this.eventService.cardNumberToShow);
             if (this.eventService.cardNumberToShow !== null && card._id !== this.event.cards[this.eventService.cardNumberToShow]._id) {
                 return "none";
             }
@@ -123,10 +103,10 @@ export class EventComponent implements OnInit {
         else if (when === "move") {
             const direction = [coord[0] - this.swipeCoord[0], coord[1] - this.swipeCoord[1]];
             const duration = time - this.swipeTime;
-            const intervalsSize = (this.innerWidth / this.event.cards.length)*9/10 ;
-            const intervalsNumber = Math.round(direction[0]/intervalsSize);
+            const intervalsSize = (this.innerWidth / this.event.cards.length) * 9 / 10;
+            const intervalsNumber = Math.round(direction[0] / intervalsSize);
 
-            if (duration > 600 ) { //Horizontal enough
+            if (duration > 600) { //Horizontal enough
                 this.setCardToShowValue(this.oldCardNumber + intervalsNumber);
             }
         }

@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HomeCookEvent } from '../home-cook-event';
 import { EventService } from '../event.service';
 import { HomeCookCard } from '../home-cook-card';
 import { UserService } from '../user.service';
+import { ModalsService } from '../modals.service';
 
 @Component({
     selector: 'app-navbar',
@@ -12,7 +13,7 @@ import { UserService } from '../user.service';
 export class NavbarComponent implements OnInit {
     public event: HomeCookEvent;
 
-    constructor(private eventService: EventService, private userService: UserService) {
+    constructor(private eventService: EventService, private userService: UserService, private modalsService: ModalsService) {
 
     }
 
@@ -20,10 +21,10 @@ export class NavbarComponent implements OnInit {
         this.event = this.eventService.event;
     }
 
-    public setIdCardToShow(card: HomeCookCard) : void {
+    public setIdCardToShow(card: HomeCookCard): void {
         this.eventService.cardIdToShow = card._id;
-        for (let i in this.event.cards){
-            if(this.event.cards[i]._id=== this.eventService.cardIdToShow){
+        for (let i in this.event.cards) {
+            if (this.event.cards[i]._id === this.eventService.cardIdToShow) {
                 this.eventService.setCardNumberToShow(parseFloat(i));
                 return;
             }
@@ -34,20 +35,10 @@ export class NavbarComponent implements OnInit {
 
 
     public newCardClick() {
-        if (this.userService.isUserNameValid()){
-            this.eventService.showNewCardModal();
-        }else {
-            this.userService.showConnexionFormEvent(true);
-            return;
-        }
+        this.modalsService.showNewCardModal();
     }
 
     public newCardElementClick() {
-        if (this.userService.isUserNameValid()){
-            this.eventService.checkUsernameAndOpenCardElementModal();
-        }else {
-            this.userService.showConnexionFormEvent(true);
-            return;
-        }
+        this.modalsService.showNewCardElementModal(this.eventService.getCardToAddElement());
     }
 }

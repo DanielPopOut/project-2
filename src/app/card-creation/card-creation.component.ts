@@ -3,6 +3,7 @@ import { HomeCookCard } from '../home-cook-card';
 import { EventService } from '../event.service';
 import { UserService } from '../user.service';
 import { ServerService } from '../server.service';
+import { ModalsService } from '../modals.service';
 
 @Component({
     selector: 'app-card-creation',
@@ -17,8 +18,8 @@ export class CardCreationComponent implements OnInit {
     @ViewChild('buttonHiddenCardModal') buttonHiddenCardModal: ElementRef;
 
 
-    constructor(private eventService: EventService, private userService: UserService, private serverService: ServerService) {
-        this.eventService.newCardSubject$.subscribe(bool => {
+    constructor(private eventService: EventService, private userService: UserService, private serverService: ServerService, private modalsService: ModalsService) {
+        this.modalsService.newCardSubject$.subscribe(bool => {
             this.showModal();
         });
     }

@@ -3,6 +3,7 @@ import { CardElement } from './card-element';
 import { HomeCookCard } from './home-cook-card';
 import { Voter } from './voter';
 import { EventService } from './event.service';
+import { UserService } from './user.service';
 
 @Injectable()
 export class CardElementService {
@@ -16,7 +17,7 @@ export class CardElementService {
         new CardElement("test4", "Ceci est un test avec une ligne plus grande que les autres pour voir si elle aura la meme taille", 2, "fnoqeaf", "2", "Remy")];
 
 
-    constructor(private eventService: EventService) {
+    constructor(private eventService: EventService, private userService: UserService) {
         this.cardElementList = this.fakeCardElementList;
         console.log("build cardelementservice")
     }
@@ -27,9 +28,9 @@ export class CardElementService {
         this.cardElementToCreate.card_id = card._id;
     }
 
-    public newCardElement(eventId: string, title: string): void {
-        this.cardElementToCreate.event_id = eventId;
-        this.cardElementToCreate.title = title;
+    public newCardElement(cardParentId: string, title: string): void {
+        this.cardElementToCreate = new CardElement(undefined, title, 0, this.eventService.event._id, cardParentId, this.userService.username);
+
         // this.cardElementList.push(this.cardElementToCreate);
         this.cardElementList.push(this.cardElementToCreate);
         this.cardElementList = this.cardElementList.slice();

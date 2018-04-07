@@ -21,15 +21,11 @@ export class EventService {
         cards: [new HomeCookCard("0", "Entrée", 0), new HomeCookCard('1', "Plat", 1), new HomeCookCard('2', "Boissons", 2)]
     };
     public testEventId = '5ac6232ff94294ecb3d63409';
-    public username: string;
     public cardElementToShowDetails: CardElement;
-    private nonConnected = new Subject<boolean>();
     public savedCardElementList: CardElement[];
     public innerWidth: number;
     public cardIdToShow: string;
     public cardNumberToShow: number;
-    private newCardSubject = new Subject<boolean>();
-    public newCardSubject$ = this.newCardSubject.asObservable();
 
     constructor( private serverService: ServerService) {
         this.mockWithServer();
@@ -67,19 +63,15 @@ export class EventService {
         }
     }
 
-
-
     public setCardNumberToShow(number: number) : void {
         if (this.event.cards.length< 1){
             this.cardNumberToShow = null;
             this.cardIdToShow = null;
         }else {
             this.cardNumberToShow = number;
-            console.log(this.event.cards.length, number, this.event.cards[number]);
             this.cardIdToShow = this.event.cards[number]._id;
         }
     }
-
 
     public createNewEvent(homeCookEvent: HomeCookEvent): boolean {
         //TODO envoi requete vers server
@@ -89,8 +81,6 @@ export class EventService {
         // this.event['id'] = "12345678910";
         return true
     }
-
-
 
     public validCardName(name: string): [boolean, string] {
         if (!name) {
@@ -124,8 +114,11 @@ export class EventService {
         return this.innerWidth < 576;
     }
 
-    public showNewCardModal() : void {
-            this.newCardSubject.next(true);
+    public getCardToAddElement(): HomeCookCard {
+        if (this.event.cards.length< 1){
+            return null;
+        }else {
+            return this.event.cards[this.cardNumberToShow];
+        }
     }
-
 }
