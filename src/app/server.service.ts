@@ -66,24 +66,6 @@ export class ServerService {
             .pipe();
     }
 
-    public addHomeCookEvent(homeCookEvent: HomeCookEvent): string {
-        this.addHomeCookEventRequest(homeCookEvent).subscribe(response => {
-            if (response.status === 200) {
-                return response.body;
-            }
-            return null;
-        });
-    }
-
-    public getHomeCookEvent(homeCookEventId: string): HomeCookEvent {
-        this.getHomeCookEventRequest(homeCookEventId).subscribe(response => {
-            if (response.status === 200 || response.status === 304 ) {
-               return response.body;
-            }
-            return response.body;
-            // return null;
-        });
-    }
 
 
     //HomeCookCardRequest :
