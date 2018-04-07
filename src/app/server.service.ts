@@ -131,6 +131,17 @@ export class ServerService {
             .pipe();
     }
 
+    public voteCardElementRequest(card: CardElement, username: string): Observable<HttpResponse<CardElement>> {
+        return this.http.post<CardElement>(
+            this.cardElementUrl + '/vote',
+            {filter: {_id: card._id}, username: username},
+            {
+                headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'my-auth-token'}),
+                observe: "response"
+            })
+            .pipe();
+    }
+
 
 
     //***********************************************************

@@ -79,4 +79,8 @@ export class CardElementService {
         //     this.cardElementList[voter].voters = this.eventService.savedCardElementList[voter].voters.slice();
         // }
     }
+
+    public mettreAJourCardElement(cardElementToUpdate: CardElement) {
+        this.cardElementList[this.cardElementList.findIndex(obj => obj._id == cardElementToUpdate._id)] = cardElementToUpdate;
+    }
 }

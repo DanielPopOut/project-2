@@ -31,14 +31,16 @@
     <div class="collapse navbar-collapse entire-width" id="navbarNavAltMarkup">
         <div class="navbar-nav entire-width"
              [style.display]="eventService.isContainerWidthSmall() ? 'inherit' : 'none'">
-            <div class="navbar-arrows" [style.display]="eventService.cardNumberToShow > 1 ? 'flex' : 'none'">
+            <div class="navbar-arrows" [style.display]="eventService.cardNumberToShow > 1 && eventService.event.cards.length > 3 ? 'flex' : 'none'"
+                 (click)="eventService.setCardNumberToShow(eventService.cardNumberToShow - 1)">
                 <i class="fas fa-angle-left"></i>
             </div>
             <a *ngFor="let card of event.cards;" class="nav-item nav-link"
                [style.display]="shouldNavBarCardBeVisible(card._id) ? 'inherit' : 'none'"
                [class.active]="eventService.cardIdToShow === card._id" (click)="setIdCardToShow(card)">
                 {{card.name | showNoName}}</a>
-            <div class="navbar-arrows" [style.display]="eventService.cardNumberToShow < eventService.cards.length - 2 ? 'flex' : 'none'">
+            <div class="navbar-arrows" [style.display]="eventService.cardNumberToShow < eventService.event.cards.length - 2 && eventService.event.cards.length > 3 ? 'flex' : 'none'"
+                 (click)="eventService.setCardNumberToShow(eventService.cardNumberToShow + 1)">
                 <i class="fas fa-lg fa-angle-right"></i>
             </div>
         </div>

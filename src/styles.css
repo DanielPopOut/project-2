@@ -9,3 +9,8 @@ html, body {
 .entire-width {
     width: 100%;
 }
+
+
+.display-none {
+    display: none;
+}

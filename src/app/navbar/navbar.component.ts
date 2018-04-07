@@ -56,7 +56,7 @@ export class NavbarComponent implements OnInit {
         if (carteAffichee - 1 < 0) {
             valeursATester = [carteAffichee, (carteAffichee + 1) % nbcartes, (carteAffichee + 2  ) % nbcartes];
         } else if (carteAffichee + 1 === nbcartes) {
-            valeursATester = [carteAffichee, (carteAffichee - 1 + nbcartes) % nbcartes, (carteAffichee + 2 ) % nbcartes];
+            valeursATester = [carteAffichee, (carteAffichee - 1 + nbcartes) % nbcartes, (carteAffichee - 2 ) % nbcartes];
         } else {
             valeursATester = [carteAffichee, (carteAffichee - 1 + nbcartes) % nbcartes, (carteAffichee + 1 ) % nbcartes];
         }

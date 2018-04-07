@@ -58,11 +58,12 @@ export class EventService {
         })
     }
 
-    public deleteCard(card: HomeCookCard ) : void {
-        this.serverService.deleteHomeCookCardRequest(card._id).subscribe(response => {
-            console.log("carte " + card.name, card._id, "supprimée");
+    public deleteCard(cardToDelete: HomeCookCard): void {
+        this.serverService.deleteHomeCookCardRequest(cardToDelete._id).subscribe(response => {
+            console.log("carte " + cardToDelete.name, cardToDelete._id, "supprimée");
             // this.setNewEventCards(response.body);
-
+            this.event.cards.splice(this.event.cards.findIndex(obj => obj._id == cardToDelete._id), 1);
+            this.setCardNumberToShow((this.cardNumberToShow - 1 + this.event.cards.length) % this.event.cards.length);
         })
     }
 

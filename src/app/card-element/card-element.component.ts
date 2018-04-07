@@ -4,6 +4,7 @@ import { CardElementService } from '../card-element.service';
 import { EventService } from '../event.service';
 import { Router } from "@angular/router";
 import { UserService } from '../user.service';
+import { ServerService } from '../server.service';
 
 @Component({
     selector: 'app-card-element',
@@ -17,7 +18,7 @@ export class CardElementComponent implements OnInit {
     @Input() cardElement: CardElement;
 
     constructor(private cardElementService: CardElementService, private eventService: EventService,
-                private userService: UserService, private router: Router) {
+                private userService: UserService, private serverService: ServerService, private router: Router) {
     }
 
     ngOnInit() {
@@ -54,5 +55,11 @@ export class CardElementComponent implements OnInit {
         let voter = this.cardElementService.cardElementContainsVoter(this.cardElement, this.userService.username);
         // let numberVotes = this.cardElement.voters.filter(voter => voter.name === this.eventService.username).length;
         return voter == null ? 0 : voter.nbVotes;
+    }
+
+    public voteForCardElement(): void {
+        this.serverService.voteCardElementRequest(this.cardElement, this.userService.username).subscribe(resp => {
+            this.cardElementService.mettreAJourCardElement(resp.body);
+        });
     }
 }

@@ -1,6 +1,5 @@
 <button
-    [class]=" userService.isUserNameValid()? ' btn btn-outline-light connexion-button' : ' btn btn-outline-primary connexion-button'"
-    [style.display]="'none'"
+    class="display-none" [style.display]="'none'"
     (click)="newGuestNameInputFocus()" data-toggle="modal" data-target="#guestListModal" #buttonModal>
     <div *ngIf=" userService.isUserNameValid(); else elseBlock"><span
         class="padding-right">{{userService.username}}</span> <i class="fas fa-sync"></i></div>
