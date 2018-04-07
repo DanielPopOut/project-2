@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CardElement } from './card-element';
-import { HomeCookCard } from './home-cook-card';
 import { Voter } from './voter';
-import { EventService } from './event.service';
-import { UserService } from './user.service';
 
 @Injectable()
 export class CardElementService {
-    public cardElementToCreate: CardElement;
     public cardElementList: CardElement[];
     public fakeCardElementList: CardElement[] = [
         new CardElement("test0", "Pastèque", 2, "eafeafea", "0", "Remy"),
@@ -17,22 +13,13 @@ export class CardElementService {
         new CardElement("test4", "Ceci est un test avec une ligne plus grande que les autres pour voir si elle aura la meme taille", 2, "fnoqeaf", "2", "Remy")];
 
 
-    constructor(private eventService: EventService, private userService: UserService) {
-        this.cardElementList = this.fakeCardElementList;
-        console.log("build cardelementservice")
+    constructor() {
+        this.cardElementList = [];
     }
 
-    public setCardElementToCreate(card: HomeCookCard): void {
-        this.cardElementToCreate = new CardElement("", "", null, "", "", "");
-        this.cardElementToCreate.type = card.type;
-        this.cardElementToCreate.card_id = card._id;
-    }
-
-    public newCardElement(cardParentId: string, title: string): void {
-        this.cardElementToCreate = new CardElement(undefined, title, 0, this.eventService.event._id, cardParentId, this.userService.username);
-
+    public addCardElement(cardElementToCreate: CardElement): void {
         // this.cardElementList.push(this.cardElementToCreate);
-        this.cardElementList.push(this.cardElementToCreate);
+        this.cardElementList.push(cardElementToCreate);
         this.cardElementList = this.cardElementList.slice();
     }
 
@@ -58,10 +45,10 @@ export class CardElementService {
     public sortCardElementList(): void {
         this.cardElementList.sort(function (a, b) {
             let [b_total, a_total] = [0, 0];
-            for(let voter of b.voters){
+            for (let voter of b.voters) {
                 b_total += voter.nbVotes;
             }
-            for(let voter of a.voters){
+            for (let voter of a.voters) {
                 a_total += voter.nbVotes;
             }
             return b_total - a_total;
@@ -80,16 +67,16 @@ export class CardElementService {
     }
 
 
-    public saveCardElementList() : void {
-        this.eventService.savedCardElementList = this.cardElementList.slice();
-        for (let voter in this.cardElementList ){
-            this.eventService.savedCardElementList[voter] = Object.assign({}, this.cardElementList[voter]) as CardElement;
-        }
+    public saveCardElementList(): void {
+        // this.eventService.savedCardElementList = this.cardElementList.slice();
+        // for (let voter in this.cardElementList) {
+        //     this.eventService.savedCardElementList[voter] = Object.assign({}, this.cardElementList[voter]) as CardElement;
+        // }
     }
 
-    public restoreCardElementList() : void {
-        for (let voter in this.cardElementList ){
-            this.cardElementList[voter].voters = this.eventService.savedCardElementList[voter].voters.slice();
-        }
+    public restoreCardElementList(): void {
+        // for (let voter in this.cardElementList) {
+        //     this.cardElementList[voter].voters = this.eventService.savedCardElementList[voter].voters.slice();
+        // }
     }
 }

@@ -23,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ServerService } from './server.service';
 import { CardElementModalComponent } from './card-element-modal/card-element-modal.component';
 import { ModalsService } from './modals.service';
+import { ShowNoNamePipe } from './show-no-name.pipe';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { ModalsService } from './modals.service';
         CardElementDetailsComponent,
         NavbarComponent,
         TestComponent,
-        CardElementModalComponent
+        CardElementModalComponent,
+        ShowNoNamePipe
     ],
     imports: [
         BrowserModule,

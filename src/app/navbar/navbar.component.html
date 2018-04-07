@@ -17,6 +17,7 @@
                 <a class="dropdown-item" href="#" (click)="newCardClick()">New Card</a>
                 <a class="dropdown-item" href="#" (click)="newCardElementClick()"
                    [style.display]="eventService.isContainerWidthSmall() ? 'inherit' : 'none'">New Card Element</a>
+                <a class="dropdown-item" href="#" (click)="deleteCardClick()">Delete Card</a>
             </div>
         </div>
     </div>
@@ -25,12 +26,21 @@
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span> buouboub
     </button>
+
+
     <div class="collapse navbar-collapse entire-width" id="navbarNavAltMarkup">
         <div class="navbar-nav entire-width"
              [style.display]="eventService.isContainerWidthSmall() ? 'inherit' : 'none'">
+            <div class="navbar-arrows" [style.display]="eventService.cardNumberToShow > 1 ? 'flex' : 'none'">
+                <i class="fas fa-angle-left"></i>
+            </div>
             <a *ngFor="let card of event.cards;" class="nav-item nav-link"
+               [style.display]="shouldNavBarCardBeVisible(card._id) ? 'inherit' : 'none'"
                [class.active]="eventService.cardIdToShow === card._id" (click)="setIdCardToShow(card)">
-                {{card.name}}</a>
+                {{card.name | showNoName}}</a>
+            <div class="navbar-arrows" [style.display]="eventService.cardNumberToShow < eventService.cards.length - 2 ? 'flex' : 'none'">
+                <i class="fas fa-lg fa-angle-right"></i>
+            </div>
         </div>
     </div>
 </nav>

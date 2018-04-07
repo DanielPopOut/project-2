@@ -39,6 +39,32 @@ export class NavbarComponent implements OnInit {
     }
 
     public newCardElementClick() {
-        this.modalsService.showNewCardElementModal(this.eventService.getCardToAddElement());
+        this.modalsService.showNewCardElementModal(this.eventService.getActiveCard());
+    }
+
+    public deleteCardClick() {
+        this.eventService.deleteCard(this.eventService.getActiveCard());
+    }
+
+    public shouldNavBarCardBeVisible(card_id: string): boolean {
+        let carteAffichee = this.eventService.cardNumberToShow;
+        let nbcartes = this.eventService.event.cards.length;
+        if (nbcartes < 1) {
+            return false;
+        }
+        let valeursATester = [];
+        if (carteAffichee - 1 < 0) {
+            valeursATester = [carteAffichee, (carteAffichee + 1) % nbcartes, (carteAffichee + 2  ) % nbcartes];
+        } else if (carteAffichee + 1 === nbcartes) {
+            valeursATester = [carteAffichee, (carteAffichee - 1 + nbcartes) % nbcartes, (carteAffichee + 2 ) % nbcartes];
+        } else {
+            valeursATester = [carteAffichee, (carteAffichee - 1 + nbcartes) % nbcartes, (carteAffichee + 1 ) % nbcartes];
+        }
+        if (this.eventService.event.cards[valeursATester[0]]._id === card_id ||
+            this.eventService.event.cards[valeursATester[1]]._id === card_id ||
+            this.eventService.event.cards[valeursATester[2]]._id === card_id) {
+            return true;
+        }
+        return false;
     }
 }

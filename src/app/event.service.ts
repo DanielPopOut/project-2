@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { HomeCookEvent } from './home-cook-event';
 import { HomeCookCard } from './home-cook-card';
 import { CardElement } from './card-element';
-import { Subject } from 'rxjs/Subject';
-import { Voter } from './voter';
 import { ServerService } from './server.service';
+import { CardElementService } from './card-element.service';
 
 @Injectable()
 export class EventService {
@@ -27,47 +26,59 @@ export class EventService {
     public cardIdToShow: string;
     public cardNumberToShow: number;
 
-    constructor( private serverService: ServerService) {
+    constructor(private serverService: ServerService, private cardElementService: CardElementService) {
         this.mockWithServer();
         // this.event =this.fakeEvent;
         this.setCardNumberToShow(0);
     }
+
     //Prend le faux évènement créé plus haut
     public mockWithServer() {
         this.event = new HomeCookEvent();
         this.event.cards = [];
         this.event.guests = [];
-        //this.event.setHomeCookEvent(this.fakeEvent);
+        this.serverService.getHomeCookEventRequest(this.testEventId).subscribe(response => {
+            if (response.status === 200 || response.status === 304) {
+                this.event.setHomeCookEvent(response.body);
+                this.getHomeCookCards(this.event._id);
+                this.getCardElements(this.event._id);
+            }
+        });
+    }
 
-        setTimeout(()=> {
-            this.serverService.getHomeCookEventRequest(this.testEventId).subscribe(response => {
-                if (response.status === 200 || response.status === 304 ) {
-                    this.event.setHomeCookEvent(response.body);
-                    this.getHomeCookCards(this.event._id);
-                }
-                console.log(this.event);
-            });
-        }, 1000);
+    public getCardElements(eventId: string): void {
+        this.serverService.getCardsElementWithEventIdRequest(eventId).subscribe(cards => {
+            this.cardElementService.cardElementList = cards.body;
+        });
     }
 
     public getHomeCookCards(eventId: string): void {
-        this.serverService.getHomeCookCardsWithEventIdRequest(this.event._id).subscribe(response => {
+        this.serverService.getHomeCookCardsWithEventIdRequest(eventId).subscribe(response => {
             this.setNewEventCards(response.body);
         })
     }
 
-    public setNewEventCards(newHomeCookCards : HomeCookCard[]) {
+    public deleteCard(card: HomeCookCard ) : void {
+        this.serverService.deleteHomeCookCardRequest(card._id).subscribe(response => {
+            console.log("carte " + card.name, card._id, "supprimée");
+            // this.setNewEventCards(response.body);
+
+        })
+    }
+
+
+    public setNewEventCards(newHomeCookCards: HomeCookCard[]) {
         this.event.cards = newHomeCookCards;
-        if(this.event.cards.length > 1) {
+        if (this.event.cards.length > 1) {
             this.cardNumberToShow = 0;
         }
     }
 
-    public setCardNumberToShow(number: number) : void {
-        if (this.event.cards.length< 1){
+    public setCardNumberToShow(number: number): void {
+        if (this.event.cards.length < 1) {
             this.cardNumberToShow = null;
             this.cardIdToShow = null;
-        }else {
+        } else {
             this.cardNumberToShow = number;
             this.cardIdToShow = this.event.cards[number]._id;
         }
@@ -94,16 +105,9 @@ export class EventService {
         return [true, ''];
     }
 
-    public createNewCard(cardToCreate: HomeCookCard): [boolean, string] {
-        let x = this.validCardName(cardToCreate.name);
-        if (x[0]) {
-            let newEventList = this.event.cards.slice();
-            newEventList.push(cardToCreate);
-            // this.event.cards.push(cardToCreate);
-            this.event.cards = newEventList;
-            return [true, ''];
-        }
-        return x;
+    public addNewCard(cardToCreate: HomeCookCard): void {
+        this.event.cards = this.event.cards.slice();
+        this.event.cards.push(cardToCreate);
     }
 
     public setCardDetails(cardElement: CardElement) {
@@ -114,10 +118,10 @@ export class EventService {
         return this.innerWidth < 576;
     }
 
-    public getCardToAddElement(): HomeCookCard {
-        if (this.event.cards.length< 1){
+    public getActiveCard(): HomeCookCard {
+        if (this.event.cards.length < 1) {
             return null;
-        }else {
+        } else {
             return this.event.cards[this.cardNumberToShow];
         }
     }

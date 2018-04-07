@@ -3,14 +3,15 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angul
 import { Observable } from 'rxjs/Observable';
 import { HomeCookEvent } from './home-cook-event';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { EventService } from "./event.service";
 import { HomeCookCard } from './home-cook-card';
+import { CardElement } from './card-element';
 
 @Injectable()
 export class ServerService {
-    private baseUrl = 'http://localhost:3000/';
+    private baseUrl = 'http://localhost:3000/api/';
     private homecookEventUrl = this.baseUrl + 'homecookEvent';
     private homecookCardUrl = this.baseUrl + 'homecookCard';
+    private cardElementUrl = this.baseUrl + 'cardElement';
 
     private httpOptions = {
         headers: new HttpHeaders({
@@ -25,7 +26,9 @@ export class ServerService {
     constructor(private http: HttpClient) {
     }
 
+    //***********************************************************
     //HomeCookEventRequest :
+    //***********************************************************
 
 
     public addHomeCookEventRequest(homeCookEvent: HomeCookEvent): Observable<HttpResponse<string>> {
@@ -67,8 +70,9 @@ export class ServerService {
     }
 
 
-
-    //HomeCookCardRequest :
+    //***********************************************************
+    //HomeCookCardRequests :
+    //***********************************************************
 
     public addHomeCookCardRequest(homeCookCard: HomeCookCard): Observable<HttpResponse<string>> {
         return this.http.post<string>(
@@ -92,16 +96,47 @@ export class ServerService {
             .pipe();
     }
 
-    public addHomeCookCard(homeCookCard: HomeCookCard): void {
-        this.addHomeCookCardRequest(homeCookCard).subscribe(response => {
-            if (response.status === 200) {
-                homeCookCard._id = response.body
-            }
-        });
+    public deleteHomeCookCardRequest(homeCookEventId: string): Observable<HttpResponse<HomeCookCard>> {
+        return this.http.delete<HomeCookCard>(this.homecookCardUrl + '/' + homeCookEventId,
+            {
+                headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'my-auth-token'}),
+                observe: "response"
+            })
+    }
+
+    //***********************************************************
+    //HomeCookCardElement Requests
+    //***********************************************************
+
+
+    public addCardElementRequest(cardElement: CardElement): Observable<HttpResponse<string>> {
+        return this.http.post<string>(
+            this.cardElementUrl,
+            cardElement,
+            {
+                headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'my-auth-token'}),
+                observe: "response"
+            })
+            .pipe();
+    }
+
+    public getCardsElementWithEventIdRequest(eventId: string): Observable<HttpResponse<CardElement[]>> {
+        return this.http.post<CardElement[]>(
+            this.cardElementUrl + '/filter',
+            {event_id: eventId},
+            {
+                headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'my-auth-token'}),
+                observe: "response"
+            })
+            .pipe();
     }
 
 
-    //HomeCookCardElement Request
+
+    //***********************************************************
+    //*******************   Autre   *********************
+    //***********************************************************
+
 
     private handleError(error: HttpErrorResponse) {
         if (error.error instanceof ErrorEvent) {

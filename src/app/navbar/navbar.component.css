@@ -31,3 +31,12 @@
 .connexion-button {
     font-size: 1.2rem;
 }
+
+.navbar-collapse {
+    color : white;
+}
+
+.navbar-arrows {
+    align-items: center;
+    display: flex;
+}

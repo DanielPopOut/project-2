@@ -36,6 +36,7 @@ export class EventComponent implements OnInit {
         setTimeout(() => {
             if (this.eventService.savedCardElementList) {
                 this.cardElementService.restoreCardElementList();
+
             }
         }, 150);
     }

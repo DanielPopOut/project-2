@@ -30,7 +30,7 @@
 
     <div class="addCardElementDiv btn btn-outline-primary"
          [style.display]="eventService.isContainerWidthSmall() ? 'inherit' : 'none' "
-         (click)="newCardElementClick(eventService.getCardToAddElement())"> New element
+         (click)="newCardElementClick(eventService.getActiveCard())"> New element
     </div>
 
 </div>

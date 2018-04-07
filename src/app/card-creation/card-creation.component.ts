@@ -29,14 +29,12 @@ export class CardCreationComponent implements OnInit {
     }
 
     public showModal() : void {
-        this.cardToCreate = new HomeCookCard(undefined, "", 0, this.eventService.event._id);
         this.buttonHiddenCardModal.nativeElement.click();
         this.newCardNameInputFocus();
     }
 
     public createNewCard(cardToCreateName: string): void {
-        this.cardToCreate.name = cardToCreateName;
-        console.log(this.cardToCreate);
+        this.cardToCreate = new HomeCookCard(undefined, cardToCreateName, 0, this.eventService.event._id);
         this.addHomeCookCard(this.cardToCreate);
     }
 
@@ -49,12 +47,8 @@ export class CardCreationComponent implements OnInit {
     public addHomeCookCard(homeCookCard: HomeCookCard): void {
         this.serverService.addHomeCookCardRequest(homeCookCard).subscribe(response => {
             if (response.status === 200) {
-                homeCookCard._id = response.body
-                let validCardName: [boolean, string];
-                validCardName = this.eventService.createNewCard(this.cardToCreate);
-                if (!validCardName[0]) {
-                    console.log(validCardName[1]);
-                }
+                homeCookCard._id = response.body;
+                this.eventService.addNewCard(this.cardToCreate);
             }
         });
     }
