@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { EventService } from '../event.service';
 import { HomeCookEvent } from '../home-cook-event';
 import { CardElementService } from '../card-element.service';
@@ -33,12 +33,6 @@ export class EventComponent implements OnInit {
         this.event = this.eventService.event;
         //this.eventService.cardNumberToShow = this.eventService.cardNumberToShow;
         this.updateCardText();
-        setTimeout(() => {
-            if (this.eventService.savedCardElementList) {
-                this.cardElementService.restoreCardElementList();
-
-            }
-        }, 150);
     }
 
     public updateCardText() {

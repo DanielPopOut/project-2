@@ -4,6 +4,7 @@ import { HomeCookCard } from './home-cook-card';
 import { CardElement } from './card-element';
 import { ServerService } from './server.service';
 import { CardElementService } from './card-element.service';
+import { Voter } from './voter';
 
 @Injectable()
 export class EventService {
@@ -19,7 +20,7 @@ export class EventService {
         guests: ['Maxime', 'Amandine', 'Prunelle', 'Theo', 'Ash'],
         cards: [new HomeCookCard("0", "Entrée", 0), new HomeCookCard('1', "Plat", 1), new HomeCookCard('2', "Boissons", 2)]
     };
-    public testEventId = '5ac6232ff94294ecb3d63409';
+    public testEventId = '5acf7677ef98fc62f125636d';
     public cardElementToShowDetails: CardElement;
     public savedCardElementList: CardElement[];
     public innerWidth: number;
@@ -48,7 +49,7 @@ export class EventService {
 
     public getCardElements(eventId: string): void {
         this.serverService.getCardsElementWithEventIdRequest(eventId).subscribe(cards => {
-            this.cardElementService.cardElementList = cards.body;
+            this.cardElementService.setCardElementList(cards.body as CardElement[]);
         });
     }
 
@@ -109,6 +110,7 @@ export class EventService {
     public addNewCard(cardToCreate: HomeCookCard): void {
         this.event.cards = this.event.cards.slice();
         this.event.cards.push(cardToCreate);
+        this.setCardNumberToShow(this.event.cards.length -1);
     }
 
     public setCardDetails(cardElement: CardElement) {

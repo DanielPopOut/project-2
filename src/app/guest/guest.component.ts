@@ -3,6 +3,7 @@ import { EventService } from '../event.service';
 import { HomeCookEvent } from '../home-cook-event';
 import { Subscription } from 'rxjs/Subscription';
 import { UserService } from '../user.service';
+import { ServerService } from '../server.service';
 
 @Component({
     selector: 'app-guest',
@@ -18,7 +19,7 @@ export class GuestComponent implements OnInit {
     @ViewChild('buttonModal') buttonModal: ElementRef;
 
 
-    constructor(private eventService: EventService, private userService: UserService) {
+    constructor(private eventService: EventService, private userService: UserService, private serverService: ServerService) {
         this.userService.nonConnected$.subscribe(bool => {
             this.showConnexionModal();
         });
@@ -37,13 +38,26 @@ export class GuestComponent implements OnInit {
     public addNewGuest(newGuestName: string): void {
         console.log(newGuestName);
         let validNewName: [boolean, string];
-        validNewName = this.userService.addNewGuest(newGuestName);
-        if (validNewName[0]) {
-            this.userName = newGuestName;
-        } else {
-            console.log(validNewName[1]);
-        }
+        this.serverService.addHomeCookGuestRequest(this.eventService.event._id, newGuestName).subscribe(resp => {
+            console.log(resp);
+            this.userService.addNewGuest(newGuestName);
+        });
+        // validNewName = this.userService.addNewGuest(newGuestName);
+        // if (validNewName[0]) {
+        //     this.userName = newGuestName;
+        // } else {
+        //     console.log(validNewName[1]);
+        // }
     }
+
+    // public validGuestName(name: string): boolean {
+    //     if (!name.trim()) {
+    //         return false;
+    //     } else if (this.eventService.event.guests.indexOf(name.trim()) > -1 || this.eventService.event.host_name === name.trim()) {
+    //         return false;
+    //     }
+    //     return true;
+    // }
 
     public newGuestNameInputFocus(): void {
         setTimeout(() => {

@@ -5,6 +5,7 @@ import { EventService } from '../event.service';
 import { Router } from "@angular/router";
 import { UserService } from '../user.service';
 import { ServerService } from '../server.service';
+import { Voter } from '../voter';
 
 @Component({
     selector: 'app-card-element',
@@ -23,13 +24,12 @@ export class CardElementComponent implements OnInit {
 
     ngOnInit() {
         this.showInfosBoolean = true;
-        this.cardElement.voters = [];
         this.color = this.getRandomColor();
     }
 
     public checkUsernameValidAndVoteForCard(): void {
         if (this.userService.isUserNameValid()) {
-            this.cardElementService.voteForCardElement(this.cardElement._id, this.userService.username);
+            this.voteForCardElement();
         } else {
             this.userService.showConnexionFormEvent(true);
         }
@@ -47,7 +47,6 @@ export class CardElementComponent implements OnInit {
 
     public showCardDetails(): void {
         this.eventService.setCardDetails(this.cardElement);
-        this.cardElementService.saveCardElementList();
         this.router.navigate(['card-details']);
     }
 
@@ -58,8 +57,14 @@ export class CardElementComponent implements OnInit {
     }
 
     public voteForCardElement(): void {
-        this.serverService.voteCardElementRequest(this.cardElement, this.userService.username).subscribe(resp => {
-            this.cardElementService.mettreAJourCardElement(resp.body);
+        let userVoterData = this.cardElementService.cardElementContainsVoter(this.cardElement, this.userService.username);
+        userVoterData = userVoterData == null ? new Voter(this.userService.username, 1) : new Voter(this.userService.username, (userVoterData.nbVotes + 1) % 3);
+
+        this.serverService.voteCardElementRequest(this.cardElement, userVoterData).subscribe(response => {
+            // this.cardElementService.mettreAJourCardElement(resp.body);
+            if (response.status === 200) {
+                this.cardElementService.voteForCardElement(this.cardElement._id, this.userService.username);
+            }
         });
     }
 }

@@ -27,15 +27,9 @@ export class UserService {
         return true;
     }
 
-    public addNewGuest(newGuestName: string): [boolean, string] {
-        if (!this.validGuestName(newGuestName)[0]) {
-            return this.validGuestName(newGuestName);
-        }
-        //TODO envoie requete vers server
-
-        this.eventService.fakeEvent.guests.push(newGuestName);
+    public addNewGuest(newGuestName: string): void {
+        this.eventService.event.guests.push(newGuestName);
         this.username = newGuestName;
-        return [true, ''];
     }
 
     public validGuestName(name: string): [boolean, string] {

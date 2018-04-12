@@ -5,20 +5,12 @@ import { Voter } from './voter';
 @Injectable()
 export class CardElementService {
     public cardElementList: CardElement[];
-    public fakeCardElementList: CardElement[] = [
-        new CardElement("test0", "Pastèque", 2, "eafeafea", "0", "Remy"),
-        new CardElement("test1", "Banane", 2, "eafeafea", "2", "Remy"),
-        new CardElement("test2", "Poulet", 2, "eafeafea", "1", "Remy"),
-        new CardElement("test3", "Tofu", 2, "fnoqeaf", "1", "Remy"),
-        new CardElement("test4", "Ceci est un test avec une ligne plus grande que les autres pour voir si elle aura la meme taille", 2, "fnoqeaf", "2", "Remy")];
-
 
     constructor() {
         this.cardElementList = [];
     }
 
     public addCardElement(cardElementToCreate: CardElement): void {
-        // this.cardElementList.push(this.cardElementToCreate);
         this.cardElementList.push(cardElementToCreate);
         this.cardElementList = this.cardElementList.slice();
     }
@@ -37,7 +29,7 @@ export class CardElementService {
 
     public cardElementContainsVoter(cardElement: CardElement, voterName: string): Voter {
         for (let voter of cardElement.voters) {
-            if (voter.name === voterName) return voter;
+            if (voter.name === voterName) return voter as Voter;
         }
         return null;
     }
@@ -66,21 +58,17 @@ export class CardElementService {
         return totalVotersNumber;
     }
 
-
-    public saveCardElementList(): void {
-        // this.eventService.savedCardElementList = this.cardElementList.slice();
-        // for (let voter in this.cardElementList) {
-        //     this.eventService.savedCardElementList[voter] = Object.assign({}, this.cardElementList[voter]) as CardElement;
-        // }
-    }
-
-    public restoreCardElementList(): void {
-        // for (let voter in this.cardElementList) {
-        //     this.cardElementList[voter].voters = this.eventService.savedCardElementList[voter].voters.slice();
-        // }
-    }
-
     public mettreAJourCardElement(cardElementToUpdate: CardElement) {
         this.cardElementList[this.cardElementList.findIndex(obj => obj._id == cardElementToUpdate._id)] = cardElementToUpdate;
+    }
+
+    public setCardElementList(newCardElementList: CardElement[]) {
+        for (let cardElement of newCardElementList) {
+            for (let voter in cardElement.voters) {
+                let voterdata = cardElement.voters[voter]
+                cardElement.voters[voter] = new Voter(voterdata.name, voterdata.nbVotes);
+            }
+        }
+        this.cardElementList = newCardElementList;
     }
 }

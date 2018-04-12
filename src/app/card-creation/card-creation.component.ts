@@ -29,6 +29,7 @@ export class CardCreationComponent implements OnInit {
     }
 
     public showModal() : void {
+        this.cardToCreate = new HomeCookCard(undefined, "", 0, this.eventService.event._id);
         this.buttonHiddenCardModal.nativeElement.click();
         this.newCardNameInputFocus();
     }

@@ -22,4 +22,8 @@ export class CardElement {
         this.voters = [];
     }
 
+    public vote() {
+
+    }
+
 }

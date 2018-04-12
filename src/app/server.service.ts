@@ -5,6 +5,7 @@ import { HomeCookEvent } from './home-cook-event';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { HomeCookCard } from './home-cook-card';
 import { CardElement } from './card-element';
+import { Voter } from './voter';
 
 @Injectable()
 export class ServerService {
@@ -62,6 +63,17 @@ export class ServerService {
     public getAllHomeCookEventRequest(password: string): Observable<HttpResponse<HomeCookEvent>> {
         return this.http.post<HomeCookEvent>(this.homecookEventUrl + '/all',
             {password: password},
+            {
+                headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'my-auth-token'}),
+                observe: "response"
+            })
+            .pipe();
+    }
+
+    public addHomeCookGuestRequest(homeCookEventId: string, guestName: string): Observable<HttpResponse<string>> {
+        return this.http.post<string>(
+            this.homecookEventUrl + '/' + homeCookEventId + '/guest',
+            {guests: guestName},
             {
                 headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'my-auth-token'}),
                 observe: "response"
@@ -131,10 +143,10 @@ export class ServerService {
             .pipe();
     }
 
-    public voteCardElementRequest(card: CardElement, username: string): Observable<HttpResponse<CardElement>> {
+    public voteCardElementRequest(cardElement: CardElement, voterData: Voter): Observable<HttpResponse<CardElement>> {
         return this.http.post<CardElement>(
-            this.cardElementUrl + '/vote',
-            {filter: {_id: card._id}, username: username},
+            this.cardElementUrl + '/vote/'+ cardElement._id + '/' + voterData.name,
+            voterData,
             {
                 headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'my-auth-token'}),
                 observe: "response"

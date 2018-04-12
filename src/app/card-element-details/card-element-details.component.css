@@ -4,6 +4,11 @@
     flex-direction: column;
 }
 
+
 .table {
     margin-bottom: 0px;
+}
+
+.table td, .table th, .card-header {
+    text-align: center;
 }
