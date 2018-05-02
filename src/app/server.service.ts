@@ -161,6 +161,15 @@ export class ServerService {
     //***********************************************************
 
 
+    public getTest(): Observable<HttpResponse<string>> {
+        return this.http.get<string>("http://localhost:4200",
+            {
+                headers: new HttpHeaders({'Content-Type': 'text/html', 'Authorization': 'my-auth-token'}),
+                responseType: 'text'
+            })
+            .pipe();
+    }
+
     private handleError(error: HttpErrorResponse) {
         if (error.error instanceof ErrorEvent) {
             // A client-side or network error occurred. Handle it accordingly.

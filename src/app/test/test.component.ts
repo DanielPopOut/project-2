@@ -45,16 +45,16 @@ export class TestComponent implements OnInit {
     testEnvoiEvent() {
         // this.serverService.addHomeCookEventRequest(this.fakeEvent).subscribe(resp => console.log(resp));
         // this.serverService.getAllHomeCookEventRequest("popout").subscribe(resp => console.log(resp));
-        let fakeVoter = new Voter(this.voter.name, (this.voter.nbVotes + 1) % 3);
-        this.serverService.voteCardElementRequest(
-            new CardElement("5acf76b5ef98fc62f1256371", "Pastèque", 2, "eafeafea", "0", "Remy"), fakeVoter)
-            .subscribe(response => {
-                console.log(response);
-                if (response.status === 200) {
-                    this.voter.nbVotes = fakeVoter.nbVotes;
-                    console.log("nouveau nbVote : ", this.voter.nbVotes);
-                }
-            })
+        // let fakeVoter = new Voter(this.voter.name, (this.voter.nbVotes + 1) % 3);
+        // this.serverService.voteCardElementRequest(
+        //     new CardElement("5acf76b5ef98fc62f1256371", "Pastèque", 2, "eafeafea", "0", "Remy"), fakeVoter)
+        //     .subscribe(response => {
+        //         console.log(response);
+        //         if (response.status === 200) {
+        //             this.voter.nbVotes = fakeVoter.nbVotes;
+        //             console.log("nouveau nbVote : ", this.voter.nbVotes);
+        //         }
+        //     })
         //this.serverService.getCardsElementWithEventIdRequest("popout").subscribe(resp => console.log(resp));
     }
 }

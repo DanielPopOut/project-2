@@ -1,21 +1,58 @@
 
-.research-bar {
-  display: flex;
-  align-items: center;
-  height: 100%;
+.research-bar-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
     position: relative;
 }
 
 .new-event-button {
-  position: absolute;
-  bottom: 30px;
-  right: 15px;
-}
-
-.test-container {
-  display: flex; /* ??? */
+    position: absolute;
+    bottom: 30px;
+    right: 15px;
+    font-size: 150%;
+    font-weight: 800;
+    padding: 0px 15px 4px 15px;
 }
 
 ::placeholder { /* Most modern browsers support this now. */
-  color: #0275d8;
+    color: #0275d8;
+}
+
+.research-bar {
+    display: flex;
+    flex-direction: row;
+    font-size: 2rem;
+    width: 100%;
+}
+
+.research-button {
+    width: 100%;
+    flex: 0 1;
+    font-size: 100%;
+}
+
+.research-input {
+    flex: 1 1;
+    font-size: 100%;
+}
+
+@media only screen and (max-width: 576px) {
+    .research-bar {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .research-button {
+        width: 100%;
+    }
+
+    /*.new-event-button {*/
+        /*position: absolute;*/
+        /*bottom: 30px;*/
+        /*right: 15px;*/
+        /*font-size: 100%;*/
+        /*font-weight: 800;*/
+        /*padding: 0px 10px 3px 10px;*/
+    /*}*/
 }

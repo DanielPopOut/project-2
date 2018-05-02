@@ -42,7 +42,8 @@ export class CardElementDetailsComponent implements OnInit, OnDestroy {
 
     public getTotalVotersNumber(valeurVoulue: number) : number {
         let tableauNumber1 = this.cardElement.voters.map(x => x.nbVotes === valeurVoulue ? 1 : 0);
-        return tableauNumber1.reduce( (accumulator, currentValue) => accumulator + currentValue );
+        //return tableauNumber1.reduce( (accumulator, currentValue) => accumulator + currentValue );
+        return 1;
     }
 
     // public getTotalVotersNumber(): number {
