@@ -14,3 +14,51 @@ html, body {
 .display-none {
     display: none;
 }
+
+.big-centered-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    position: relative;
+}
+
+.new-event-form {
+    text-align: right;
+}
+
+.align-text-center {
+    text-align: center;
+}
+.align-text-right {
+    text-align: right;
+}
+
+.flex-1-1 {
+    flex: 1 1;
+}
+
+.flex-row {
+    display: flex;
+    align-items: center;
+}
+
+.display-flex-column-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.margin-right-5px {
+    margin-right: 5px;
+}
+.class-overflow-scroll {
+    overflow: scroll;
+}
+
+.color-primary {
+    color: #0275d8;
+}
+
+.color-secondary {
+    color: #d8001a;
+}

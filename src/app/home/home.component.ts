@@ -1,21 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { EventService } from '../event.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
-    private windowSize: number;
-  constructor(private router: Router) { }
+export class HomeComponent {
+    public eventCodeInput: string;
+    private eventId: string;
+    private hostname: string;
 
-  ngOnInit() {
-      this.windowSize = window.screen.width ;
-  }
+    constructor(private router: Router, private eventService: EventService) {
+    }
 
+    public newEvent(): void {
+        this.router.navigate(['newevent']);
+    }
 
-  newEvent(): void {
-    this.router.navigate(['newevent']);
-  }
+    public findEvent() {
+        if(this.eventCodeInput){
+            let urlSplited = this.eventCodeInput.split('/');
+            if(urlSplited.length > 1) {
+                this.eventId = urlSplited[0];
+                this.hostname = urlSplited[1];
+                this.eventService.requestEventFromServer(this.eventCodeInput);
+            }else {
+
+            }
+        }else {
+
+        }
+    }
+
 }

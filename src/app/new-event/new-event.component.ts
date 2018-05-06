@@ -41,7 +41,8 @@ export class NewEventComponent implements OnInit {
                 this.userService.username = homeCookEvent.host_name;
                 if (this.eventService.createNewEvent(this.eventToCreate)) {
                     console.log("event crée après submit ", this.eventService.event);
-                    this.router.navigate(['event']);
+                    this.eventService.emitNewHomeCookEvent();
+                    //this.router.navigate(['event', homeCookEvent._id,homeCookEvent.host_name]);
                 }
             }
         });

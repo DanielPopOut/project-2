@@ -1,63 +1,46 @@
-<div class="container">
-  <p>
-    new-event works!
-  </p>
-
-  <div class="container">
-    <h1>Hero Form</h1>
-    <form>
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" required>
-      </div>
-
-      <div class="form-group">
-        <label for="alterEgo">Alter Ego</label>
-        <input type="text" class="form-control" id="alterEgo">
-      </div>
-
-      <button type="submit" class="btn btn-success">Submit</button>
-
+<div class="container big-centered-container">
+    <form (ngSubmit)="onSubmit()" #eventForm="ngForm" class="entire-width align-text-center">
+        <div class="align-text-right">
+            <div class="form-group row">
+                <label for="inputHostName" class="col-sm-2 col-form-label">HostName</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputHostName" placeholder="HostName" required
+                           [(ngModel)]="eventToCreate.host_name" name="host_name" #host_name="ngModel">
+                    <div [hidden]="host_name.valid || host_name.pristine"
+                         class="alert alert-danger"></div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputName" class="col-sm-2 col-form-label">Event name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputName" placeholder="Event Name" required
+                           [(ngModel)]="eventToCreate.name" name="name">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputAdress" class="col-sm-2 col-form-label">Adress</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputAdress" placeholder="Adress" required
+                           [(ngModel)]="eventToCreate.place" name="place">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputDate" class="col-sm-2 col-form-label">Date Time</label>
+                <div class="col-sm-10">
+                    <input type="datetime-local" class="form-control" id="inputDate" placeholder="Date Time" required
+                           [(ngModel)]="eventToCreate.date" name="date">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputMail" class="col-sm-2 col-form-label">Mail</label>
+                <div class="col-sm-10">
+                    <input type="mail" class="form-control" id="inputMail" placeholder="Mail" required
+                           [(ngModel)]="eventToCreate.mail" name="mail">
+                </div>
+            </div>
+        </div>
+        <div class="submit-button-container">
+            <button type="submit" class="btn btn-primary" [disabled]="!eventForm.form.valid">Create New Event</button>
+        </div>
     </form>
-  </div>
-
-  <form (ngSubmit)="onSubmit()" #eventForm="ngForm">
-    <div class="form-group row">
-      <label for="inputHostName" class="col-sm-2 col-form-label">HostName</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="inputHostName" placeholder="HostName" required [(ngModel)]="eventToCreate.host_name" name="host_name" #host_name="ngModel">
-        <div [hidden]="host_name.valid || host_name.pristine"
-             class="alert alert-danger"></div>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="inputName" class="col-sm-2 col-form-label">Event name</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="inputName" placeholder="Event Name" required [(ngModel)]="eventToCreate.name" name="name">
-    </div>
-    </div>
-    <div class="form-group row">
-      <label for="inputAdress" class="col-sm-2 col-form-label">Adress</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="inputAdress" placeholder="Adress" required [(ngModel)]="eventToCreate.place" name="place">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="inputDate" class="col-sm-2 col-form-label">Date Time</label>
-      <div class="col-sm-10">
-        <input type="datetime-local" class="form-control" id="inputDate" placeholder="Date Time" required [(ngModel)]="eventToCreate.date" name="date">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="inputMail" class="col-sm-2 col-form-label">Mail</label>
-      <div class="col-sm-10">
-        <input type="mail" class="form-control" id="inputMail" placeholder="Mail" required [(ngModel)]="eventToCreate.mail" name="mail">
-      </div>
-    </div>
-    <div class="form-group row">
-      <div class="col-sm-10">
-        <button type="submit" class="btn btn-primary" [disabled]="!eventForm.form.valid">Sign in</button>
-      </div>
-    </div>
-  </form>
 </div>

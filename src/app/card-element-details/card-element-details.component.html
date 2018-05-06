@@ -6,25 +6,21 @@
         <!-- Table -->
         <table class="table table-striped table-hover">
             <thead class="thead-light">
-            <tr>
-                <th>Name</th>
-                <th>Votes</th>
-            </tr>
             </thead>
             <tbody>
             <tr *ngFor="let voter of cardElement.voters">
-                <td>{{voter.name}}</td>
+                <th>{{voter.name}}</th>
                 <td><span [ngSwitch]="voter.nbVotes">
                 <!--<span *ngSwitchCase="0">...</span>-->
-                <span *ngSwitchCase="1"><i class="far fa-check-circle fa-lg "></i></span>
-                <span *ngSwitchCase="2"><i class="fas fa-times-circle fa-lg "></i></span>
+                <span *ngSwitchCase="1"><i class="far fa-check-circle fa-lg color-primary"></i></span>
+                <span *ngSwitchCase="2"><i class="fas fa-times-circle fa-lg color-secondary"></i></span>
             </span></td>
             </tr>
             <tr>
                 <th>Total</th>
                 <th>
-                    {{getTotalVotersNumber(1)}} <i class="far fa-check-circle fa-lg "></i>
-                    {{getTotalVotersNumber(2)}} <i class="fas fa-times-circle fa-lg "></i>
+                    {{getTotalVotersNumber(1)}} <i class="far fa-check-circle fa-lg color-primary"></i>
+                    {{getTotalVotersNumber(2)}} <i class="fas fa-times-circle fa-lg color-secondary"></i>
                 </th>
             </tr>
             </tbody>

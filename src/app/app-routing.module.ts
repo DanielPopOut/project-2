@@ -8,17 +8,18 @@ import { CardElementDetailsComponent } from './card-element-details/card-element
 import { TestComponent } from './test/test.component';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'newevent', component: NewEventComponent},
-  {path: 'event', component: EventComponent},
-  {path: 'card', component: CardElementComponent},
-  {path: 'card-details', component: CardElementDetailsComponent},
-  {path: 'test', component: TestComponent}
+    {path: '', component: HomeComponent},
+    {path: 'newevent', component: NewEventComponent},
+    // {path: 'event', component: EventComponent},
+    {path: 'event/:id/:hostname', component: EventComponent},
+    {path: 'card', component: CardElementComponent},
+    {path: 'card-details', component: CardElementDetailsComponent},
+    {path: 'test', component: TestComponent}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule {
 }

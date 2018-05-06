@@ -1,10 +1,11 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { EventService } from '../event.service';
 import { HomeCookEvent } from '../home-cook-event';
 import { CardElementService } from '../card-element.service';
 import { HomeCookCard } from '../home-cook-card';
 import { UserService } from '../user.service';
 import { ModalsService } from '../modals.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-event',
@@ -23,12 +24,20 @@ export class EventComponent implements OnInit {
     private oldCardNumber: number;
 
     constructor(private eventService: EventService, private cardElementService: CardElementService,
-                private userService: UserService, private modalsService: ModalsService) {
+                private userService: UserService, private modalsService: ModalsService, private route: ActivatedRoute) {
         this.innerWidth = (window.screen.width);
         this.eventService.innerWidth = window.screen.width;
     }
 
     ngOnInit() {
+        if (!this.eventService.event) {
+            this.route.params.subscribe(params => {
+                console.log(params.id, params.hostname);
+                //this.username = params.username;
+                this.eventService.requestEventFromServer(params.id + '/' + params.hostname);
+            });
+        }
+
         this.newCardElementName = "";
         this.event = this.eventService.event;
         //this.eventService.cardNumberToShow = this.eventService.cardNumberToShow;

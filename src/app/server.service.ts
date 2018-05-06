@@ -43,8 +43,8 @@ export class ServerService {
             .pipe();
     }
 
-    public getHomeCookEventRequest(homeCookEventId: string): Observable<HttpResponse<HomeCookEvent>> {
-        return this.http.get<HomeCookEvent>(this.homecookEventUrl + '/' + homeCookEventId,
+    public getHomeCookEventRequest(homeCookEventIdAndHostName: string): Observable<HttpResponse<HomeCookEvent>> {
+        return this.http.get<HomeCookEvent>(this.homecookEventUrl + '/' + homeCookEventIdAndHostName,
             {
                 headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'my-auth-token'}),
                 observe: "response"
@@ -161,14 +161,14 @@ export class ServerService {
     //***********************************************************
 
 
-    public getTest(): Observable<HttpResponse<string>> {
+    /*public getTest(): Observable<HttpResponse<string>> {
         return this.http.get<string>("http://localhost:4200",
             {
                 headers: new HttpHeaders({'Content-Type': 'text/html', 'Authorization': 'my-auth-token'}),
                 responseType: 'text'
             })
             .pipe();
-    }
+    }*/
 
     private handleError(error: HttpErrorResponse) {
         if (error.error instanceof ErrorEvent) {

@@ -4,6 +4,7 @@ import { EventService } from '../event.service';
 import { HomeCookCard } from '../home-cook-card';
 import { UserService } from '../user.service';
 import { ModalsService } from '../modals.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-navbar',
@@ -13,7 +14,7 @@ import { ModalsService } from '../modals.service';
 export class NavbarComponent implements OnInit {
     public event: HomeCookEvent;
 
-    constructor(private eventService: EventService, private userService: UserService, private modalsService: ModalsService) {
+    constructor(private eventService: EventService, private userService: UserService, private modalsService: ModalsService, private router: Router) {
 
     }
 
@@ -66,5 +67,9 @@ export class NavbarComponent implements OnInit {
             return true;
         }
         return false;
+    }
+
+    public goBackToHome() {
+        this.router.navigate(['']);
     }
 }

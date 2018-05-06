@@ -2,14 +2,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 5px;
     border-bottom: 1px solid #eceeef;
     padding-bottom: 5px;
     margin-bottom: 8px;
 }
 
 .first-line-navbar {
-    display:flex;
+    display: flex;
     justify-content: space-between;
     color: white;
     width: 100%;
@@ -43,19 +43,9 @@
     margin-bottom: 5px;
 }
 
-.title_add_card_container, .card-name-div {
+.card-name-div {
     display: flex;
     flex-direction: row;
-}
-
-.title_add_card_container * {
-    margin-right: 5px;
-    font-size: 1.9rem;
-    font-weight: 800;
-}
-
-.card_container {
-    flex: 1;
 }
 
 .container {
@@ -67,6 +57,7 @@
 
 .card-container-div {
     margin-bottom: 5px;
+    max-height: 300px;
 }
 
 .app-container {
@@ -78,3 +69,13 @@
     margin: auto;
     font-size: 1.2rem;
 }
+
+@media only screen and (max-width: 576px) {
+    .card-container-div {
+        margin-bottom: 5px;
+        max-height: 1000px;
+    }
+}
+
+
+

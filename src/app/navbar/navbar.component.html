@@ -1,16 +1,38 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark">
     <div class="first-line-navbar">
-        <span class="navbar-brand">{{event.name}}</span>
-        <button
-            [class]=" userService.isUserNameValid()? ' btn btn-outline-light connexion-button' : ' btn btn-outline-primary connexion-button'"
-            (click)="userService.showConnexionFormEvent(true)">
-            <div *ngIf=" userService.isUserNameValid(); else elseBlock"><span class="padding-right">{{userService.username}}</span>
-                <i class="fas fa-sync"></i></div>
-            <ng-template #elseBlock>
-                <div>Not connected <i class="fas fa-user-plus fa-lg"></i></div>
-            </ng-template>
-        </button>
-        <div class="dropdown" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+        <div class="flex-row flex-1-1">
+            <div class="navbar-arrows margin-right-5px"
+                 (click)="goBackToHome()">
+                <i class="fas fa-angle-left"></i>
+            </div>
+            <span class="navbar-brand flex-1-1">{{event.name}}</span>
+        </div>
+
+        <div class="align-text-center flex-1-1">
+            <div class="event_infos_container"
+                 [style.display]="!eventService.isContainerWidthSmall() ? 'inherit' : 'none' ">
+                <div class="event_name_div">{{event.name}}</div>
+                <div class="event_date">{{event.date | date:'EEEE d MMMM yyyy HH:MM'}}</div>
+
+                <h5 class="event_place card-text">{{event.place}}</h5>
+                <h5 class="event_host">Chez {{event.host_name}}</h5>
+                <button [style.display]="'none'" data-toggle="modal" data-target="#newCardElementModal"
+                        #buttonHiddenCardElementModal></button>
+            </div>
+            <button
+                [class]=" userService.isUserNameValid()? ' btn btn-outline-light connexion-button' : ' btn btn-outline-primary connexion-button'"
+                (click)="userService.showConnexionFormEvent(true)">
+                <div *ngIf=" userService.isUserNameValid(); else elseBlock"><span class="padding-right">{{userService.username}}</span>
+                    <i class="fas fa-sync"></i></div>
+                <ng-template #elseBlock>
+                    <div>Not Connected<i class="fas fa-user-plus fa-lg"></i></div>
+                </ng-template>
+            </button>
+
+
+        </div>
+
+        <div class="dropdown flex-1-1 align-text-right" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
              aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-ellipsis-v"></i>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
@@ -31,15 +53,17 @@
     <div class="collapse navbar-collapse entire-width" id="navbarNavAltMarkup">
         <div class="navbar-nav entire-width"
              [style.display]="eventService.isContainerWidthSmall() ? 'inherit' : 'none'">
-            <div class="navbar-arrows" [style.display]="eventService.cardNumberToShow > 1 && eventService.event.cards.length > 3 ? 'flex' : 'none'"
+            <div class="navbar-arrows"
+                 [style.display]="eventService.cardNumberToShow > 1 && eventService.event.cards.length > 3 ? 'flex' : 'none'"
                  (click)="eventService.setCardNumberToShow(eventService.cardNumberToShow - 1)">
                 <i class="fas fa-angle-left"></i>
             </div>
-            <a *ngFor="let card of event.cards;" class="nav-item nav-link"
+            <a *ngFor="let card of event.cards;" class="nav-item nav-link flex-1-1"
                [style.display]="shouldNavBarCardBeVisible(card._id) ? 'inherit' : 'none'"
                [class.active]="eventService.cardIdToShow === card._id" (click)="setIdCardToShow(card)">
                 {{card.name | showNoName}}</a>
-            <div class="navbar-arrows" [style.display]="eventService.cardNumberToShow < eventService.event.cards.length - 2 && eventService.event.cards.length > 3 ? 'flex' : 'none'"
+            <div class="navbar-arrows"
+                 [style.display]="eventService.cardNumberToShow < eventService.event.cards.length - 2 && eventService.event.cards.length > 3 ? 'flex' : 'none'"
                  (click)="eventService.setCardNumberToShow(eventService.cardNumberToShow + 1)">
                 <i class="fas fa-lg fa-angle-right"></i>
             </div>

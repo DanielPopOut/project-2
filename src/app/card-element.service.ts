@@ -71,4 +71,6 @@ export class CardElementService {
         }
         this.cardElementList = newCardElementList;
     }
+
+
 }
