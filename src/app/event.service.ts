@@ -26,6 +26,8 @@ export class EventService {
     public cardNumberToShow: number;
     private eventFoundSubject = new Subject<boolean>();
     public eventFoundSubject$ = this.eventFoundSubject.asObservable();
+    private cardElementDeleted = new Subject<boolean>();
+    public cardElementDeleted$ = this.cardElementDeleted.asObservable();
 
     constructor(private serverService: ServerService, private cardElementService: CardElementService) {
         //
@@ -74,11 +76,23 @@ export class EventService {
     }
 
     public deleteCard(cardToDelete: HomeCookCard): void {
+        if (cardToDelete.type < 0) {
+            return;
+        }
         this.serverService.deleteHomeCookCardRequest(cardToDelete._id).subscribe(response => {
             console.log("carte " + cardToDelete.name, cardToDelete._id, "supprimée");
             // this.setNewEventCards(response.body);
             this.event.cards.splice(this.event.cards.findIndex(obj => obj._id == cardToDelete._id), 1);
             this.setCardNumberToShow((this.cardNumberToShow - 1 + this.event.cards.length) % this.event.cards.length);
+        })
+    }
+
+    public deleteCardElement(cardElementToDelete: CardElement): void {
+        this.serverService.deleteCardElementRequest(cardElementToDelete._id).subscribe(response => {
+            console.log("carte " + cardElementToDelete.title, cardElementToDelete._id, "supprimée");
+            // this.setNewEventCards(response.body);
+            this.cardElementService.cardElementList.splice(this.cardElementService.cardElementList.findIndex(obj => obj._id == cardElementToDelete._id), 1);
+            this.cardElementDeleted.next(true);
         })
     }
 

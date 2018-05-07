@@ -67,4 +67,12 @@ export class CardElementComponent implements OnInit {
             }
         });
     }
+
+    public getTotalVotersNumber(valeurVoulue: number): number {
+        if (this.cardElement.voters.length < 1) {
+            return 0;
+        }
+        let tableauNumber1 = this.cardElement.voters.map(x => (x.nbVotes === valeurVoulue ? 1 : 0));
+        return tableauNumber1.reduce((accumulator, currentValue) => accumulator + currentValue);
+    }
 }

@@ -1,11 +1,12 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark">
     <div class="first-line-navbar">
-        <div class="flex-row flex-1-1">
-            <div class="navbar-arrows margin-right-5px"
-                 (click)="goBackToHome()">
-                <i class="fas fa-angle-left"></i>
+        <div class="flex-1-1 flex-and-center">
+            <div [style.display]="eventService.isContainerWidthSmall() ? 'inherit' : 'none' ">
+                <!--<span class=" margin-right-5px" (click)="goBackToHome()">-->
+                    <!--<i class="fas fa-angle-left"></i>-->
+                <!--</span>-->
+                <div class="navbar-brand flex-1-1">{{event.name}}</div>
             </div>
-            <span class="navbar-brand flex-1-1">{{event.name}}</span>
         </div>
 
         <div class="align-text-center flex-1-1">
@@ -32,14 +33,18 @@
 
         </div>
 
-        <div class="dropdown flex-1-1 align-text-right" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-             aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-ellipsis-v"></i>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#" (click)="newCardClick()">New Card</a>
-                <a class="dropdown-item" href="#" (click)="newCardElementClick()"
-                   [style.display]="eventService.isContainerWidthSmall() ? 'inherit' : 'none'">New Card Element</a>
-                <a class="dropdown-item" href="#" (click)="deleteCardClick()">Delete Card</a>
+        <div class="flex-1-1 align-text-right flex-and-center">
+            <div class="flex-1-1"></div>
+            <div class="dropdown " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                 aria-haspopup="true" aria-expanded="false"
+                 [style.display]="eventService.isContainerWidthSmall() ? 'inherit' : 'none' ">
+                <i class="fas fa-ellipsis-v"></i>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#" (click)="newCardClick()">New Card</a>
+                    <a class="dropdown-item" href="#" (click)="newCardElementClick()"
+                       [style.display]="eventService.isContainerWidthSmall() ? 'inherit' : 'none'">New Card Element</a>
+                    <a class="dropdown-item" href="#" (click)="deleteCardClick()">Delete Card</a>
+                </div>
             </div>
         </div>
     </div>

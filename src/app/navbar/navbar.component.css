@@ -21,6 +21,10 @@
 .navbar-brand {
     font-weight: 500;
     font-size: 1.5rem;
+    overflow: hidden;
+    max-width: 100px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .dropdown-menu-right {
@@ -36,10 +40,6 @@
     color : white;
 }
 
-.navbar-arrows {
-    align-items: center;
-    display: flex;
-}
 
 .event_infos_container {
     display: flex;

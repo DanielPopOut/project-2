@@ -8,23 +8,21 @@
          (touchmove)="swipe($event, 'move')"
          (window:resize)="onResize($event)">
         <div class="row" [style.height]="eventService.isContainerWidthSmall() ? '100%' : 'initial' ">
-            <div class="event_infos_container"
-                 [style.display]="!eventService.isContainerWidthSmall() ? 'inherit' : 'none' ">
-                <div class="event_date">{{event.date | date:'medium'}}</div>
-                <div class="title_add_card_container" [style.display]="'flex'">
-                    <div class="event_name">{{event.name}}</div>
-                    <app-card-creation></app-card-creation>
-                </div>
-                <h5 class="event_place card-text">{{event.place}}</h5>
-                <h5 class="event_host">Chez {{event.host_name}}</h5>
-                <button [style.display]="'none'" data-toggle="modal" data-target="#newCardElementModal"
-                        #buttonHiddenCardElementModal></button>
-            </div>
-            <div *ngFor="let card of event.cards" class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 Newcard-container-div"
+            <div *ngFor="let card of event.cards" class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 card-container-div"
                  [style.display]="shouldCardBeHidden(card)">
-                <app-card [card]="card" [cardNumberToShow]="textCardNumber"
+                <app-card  [card]="card" [cardNumberToShow]="textCardNumber"
                           (onNewElementClick)="newCardElementClick($event)"></app-card>
             </div>
+        </div>
+
+
+    </div>
+
+    <div class="entire-screen without-click z-index-10">
+        <div class="container big-centered-container">
+            <span class="new-card-button with-click" (click)="createNewCard()">
+                <i class="fas fa-plus fa-lg"></i>
+            </span>
         </div>
     </div>
 

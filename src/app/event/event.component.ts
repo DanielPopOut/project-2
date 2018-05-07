@@ -121,4 +121,8 @@ export class EventComponent implements OnInit {
         this.innerWidth = (window.screen.width);
         this.eventService.innerWidth = window.screen.width;
     }
+
+    public createNewCard(): void {
+        this.modalsService.showNewCardModal();
+    }
 }

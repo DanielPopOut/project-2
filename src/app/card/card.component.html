@@ -1,16 +1,18 @@
-<div class="card bg-light  mb-3">
+<div class="card bg-light  mb-3" >
     <div class="card-header" [style.display]="!eventService.isContainerWidthSmall() ? 'inherit' : 'none'">{{card.name}}
         <!--({{cardNumberToShow}})-->
-        <div (click)="newElementButtonClick()" [style.display]="card.type < 0 ? 'none' : 'inherit'"><i class="fas fa-plus "></i></div>
+        <div class="card-actions-div"  [style.display]="card.type < 0 ? 'none' : 'inherit'">
+            <span (click)="deleteCardButtonClick()"><i class="fas fa-trash" ></i></span>
+            <span (click)="newElementButtonClick()"><i class="fas fa-plus " ></i> </span></div>
     </div>
     <ul class="list-group list-group-flush class-fill class-overflow-scroll">
-        <div *ngIf="card.type < 0; else elseBlock" class="class-fill" >
+        <div *ngIf="card.type < 0; else elseBlock" class="class-fill">
             <div class="align-text-center flex-1-1 class-fill display-flex-column-center">
-                    <div class="event_name_div">{{eventService.event.name}}</div>
-                    <div class="event_date">{{eventService.event.date | date:'EEEE d MMMM yyyy HH:MM'}}</div>
+                <div class="event_name_div">{{eventService.event.name}}</div>
+                <div class="event_date">{{eventService.event.date | date:'EEEE d MMMM yyyy HH:MM'}}</div>
 
-                    <h5 class="event_place card-text">{{eventService.event.place}}</h5>
-                    <h5 class="event_host">Chez {{eventService.event.host_name}}</h5>
+                <h5 class="event_place card-text">{{eventService.event.place}}</h5>
+                <h5 class="event_host">Chez {{eventService.event.host_name}}</h5>
             </div>
         </div>
         <ng-template #elseBlock>

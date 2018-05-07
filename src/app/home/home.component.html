@@ -1,10 +1,10 @@
 <div class="container research-bar-container">
     <div class="research-bar">
-        <input type="text" class="form-control research-input" placeholder="EventCode" aria-label="Recipient's username"
+        <input type="text" class="form-control research-input" placeholder="Event code" aria-label="Recipient's username"
                aria-describedby="basic-addon2" [(ngModel)]="eventCodeInput">
             <button class="btn btn-outline-secondary research-button" type="button" (click)="findEvent()">Find Event</button>
 
-        <button class="btn btn-primary new-event-button" (click)="newEvent()"> +</button>
+        <span class="btn-primary new-event-button" (click)="newEvent()"> <i class="fas fa-plus fa-lg"></i></span>
     </div>
 </div>
 

@@ -1,4 +1,4 @@
-<div class="card-element-container" [style.color]="color">
+<div class="card-element-container">
     <!--(mouseenter)="showInfos(false)" [style.border-color]="color"-->
     <!--(mouseleave)="showInfos(true)" -->
     <!--[style.color]="color">-->
@@ -6,10 +6,17 @@
     <div class="card-element-options-container " (click)="checkUsernameValidAndVoteForCard()">
         <!--<div class="card-element-options-container " [hidden]="showInfosBoolean" >-->
         <div class="card-element-option">
+
+            <div *ngIf="cardElement.voters.length > 0">
+                <div class="vote-data-div">
+                    {{getTotalVotersNumber(1)}} <span><i class="fas fa-poo fa-lg "></i></span> </div>
+                <div class="vote-data-div">
+                    {{getTotalVotersNumber(2)}} <span><i class="far fa-frown fa-lg "></i></span> </div>
+            </div>
         </div>
         <div class="card-element-option card-center">
             <div>
-                <div class="div-scroll">{{cardElement.title}}</div>
+                <div class="div-scroll" [style.color]="color">{{cardElement.title}}</div>
                 <div (click)="showCardDetails()">
                     <span>{{cardElement.voters.length}}</span> <i class="fas fa-users"></i>
                     <!--<span>{{cardElementService.getTotalVotersNumber(cardElement._id)}}</span>
@@ -21,8 +28,8 @@
         <div class="card-element-option">
             <span [ngSwitch]="getUserNumberVotes()">
                 <!--<span *ngSwitchCase="0">...</span>-->
-                <span *ngSwitchCase="1"><i class="far fa-check-circle fa-lg "></i></span>
-                <span *ngSwitchCase="2"><i class="fas fa-times-circle fa-lg "></i></span>
+                <span *ngSwitchCase="1"><i class="fas fa-poo fa-lg color-brown"></i></span>
+                <span *ngSwitchCase="2"><i class="far fa-frown fa-lg color-secondary"></i></span>
             </span>
         </div>
     </div>

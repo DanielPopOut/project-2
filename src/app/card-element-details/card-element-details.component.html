@@ -12,15 +12,15 @@
                 <th>{{voter.name}}</th>
                 <td><span [ngSwitch]="voter.nbVotes">
                 <!--<span *ngSwitchCase="0">...</span>-->
-                <span *ngSwitchCase="1"><i class="far fa-check-circle fa-lg color-primary"></i></span>
-                <span *ngSwitchCase="2"><i class="fas fa-times-circle fa-lg color-secondary"></i></span>
+                <span *ngSwitchCase="1"><i class="fas fa-poo fa-lg color-brown"></i></span>
+                <span *ngSwitchCase="2"><i class="fas fa-frown fa-lg color-secondary"></i></span>
             </span></td>
             </tr>
             <tr>
                 <th>Total</th>
                 <th>
-                    {{getTotalVotersNumber(1)}} <i class="far fa-check-circle fa-lg color-primary"></i>
-                    {{getTotalVotersNumber(2)}} <i class="fas fa-times-circle fa-lg color-secondary"></i>
+                    {{getTotalVotersNumber(1)}} <i class="fas fa-poo fa-lg color-brown"></i>
+                    {{getTotalVotersNumber(2)}} <i class="fas fa-frown fa-lg color-secondary"></i>
                 </th>
             </tr>
             </tbody>
@@ -28,6 +28,7 @@
     </div>
 
     <button class="btn btn-outline-primary" (click)="navigateToEvent()">Retour</button>
+    <button class="btn btn-danger" (click)="deleteCardElement()">Delete card</button>
 
 </div>
 

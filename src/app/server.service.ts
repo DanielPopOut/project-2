@@ -154,6 +154,13 @@ export class ServerService {
             .pipe();
     }
 
+    public deleteCardElementRequest(cardElementId: string): Observable<HttpResponse<CardElement>> {
+        return this.http.delete<CardElement>(this.cardElementUrl + '/' + cardElementId,
+            {
+                headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'my-auth-token'}),
+                observe: "response"
+            })
+    }
 
 
     //***********************************************************

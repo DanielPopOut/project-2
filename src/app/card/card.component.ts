@@ -24,4 +24,8 @@ export class CardComponent implements OnInit {
         this.onNewElementClick.emit(this.card);
     }
 
+    public deleteCardButtonClick() : void {
+        this.eventService.deleteCard(this.card);
+    }
+
 }

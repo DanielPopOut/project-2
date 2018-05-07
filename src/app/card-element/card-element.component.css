@@ -35,3 +35,12 @@
 .div-scroll {
     overflow: scroll;
 }
+
+.vote-data-div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.vote-data-div span {
+    margin-left: 5px;
+}

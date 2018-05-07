@@ -36,28 +36,23 @@ export class GuestComponent implements OnInit {
     }
 
     public addNewGuest(newGuestName: string): void {
-        console.log(newGuestName);
-        let validNewName: [boolean, string];
+        if (!this.validGuestName(newGuestName)) {
+            return;
+        }
         this.serverService.addHomeCookGuestRequest(this.eventService.event._id, newGuestName).subscribe(resp => {
             console.log(resp);
             this.userService.addNewGuest(newGuestName);
         });
-        // validNewName = this.userService.addNewGuest(newGuestName);
-        // if (validNewName[0]) {
-        //     this.userName = newGuestName;
-        // } else {
-        //     console.log(validNewName[1]);
-        // }
     }
 
-    // public validGuestName(name: string): boolean {
-    //     if (!name.trim()) {
-    //         return false;
-    //     } else if (this.eventService.event.guests.indexOf(name.trim()) > -1 || this.eventService.event.host_name === name.trim()) {
-    //         return false;
-    //     }
-    //     return true;
-    // }
+    public validGuestName(name: string): boolean {
+        if (!name.trim()) {
+            return false;
+        } else if (this.eventService.event.guests.indexOf(name.trim()) > -1 || this.eventService.event.host_name === name.trim()) {
+            return false;
+        }
+        return true;
+    }
 
     public newGuestNameInputFocus(): void {
         setTimeout(() => {
