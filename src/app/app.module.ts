@@ -24,6 +24,7 @@ import { ServerService } from './server.service';
 import { CardElementModalComponent } from './card-element-modal/card-element-modal.component';
 import { ModalsService } from './modals.service';
 import { ShowNoNamePipe } from './show-no-name.pipe';
+import { ModalComponent } from './modal/modal.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { ShowNoNamePipe } from './show-no-name.pipe';
         NavbarComponent,
         TestComponent,
         CardElementModalComponent,
-        ShowNoNamePipe
+        ShowNoNamePipe,
+        ModalComponent
     ],
     imports: [
         BrowserModule,

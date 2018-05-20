@@ -10,7 +10,7 @@
         <div class="row" [style.height]="eventService.isContainerWidthSmall() ? '100%' : 'initial' ">
             <div *ngFor="let card of event.cards" class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 card-container-div"
                  [style.display]="shouldCardBeHidden(card)">
-                <app-card  [card]="card" [cardNumberToShow]="textCardNumber"
+                <app-card [card]="card" [cardNumberToShow]="textCardNumber"
                           (onNewElementClick)="newCardElementClick($event)"></app-card>
             </div>
         </div>
@@ -18,7 +18,7 @@
 
     </div>
 
-    <div class="entire-screen without-click z-index-10">
+    <div class="entire-screen without-click z-index-10" [style.display]="!eventService.isContainerWidthSmall() ? 'inherit' : 'none' ">
         <div class="container big-centered-container">
             <span class="new-card-button with-click" (click)="createNewCard()">
                 <i class="fas fa-plus fa-lg"></i>

@@ -26,7 +26,7 @@
                 <div *ngIf=" userService.isUserNameValid(); else elseBlock"><span class="padding-right">{{userService.username}}</span>
                     <i class="fas fa-sync"></i></div>
                 <ng-template #elseBlock>
-                    <div>Not Connected<i class="fas fa-user-plus fa-lg"></i></div>
+                    <div>Connect <i class="fas fa-user-plus fa-lg"></i></div>
                 </ng-template>
             </button>
 
@@ -34,16 +34,15 @@
         </div>
 
         <div class="flex-1-1 align-text-right flex-and-center">
-            <div class="flex-1-1"></div>
-            <div class="dropdown " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+            <div class="dropdown entire-width" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                  aria-haspopup="true" aria-expanded="false"
-                 [style.display]="eventService.isContainerWidthSmall() ? 'inherit' : 'none' ">
+                 [style.display]="eventService.isContainerWidthSmall() ? 'inline' : 'none' ">
                 <i class="fas fa-ellipsis-v"></i>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#" (click)="newCardClick()">New Card</a>
+                    <a class="dropdown-item" href="#" (click)="newCardClick()">New card</a>
                     <a class="dropdown-item" href="#" (click)="newCardElementClick()"
-                       [style.display]="eventService.isContainerWidthSmall() ? 'inherit' : 'none'">New Card Element</a>
-                    <a class="dropdown-item" href="#" (click)="deleteCardClick()">Delete Card</a>
+                       [style.display]="eventService.isContainerWidthSmall() ? 'inherit' : 'none'">New choice</a>
+                    <a class="dropdown-item" href="#" (click)="deleteCardClick()">Delete card</a>
                 </div>
             </div>
         </div>
@@ -58,16 +57,16 @@
     <div class="collapse navbar-collapse entire-width" id="navbarNavAltMarkup">
         <div class="navbar-nav entire-width"
              [style.display]="eventService.isContainerWidthSmall() ? 'inherit' : 'none'">
-            <div class="navbar-arrows"
+            <div class="flex-and-center"
                  [style.display]="eventService.cardNumberToShow > 1 && eventService.event.cards.length > 3 ? 'flex' : 'none'"
                  (click)="eventService.setCardNumberToShow(eventService.cardNumberToShow - 1)">
-                <i class="fas fa-angle-left"></i>
+                <i class="fas fa-lg fa-angle-left"></i>
             </div>
             <a *ngFor="let card of event.cards;" class="nav-item nav-link flex-1-1"
                [style.display]="shouldNavBarCardBeVisible(card._id) ? 'inherit' : 'none'"
                [class.active]="eventService.cardIdToShow === card._id" (click)="setIdCardToShow(card)">
                 {{card.name | showNoName}}</a>
-            <div class="navbar-arrows"
+            <div class="flex-and-center"
                  [style.display]="eventService.cardNumberToShow < eventService.event.cards.length - 2 && eventService.event.cards.length > 3 ? 'flex' : 'none'"
                  (click)="eventService.setCardNumberToShow(eventService.cardNumberToShow + 1)">
                 <i class="fas fa-lg fa-angle-right"></i>

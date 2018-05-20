@@ -39,9 +39,12 @@ export class CardElementDetailsComponent implements OnInit {
             return 0;
         }
         let tableauNumber1 = this.cardElement.voters.map(x => (x.nbVotes === valeurVoulue ? 1 : 0));
-        return tableauNumber1.reduce((accumulator, currentValue) => accumulator + currentValue);
+        return tableauNumber1.reduce(this.getSum, 0);
     }
 
+    public getSum(total, num) {
+        return total + num;
+    }
     // public getTotalVotersNumber(): number {
     //     let totalVotersNumber = 0;
     //     for (let voter of this.cardElement.voters) {

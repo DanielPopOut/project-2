@@ -32,11 +32,6 @@
     font-size: 1.5rem;
 }
 
-.dropdown-menu-right {
-    left: inherit;
-    right: 0;
-}
-
 .btn-guest {
     margin-left: 3px;
     margin-right: 3px;
