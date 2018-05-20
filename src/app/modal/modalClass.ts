@@ -1,4 +1,4 @@
-export class ModalClass {
+export class ModalParams {
     public title: string;
     public bodyMessage: string;
     public inputType: string;

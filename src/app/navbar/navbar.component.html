@@ -12,11 +12,11 @@
         <div class="align-text-center flex-1-1">
             <div class="event_infos_container"
                  [style.display]="!eventService.isContainerWidthSmall() ? 'inherit' : 'none' ">
-                <div class="event_name_div">{{event.name}}</div>
-                <div class="event_date">{{event.date | date:'EEEE d MMMM yyyy HH:MM'}}</div>
+                <div class="event_name_div" (click)="eventService.openModalToChangeValue(eventService.event,'name',eventService.changeEventOnServer)">{{eventService.event.name}}</div>
+                <div class="event_date" (click)="eventService.openModalToChangeValue(eventService.event,'date',eventService.changeEventOnServer,'datetime-local')">{{eventService.event.date | date:'EEEE d MMMM yyyy HH:mm'}}</div>
 
-                <h5 class="event_place card-text">{{event.place}}</h5>
-                <h5 class="event_host">Chez {{event.host_name}}</h5>
+                <h5 class="event_place card-text" (click)="eventService.openModalToChangeValue(eventService.event,'place',eventService.changeEventOnServer)">{{eventService.event.place}}</h5>
+                <h5 class="event_host" >Chez {{eventService.event.host_name}}</h5>
                 <button [style.display]="'none'" data-toggle="modal" data-target="#newCardElementModal"
                         #buttonHiddenCardElementModal></button>
             </div>

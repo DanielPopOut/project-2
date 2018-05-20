@@ -37,7 +37,9 @@ export class EventComponent implements OnInit {
                 this.eventService.requestEventFromServer(params.id + '/' + params.hostname);
             });
         }
-
+        setTimeout(() => {
+                this.userService.retrieveUsername();
+            }, 500);
         this.newCardElementName = "";
         this.event = this.eventService.event;
         //this.eventService.cardNumberToShow = this.eventService.cardNumberToShow;

@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ModalService } from './modal.service';
-import { ModalClass } from './modalClass';
+import { ModalParams } from './modalClass';
+import { ServerService } from '../server.service';
+import { EventService } from '../event.service';
 
 @Component({
     selector: 'app-modal',
@@ -9,18 +11,20 @@ import { ModalClass } from './modalClass';
 })
 export class ModalComponent implements OnInit {
     public modalState: string;
-    public modalData: ModalClass;
-    public initialModalData: ModalClass;
+    public modalData: ModalParams;
+    public initialModalData: ModalParams;
 
     @ViewChild('modalContainer') modalContainer: ElementRef;
 
-    constructor(private modalService: ModalService) {
-        this.modalData =  new ModalClass();
+    constructor(private modalService: ModalService, private serverService: ServerService, private eventService: EventService) {
+        this.modalData =  new ModalParams();
         this.modalService.openModalSubject$.subscribe(modalData => {
             this.modalData = modalData;
             this.initialModalData = Object.assign({},modalData);
             this.showModal();
         });
+        this.modalState = 'hidden';
+
     }
 
     ngOnInit() {
@@ -35,7 +39,10 @@ export class ModalComponent implements OnInit {
     //     this.buttonCancelText = buttonCancelText;
     // }
 
-
+    public closeModalWithCancelButton() {
+        this.modalService.sendNewValue(null);
+        this.closeModal();
+    }
 
     public closeModal() {
         this.modalState = 'hidden';
@@ -46,7 +53,6 @@ export class ModalComponent implements OnInit {
     }
 
     public returnNewValue() {
-        console.log('newvalue');
         if (this.modalData.modalValue) {
             if (this.modalData.modalValue !== this.initialModalData.modalValue) {
                 this.modalService.sendNewValue(this.modalData.modalValue);
@@ -56,8 +62,9 @@ export class ModalComponent implements OnInit {
     }
 
     public fakeShowModal() {
-        let modalData = new ModalClass();
+        let modalData = new ModalParams();
         modalData.setModalData("Modifier", '', 'Banana');
         this.modalService.openModal(modalData);
     }
 }
+

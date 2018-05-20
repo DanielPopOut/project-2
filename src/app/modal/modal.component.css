@@ -1,3 +1,5 @@
+
+
 .modal-container {
     position: absolute;
     top: 0px;
@@ -8,20 +10,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: rgba(145, 145, 145, 0.5);
 }
 
 .modal-title {
-    font-size: 3vw;
+    font-size: 14px;
     font-weight: 700;
     margin-bottom: 0;
     line-height: 1.5;
     padding: 5px 3px 2px 5px;
     text-transform: capitalize;
-    border-bottom: black 1px solid;
+    border-bottom: 1px solid #e9ecef;
 }
 
 .modal-body {
-    font-size: 2.5vw;
+    font-size: 14px;
     display: flex;
     flex-direction: column;
     text-transform: capitalize;
@@ -29,7 +32,7 @@
 
 
 .modal-div {
-    background-color: #b9b9b9;
+    background-color: #ffffff;
 }
 
 .modal-footer {
@@ -52,6 +55,14 @@
 @media only screen and (max-width: 576px) {
     .modal-div {
         width: 100%;
+    }
+
+    .modal-title {
+        font-size: 15px;
+    }
+
+    .modal-body {
+        font-size: 14px;
     }
 }
 

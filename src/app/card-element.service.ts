@@ -60,6 +60,7 @@ export class CardElementService {
 
     public mettreAJourCardElement(cardElementToUpdate: CardElement) {
         this.cardElementList[this.cardElementList.findIndex(obj => obj._id == cardElementToUpdate._id)] = cardElementToUpdate;
+        this.cardElementList = this.cardElementList.slice();
     }
 
     public setCardElementList(newCardElementList: CardElement[]) {
@@ -70,6 +71,10 @@ export class CardElementService {
             }
         }
         this.cardElementList = newCardElementList;
+    }
+
+    public refreshCardElementist(){
+
     }
 
 

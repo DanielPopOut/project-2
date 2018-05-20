@@ -31,7 +31,7 @@ export class GuestComponent implements OnInit {
 
     public chooseName(guest: string): void {
         this.userName = guest;
-        this.userService.username = guest;
+        this.userService.setUsername(guest);
         console.log("new user " + this.userName);
     }
 

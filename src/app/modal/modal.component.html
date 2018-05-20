@@ -8,10 +8,8 @@
             <input type="{{modalData.inputType}}" [(ngModel)]="modalData.modalValue">
         </div>
         <div class="modal-footer">
-            <button class="modal-button" (click)="closeModal()">{{modalData.buttonCancelText}}</button>
+            <button class="modal-button" (click)="closeModalWithCancelButton()">{{modalData.buttonCancelText}}</button>
             <button class="modal-button" (click)="returnNewValue()" [disabled]="modalData.modalValue.trim().length < 1">{{modalData.buttonValidText}}</button>
         </div>
     </div>
 </div>
-
-<button class="modal-button" (click)="fakeShowModal()">Test Modal</button>

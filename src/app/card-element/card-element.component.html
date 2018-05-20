@@ -12,7 +12,8 @@
         </div>
         <div class="card-element-option card-center">
             <div>
-                <div class="div-scroll" [style.color]="color">{{cardElement.title}}</div>
+                <div class="div-scroll" [style.color]="color"
+                (click)="eventService.openModalToChangeValue(cardElement, 'title', eventService.changeCardElementOnServer)">{{cardElement.title}}</div>
                 <!--<div >
                     <span>{{cardElement.voters.length}}</span> <i class="fas fa-users"></i>
                 </div>-->

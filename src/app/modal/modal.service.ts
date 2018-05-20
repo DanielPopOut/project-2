@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-import { Modal, ModalClass } from './modalClass';
+import { ModalParams } from './modalClass';
 
 @Injectable()
 export class ModalService {
     private newValueSubject = new Subject<string>();
     public newValueSubject$ = this.newValueSubject.asObservable();
-    private openModalSubject = new Subject<ModalClass>();
+    private openModalSubject = new Subject<ModalParams>();
     public openModalSubject$ = this.openModalSubject.asObservable();
 
     constructor() {
@@ -16,7 +16,9 @@ export class ModalService {
         this.newValueSubject.next(newValue);
     }
 
-    public openModal(modalData: ModalClass): void {
+    public openModal(modalData: ModalParams): void {
         this.openModalSubject.next(modalData);
     }
+
+
 }

@@ -53,6 +53,16 @@ export class ServerService {
             .pipe();
     }
 
+    public replaceHomeCookEventRequest(homeCookEvent: HomeCookEvent): Observable<HttpResponse<HomeCookEvent>> {
+        return this.http.put<HomeCookEvent>(this.homecookEventUrl + '/' + homeCookEvent._id,
+            homeCookEvent,
+            {
+                headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'my-auth-token'}),
+                observe: "response"
+            })
+            .pipe();
+    }
+
     public deleteHomeCookEventRequest(homeCookEventId: string): Observable<HttpResponse<HomeCookEvent>> {
         return this.http.delete<HomeCookEvent>(this.homecookEventUrl + '/' + homeCookEventId,
             {
@@ -109,6 +119,16 @@ export class ServerService {
             .pipe();
     }
 
+    public replaceHomeCookCardRequest(homeCookCard: HomeCookCard): Observable<HttpResponse<HomeCookCard>> {
+        return this.http.put<HomeCookCard>(this.homecookCardUrl + '/' + homeCookCard._id,
+            homeCookCard,
+            {
+                headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'my-auth-token'}),
+                observe: "response"
+            })
+            .pipe();
+    }
+
     public deleteHomeCookCardRequest(homeCookEventId: string): Observable<HttpResponse<HomeCookCard>> {
         return this.http.delete<HomeCookCard>(this.homecookCardUrl + '/' + homeCookEventId,
             {
@@ -144,9 +164,19 @@ export class ServerService {
             .pipe();
     }
 
+    public replaceCardElementRequest(cardElement: CardElement): Observable<HttpResponse<CardElement>> {
+        return this.http.put<CardElement>(this.cardElementUrl + '/' + cardElement._id,
+            cardElement,
+            {
+                headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'my-auth-token'}),
+                observe: "response"
+            })
+            .pipe();
+    }
+
     public voteCardElementRequest(cardElement: CardElement, voterData: Voter): Observable<HttpResponse<CardElement>> {
         return this.http.post<CardElement>(
-            this.cardElementUrl + '/vote/'+ cardElement._id + '/' + voterData.name,
+            this.cardElementUrl + '/vote/' + cardElement._id + '/' + voterData.name,
             voterData,
             {
                 headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'my-auth-token'}),

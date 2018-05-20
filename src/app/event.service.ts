@@ -5,6 +5,8 @@ import { CardElement } from './card-element';
 import { ServerService } from './server.service';
 import { CardElementService } from './card-element.service';
 import { Subject } from "rxjs/Subject";
+import { ModalService } from './modal/modal.service';
+import { ModalParams } from './modal/modalClass';
 
 @Injectable()
 export class EventService {
@@ -24,12 +26,13 @@ export class EventService {
     public innerWidth: number;
     public cardIdToShow: string;
     public cardNumberToShow: number;
+    public username: string;
     private eventFoundSubject = new Subject<boolean>();
     public eventFoundSubject$ = this.eventFoundSubject.asObservable();
     private cardElementDeleted = new Subject<boolean>();
     public cardElementDeleted$ = this.cardElementDeleted.asObservable();
 
-    constructor(private serverService: ServerService, private cardElementService: CardElementService) {
+    constructor(private serverService: ServerService, private cardElementService: CardElementService, private modalService: ModalService) {
         //
         // if (!this.testEventResearch) {
         //     this.requestEventFromServer();
@@ -160,5 +163,61 @@ export class EventService {
         } else {
             return this.event.cards[this.cardNumberToShow];
         }
+    }
+
+    public openModalToChangeValue(object: any, key: string, callback: any, dataInputType: string = 'text') {
+        if (this.username === this.event.host_name) {
+            let modalSubscription = this.modalService.newValueSubject$.subscribe(value => {
+                if (value) {
+                    let objectChanged = Object.assign({}, object);
+                    objectChanged[key] = value;
+                    callback(objectChanged, this);
+
+                    // this.changeObjectValue(this.event, key, value, this.changeEventOnServer);
+                }
+                modalSubscription.unsubscribe();
+            });
+            let modalParams = new ModalParams();
+            modalParams.setModalData('Modifer ' + key, '', object[key], dataInputType);
+            this.modalService.openModal(modalParams);
+        }
+    }
+
+    public changeObjectValue(object: any, key: string, value: string, callback: any): void {
+        let objectChanged = Object.assign({}, object);
+        objectChanged[key] = value;
+        callback(objectChanged, this);
+    }
+
+    public changeEventOnServer(newObject: any, self) {
+        self.serverService.replaceHomeCookEventRequest(newObject).subscribe(response => {
+            if (response.status === 200 || response.status === 304) {
+                self.event = newObject;
+            } else {
+                console.log("erreur");
+            }
+        })
+    }
+
+    public changeCardOnServer(newObject: any, self) {
+        self.serverService.replaceHomeCookCardRequest(newObject).subscribe(response => {
+            if (response.status === 200 || response.status === 304) {
+                // console.log("alalala");
+                let cardToChange = self.event.cards.findIndex(card => card._id === newObject._id);
+                self.event.cards[cardToChange] = newObject;
+            } else {
+                console.log("erreur");
+            }
+        })
+    }
+
+    public changeCardElementOnServer(newObject: any, self) {
+        self.serverService.replaceCardElementRequest(newObject).subscribe(response => {
+            if (response.status === 200 || response.status === 304) {
+                self.cardElementService.mettreAJourCardElement(newObject);
+            } else {
+                console.log("erreur ");
+            }
+        })
     }
 }
