@@ -25,6 +25,7 @@ import { CardElementModalComponent } from './card-element-modal/card-element-mod
 import { ModalsService } from './modals.service';
 import { ShowNoNamePipe } from './show-no-name.pipe';
 import { ModalComponent } from './modal/modal.component';
+import { ModalService } from './modal/modal.service';
 
 
 @NgModule({
@@ -51,7 +52,7 @@ import { ModalComponent } from './modal/modal.component';
         AppRoutingModule,
         HttpClientModule
     ],
-    providers: [EventService, CardElementService, UserService, ServerService, ModalsService],
+    providers: [EventService, CardElementService, UserService, ServerService, ModalsService, ModalService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
