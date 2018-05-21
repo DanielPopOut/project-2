@@ -1,19 +1,23 @@
 <div class="card-element-container">
 
-    <div class="card-element-options-container " >
+    <div class="card-element-options-container ">
         <div class="card-element-option">
 
             <div *ngIf="cardElement.voters.length > 0" (click)="showCardDetails()">
                 <div class="vote-data-div">
-                    {{getTotalVotersNumber(1)}} <span><i class="fas fa-poo fa-lg "></i></span> </div>
+                    {{getTotalVotersNumber(1)}} <span><i class="fas fa-poo fa-lg "></i></span></div>
                 <div class="vote-data-div">
-                    {{getTotalVotersNumber(2)}} <span><i class="far fa-frown fa-lg "></i></span> </div>
+                    {{getTotalVotersNumber(2)}} <span><i class="far fa-frown fa-lg "></i></span></div>
             </div>
         </div>
-        <div class="card-element-option card-center">
+        <div class="card-element-option card-center"
+             appLongPress
+             (onSmallPress)="checkUsernameValidAndVoteForCard()"
+             (onLongPress)="eventService.openModalToChangeValue(cardElement, 'title', eventService.changeCardElementOnServer)">
             <div>
-                <div class="div-scroll" [style.color]="color"
-                (click)="eventService.openModalToChangeValue(cardElement, 'title', eventService.changeCardElementOnServer)">{{cardElement.title}}</div>
+                <div class="div-scroll" [style.color]="color">{{cardElement.title}}</div>
+                <!--appLongPress (onLongPress)="eventService.openModalToChangeValue(cardElement, 'title', eventService.changeCardElementOnServer)"-->
+
                 <!--<div >
                     <span>{{cardElement.voters.length}}</span> <i class="fas fa-users"></i>
                 </div>-->

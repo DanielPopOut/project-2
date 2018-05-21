@@ -8,6 +8,10 @@
             <thead class="thead-light">
             </thead>
             <tbody>
+            <tr>
+                <th><i class="fas fa-frown fa-lg color-secondary"></i></th>
+                <th><i class="fas fa-poo fa-lg color-brown"></i></th>
+            </tr>
             <tr *ngFor="let voter of cardElement.voters">
                 <th>{{voter.name}}</th>
                 <td><span [ngSwitch]="voter.nbVotes">
@@ -27,8 +31,12 @@
         </table>
     </div>
 
-    <button class="btn btn-outline-primary" (click)="navigateToEvent()">Retour</button>
-    <button class="btn btn-danger" (click)="deleteCardElement()">Delete card</button>
+    <div class="button-container">
+        <button class="btn btn-outline-primary flex-1-1" (click)="navigateToEvent()">Retour</button>
+        <button class="btn btn-danger flex-1-1" (click)="deleteCardElement()"><i class="fas fa-lg fa-trash"></i>
+            Delete card</button>
+    </div>
+
 
 </div>
 

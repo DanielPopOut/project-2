@@ -12,10 +12,12 @@
         <div class="align-text-center flex-1-1">
             <div class="event_infos_container"
                  [style.display]="!eventService.isContainerWidthSmall() ? 'inherit' : 'none' ">
-                <div class="event_name_div" (click)="eventService.openModalToChangeValue(eventService.event,'name',eventService.changeEventOnServer)">{{eventService.event.name}}</div>
-                <div class="event_date" (click)="eventService.openModalToChangeValue(eventService.event,'date',eventService.changeEventOnServer,'datetime-local')">{{eventService.event.date | date:'EEEE d MMMM yyyy HH:mm'}}</div>
-
-                <h5 class="event_place card-text" (click)="eventService.openModalToChangeValue(eventService.event,'place',eventService.changeEventOnServer)">{{eventService.event.place}}</h5>
+                <div class="event_name_div"  appLongPress
+                     (onLongPress)="eventService.openModalToChangeValue(eventService.event,'name',eventService.changeEventOnServer)">{{eventService.event.name}}</div>
+                <div class="event_date"  appLongPress
+                     (onLongPress)="eventService.openModalToChangeValue(eventService.event,'date',eventService.changeEventOnServer,'datetime-local')">{{eventService.event.date | date:'EEEE d MMMM yyyy HH:mm'}}</div>
+                <h5 class="event_place card-text"  appLongPress
+                    (onLongPress)="eventService.openModalToChangeValue(eventService.event,'place',eventService.changeEventOnServer)">{{eventService.event.place}}</h5>
                 <h5 class="event_host" >Chez {{eventService.event.host_name}}</h5>
                 <button [style.display]="'none'" data-toggle="modal" data-target="#newCardElementModal"
                         #buttonHiddenCardElementModal></button>
@@ -64,7 +66,10 @@
             </div>
             <a *ngFor="let card of event.cards;" class="nav-item nav-link flex-1-1"
                [style.display]="shouldNavBarCardBeVisible(card._id) ? 'inherit' : 'none'"
-               [class.active]="eventService.cardIdToShow === card._id" (click)="setIdCardToShow(card)">
+               [class.active]="eventService.cardIdToShow === card._id"
+               appLongPress
+               (onSmallPress)="setIdCardToShow(card)"
+               (onLongPress)="eventService.openModalToChangeValue(card, 'name', eventService.changeCardOnServer)">
                 {{card.name | showNoName}}</a>
             <div class="flex-and-center"
                  [style.display]="eventService.cardNumberToShow < eventService.event.cards.length - 2 && eventService.event.cards.length > 3 ? 'flex' : 'none'"

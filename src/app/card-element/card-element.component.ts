@@ -79,4 +79,8 @@ export class CardElementComponent implements OnInit {
     public getSum(total, num) {
         return total + num;
     }
+
+    public test(){
+        console.log("yayaya");
+    }
 }

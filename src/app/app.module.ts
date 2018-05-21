@@ -26,6 +26,7 @@ import { ModalsService } from './modals.service';
 import { ShowNoNamePipe } from './show-no-name.pipe';
 import { ModalComponent } from './modal/modal.component';
 import { ModalService } from './modal/modal.service';
+import { LongPressDirective } from './long-press.directive';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { ModalService } from './modal/modal.service';
         TestComponent,
         CardElementModalComponent,
         ShowNoNamePipe,
-        ModalComponent
+        ModalComponent,
+        LongPressDirective
     ],
     imports: [
         BrowserModule,

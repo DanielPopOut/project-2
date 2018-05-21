@@ -12,3 +12,13 @@
 .table td, .table th, .card-header {
     text-align: center;
 }
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+
+.button-container button {
+    margin:5px;
+}

@@ -6,7 +6,7 @@
         "ng": "ng",
         "start": "ng serve",
         "build": "ng build",
-        "dev": "ng serve --host 192.168.0.171 --port 4200",
+        "dev": "ng serve --host 192.168.1.44 --port 4200",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e"

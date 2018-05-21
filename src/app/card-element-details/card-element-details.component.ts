@@ -45,13 +45,6 @@ export class CardElementDetailsComponent implements OnInit {
     public getSum(total, num) {
         return total + num;
     }
-    // public getTotalVotersNumber(): number {
-    //     let totalVotersNumber = 0;
-    //     for (let voter of this.cardElement.voters) {
-    //         totalVotersNumber += voter.nbVotes;
-    //     }
-    //     return totalVotersNumber;
-    // }
 
     public deleteCardElement() {
         this.eventService.deleteCardElement(this.cardElement);
