@@ -14,12 +14,11 @@
 }
 
 .modal-title {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
     margin-bottom: 0;
     line-height: 1.5;
-    padding: 5px 3px 2px 5px;
-    text-transform: capitalize;
+    padding: 1rem;
     border-bottom: 1px solid #e9ecef;
 }
 
@@ -27,9 +26,7 @@
     font-size: 14px;
     display: flex;
     flex-direction: column;
-    text-transform: capitalize;
 }
-
 
 .modal-div {
     background-color: #ffffff;
@@ -85,4 +82,9 @@
 
 .hidden {
     display: none;
+}
+
+.choice-div {
+    border-bottom: 1px solid #e9ecef;
+    padding: 0.5rem
 }

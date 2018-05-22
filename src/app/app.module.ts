@@ -23,7 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ServerService } from './server.service';
 import { CardElementModalComponent } from './card-element-modal/card-element-modal.component';
 import { ModalsService } from './modals.service';
-import { ShowNoNamePipe } from './show-no-name.pipe';
+import { ShowNoNamePipe } from './pipeDir/show-no-name.pipe';
 import { ModalComponent } from './modal/modal.component';
 import { ModalService } from './modal/modal.service';
 import { LongPressDirective } from './long-press.directive';

@@ -1,15 +1,20 @@
-<div class=" modal-container fade" ngClass="{{modalState}}" (keydown.enter)="returnNewValue()" #modalContainer>
-    <div class="modal-div">
-        <div class="modal-title">
+<div class=" modal-container fade" ngClass="{{modalState}}" (keydown.enter)="returnNewValue()" (click)="closeModalWithCancelButton()" #modalContainer>
+    <div class="modal-div" (click)="$event.stopPropagation()">
+        <div *ngIf="modalData.title" class="modal-title">
             {{modalData.title}}
         </div>
-        <div class="modal-body">
+        <div class="modal-body" [style.display]="modalData.modalType !== 1 && !modalData.bodyMessage ? 'none' : initial">
             {{modalData.bodyMessage}}
-            <input type="{{modalData.inputType}}" [(ngModel)]="modalData.modalValue">
+            <input *ngIf="modalData.inputType" type="{{modalData.inputType}}" [(ngModel)]="modalData.modalValue">
+            <div *ngFor="let choice of modalData.arrayChoices" class="choice-div" (click)='returnNewValue(choice)'>
+                {{choice}}
+            </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer" [style.display]="modalData.modalType !== 2 ? 'none' : initial">
             <button class="modal-button" (click)="closeModalWithCancelButton()">{{modalData.buttonCancelText}}</button>
-            <button class="modal-button" (click)="returnNewValue()" [disabled]="modalData.modalValue.trim().length < 1">{{modalData.buttonValidText}}</button>
+            <button class="modal-button" (click)="returnNewValue()" >{{modalData.buttonValidText}}</button>
         </div>
     </div>
 </div>
+
+<div (click)="fakeShowModal()">Test</div>

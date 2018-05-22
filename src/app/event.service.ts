@@ -178,7 +178,7 @@ export class EventService {
                 modalSubscription.unsubscribe();
             });
             let modalParams = new ModalParams();
-            modalParams.setModalData('Modifer ' + key, '', object[key], dataInputType);
+            modalParams.setModalIput('Modifer ' + key, '', object[key], dataInputType);
             this.modalService.openModal(modalParams);
         }
     }

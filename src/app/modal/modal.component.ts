@@ -17,27 +17,17 @@ export class ModalComponent implements OnInit {
     @ViewChild('modalContainer') modalContainer: ElementRef;
 
     constructor(private modalService: ModalService, private serverService: ServerService, private eventService: EventService) {
-        this.modalData =  new ModalParams();
+        this.modalData = new ModalParams();
         this.modalService.openModalSubject$.subscribe(modalData => {
             this.modalData = modalData;
-            this.initialModalData = Object.assign({},modalData);
+            this.initialModalData = Object.assign({}, modalData);
             this.showModal();
         });
-        this.modalState = 'hidden';
-
+        this.closeModal();
     }
 
     ngOnInit() {
     }
-
-    // public setModal(title: string, bodyMessage: string, inputType: string, modalValue: string, buttonValidText: string, buttonCancelText: string) {
-    //     this.title = title;
-    //     this.bodyMessage = bodyMessage;
-    //     this.inputType = inputType;
-    //     this.modalValue = modalValue;
-    //     this.buttonValidText = buttonValidText;
-    //     this.buttonCancelText = buttonCancelText;
-    // }
 
     public closeModalWithCancelButton() {
         this.modalService.sendNewValue(null);
@@ -52,18 +42,39 @@ export class ModalComponent implements OnInit {
         this.modalState = 'show';
     }
 
-    public returnNewValue() {
-        if (this.modalData.modalValue) {
-            if (this.modalData.modalValue !== this.initialModalData.modalValue) {
-                this.modalService.sendNewValue(this.modalData.modalValue);
-            }
-            this.closeModal();
+    public sendValueAndCloseModal(valueToSend : string | boolean){
+        this.modalService.sendNewValue(valueToSend);
+        this.closeModal();
+    }
+
+    public returnNewValue(valueToReturn: string) {
+        console.log('valeur retournée', valueToReturn);
+        switch (this.modalData.modalType) {
+            case ModalParams.QUESTION_MODAL :
+                this.sendValueAndCloseModal(true);
+                break;
+            case ModalParams.ONE_CHOICE_MODAL :
+                this.sendValueAndCloseModal(valueToReturn);
+                break;
+            case ModalParams.INPUT_ENTRY_MODAL :
+                if (this.modalData.modalValue !== this.initialModalData.modalValue) {
+                    this.sendValueAndCloseModal(this.modalData.modalValue);
+                } else {
+                    this.sendValueAndCloseModal(null);
+                }
+                break;
         }
     }
 
-    public fakeShowModal() {
+    returnValue(valueToReturn) {
+
+    }
+
+    fakeShowModal() {
         let modalData = new ModalParams();
-        modalData.setModalData("Modifier", '', 'Banana');
+        // modalData.setModalIput("Modifier", '', 'Banana');
+        // modalData.setQuestion("Veux tu vraiment supprimer cette carte ?", 'Attention ce sera irréversible');
+        modalData.setOneChoice("Que veux tu ? ", ['Banane', 'Avocat', 'Lait']);
         this.modalService.openModal(modalData);
     }
 }

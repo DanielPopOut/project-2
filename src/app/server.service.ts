@@ -9,9 +9,9 @@ import { Voter } from './voter';
 
 @Injectable()
 export class ServerService {
-    // private baseUrl = 'http://192.168.1.44:3000/api/';
+    private baseUrl = 'http://192.168.1.44:3000/api/';
     // private baseUrl = 'http://localhost:3000/api/';
-    private baseUrl = 'https://easypoo.herokuapp.com/api/';
+    // private baseUrl = 'https://easypoo.herokuapp.com/api/';
     private homecookEventUrl = this.baseUrl + 'homecookEvent';
     private homecookCardUrl = this.baseUrl + 'homecookCard';
     private cardElementUrl = this.baseUrl + 'cardElement';

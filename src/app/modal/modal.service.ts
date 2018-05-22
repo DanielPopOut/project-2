@@ -4,7 +4,7 @@ import { ModalParams } from './modalClass';
 
 @Injectable()
 export class ModalService {
-    private newValueSubject = new Subject<string>();
+    private newValueSubject = new Subject<string | boolean>();
     public newValueSubject$ = this.newValueSubject.asObservable();
     private openModalSubject = new Subject<ModalParams>();
     public openModalSubject$ = this.openModalSubject.asObservable();
@@ -12,7 +12,7 @@ export class ModalService {
     constructor() {
     }
 
-    public sendNewValue(newValue: string): void {
+    public sendNewValue(newValue: string | boolean): void {
         this.newValueSubject.next(newValue);
     }
 
