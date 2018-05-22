@@ -36,16 +36,9 @@
         </div>
 
         <div class="flex-1-1 align-text-right flex-and-center">
-            <div class="dropdown entire-width" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                 aria-haspopup="true" aria-expanded="false"
+            <div class=" entire-width" (click)="optionsMenuClick()"
                  [style.display]="eventService.isContainerWidthSmall() ? 'inline' : 'none' ">
                 <i class="fas fa-ellipsis-v"></i>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#" (click)="newCardClick()">New card</a>
-                    <a class="dropdown-item" href="#" (click)="newCardElementClick()"
-                       [style.display]="eventService.isContainerWidthSmall() ? 'inherit' : 'none'">New choice</a>
-                    <a class="dropdown-item" href="#" (click)="deleteCardClick()">Delete card</a>
-                </div>
             </div>
         </div>
     </div>
@@ -65,7 +58,7 @@
                 <i class="fas fa-lg fa-angle-left"></i>
             </div>
             <a *ngFor="let card of event.cards;" class="nav-item nav-link flex-1-1"
-               [style.display]="shouldNavBarCardBeVisible(card._id) ? 'inherit' : 'none'"
+               [style.display]="shouldNavBarCardBeVisible(card._id) ? '' : 'none'"
                [class.active]="eventService.cardIdToShow === card._id"
                appLongPress
                (onSmallPress)="setIdCardToShow(card)"

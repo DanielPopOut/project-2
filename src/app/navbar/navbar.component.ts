@@ -5,6 +5,8 @@ import { HomeCookCard } from '../home-cook-card';
 import { UserService } from '../user.service';
 import { ModalsService } from '../modals.service';
 import { Router } from '@angular/router';
+import { ModalParams } from '../modal/modalClass';
+import { ModalService } from '../modal/modal.service';
 
 @Component({
     selector: 'app-navbar',
@@ -14,7 +16,7 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
     public event: HomeCookEvent;
 
-    constructor(private eventService: EventService, private userService: UserService, private modalsService: ModalsService, private router: Router) {
+    constructor(private eventService: EventService, private userService: UserService, private modalService: ModalService, private modalsService: ModalsService, private router: Router) {
 
     }
 
@@ -44,7 +46,8 @@ export class NavbarComponent implements OnInit {
     }
 
     public deleteCardClick() {
-        this.eventService.deleteCard(this.eventService.getActiveCard());
+        // this.eventService.deleteCard(this.eventService.getActiveCard());
+        this.modalsService.openModalToDeleteCard(this.eventService.getActiveCard());
     }
 
     public shouldNavBarCardBeVisible(card_id: string): boolean {
@@ -71,5 +74,31 @@ export class NavbarComponent implements OnInit {
 
     public goBackToHome() {
         this.router.navigate(['']);
+    }
+
+    public optionsMenuClick() {
+
+        let modalData = new ModalParams();
+        modalData.setOneChoice("Action ", ['New card', 'New choice', 'Delete card']);
+        this.modalService.listenToNewValueAndOpenModal(this, modalData, (actionChosen) => {
+            this.executeActionChosen(actionChosen)
+        });
+    }
+
+    public executeActionChosen(actionChosen: string) {
+        switch (actionChosen) {
+            case 'New card':
+                this.newCardClick();
+                break;
+
+            case 'New choice':
+                this.newCardElementClick();
+                break;
+
+            case 'Delete card':
+                this.deleteCardClick();
+                break;
+
+        }
     }
 }

@@ -13,8 +13,11 @@ export class ModalComponent implements OnInit {
     public modalState: string;
     public modalData: ModalParams;
     public initialModalData: ModalParams;
+    public modalOpacity: number = 0;
 
     @ViewChild('modalContainer') modalContainer: ElementRef;
+    @ViewChild('newDataInput') newDataInput: ElementRef;
+
 
     constructor(private modalService: ModalService, private serverService: ServerService, private eventService: EventService) {
         this.modalData = new ModalParams();
@@ -29,26 +32,28 @@ export class ModalComponent implements OnInit {
     ngOnInit() {
     }
 
-    public closeModalWithCancelButton() {
-        this.modalService.sendNewValue(null);
-        this.closeModal();
-    }
-
     public closeModal() {
         this.modalState = 'hidden';
+        this.modalOpacity = 0;
     }
 
     public showModal() {
-        this.modalState = 'show';
+        this.modalState = '';
+        if (this.modalData.modalType === ModalParams.INPUT_ENTRY_MODAL) {
+            this.newDataInputFocus();
+        }
+        setTimeout(()=> {
+            this.modalOpacity = 1;
+        }, 50);
     }
 
-    public sendValueAndCloseModal(valueToSend : string | boolean){
+    public sendValueAndCloseModal(valueToSend: string | boolean) {
         this.modalService.sendNewValue(valueToSend);
         this.closeModal();
     }
 
     public returnNewValue(valueToReturn: string) {
-        console.log('valeur retournée', valueToReturn);
+
         switch (this.modalData.modalType) {
             case ModalParams.QUESTION_MODAL :
                 this.sendValueAndCloseModal(true);
@@ -66,11 +71,46 @@ export class ModalComponent implements OnInit {
         }
     }
 
-    returnValue(valueToReturn) {
 
+    public modalBodyDisplay(): string {
+        if (this.modalData.modalType === ModalParams.QUESTION_MODAL && !this.modalData.bodyMessage) {
+            return 'none';
+        } else {
+            return '';
+        }
+    }
+
+    public modalFooterDisplay(): string {
+        if (this.modalData.modalType === ModalParams.ONE_CHOICE_MODAL) {
+            return 'none';
+        } else {
+            return '';
+        }
+    }
+
+    public newDataInputFocus(): void {
+        setTimeout(() => {
+            this.newDataInput.nativeElement.focus();
+        }, 400)
     }
 
     fakeShowModal() {
+        let modalData = new ModalParams();
+        modalData.setModalIput("Modifier", '', 'Banana');
+        // modalData.setQuestion("Veux tu vraiment supprimer cette carte ?", 'Attention ce sera irréversible');
+        // modalData.setOneChoice("Que veux tu ? ", ['Banane', 'Avocat', 'Lait']);
+        this.modalService.openModal(modalData);
+    }
+
+    fakeShowModal2() {
+        let modalData = new ModalParams();
+        // modalData.setModalIput("Modifier", '', 'Banana');
+        modalData.setQuestion("Veux tu vraiment supprimer cette carte ?");
+        // modalData.setOneChoice("Que veux tu ? ", ['Banane', 'Avocat', 'Lait']);
+        this.modalService.openModal(modalData);
+    }
+
+    fakeShowModal3() {
         let modalData = new ModalParams();
         // modalData.setModalIput("Modifier", '', 'Banana');
         // modalData.setQuestion("Veux tu vraiment supprimer cette carte ?", 'Attention ce sera irréversible');

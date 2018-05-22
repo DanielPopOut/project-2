@@ -1,7 +1,7 @@
 <div class="card bg-light  mb-3" >
-    <div class="card-header" [style.display]="!eventService.isContainerWidthSmall() ? 'inherit' : 'none'"
-    appLongPress
-         (onLongPress)="eventService.openModalToChangeValue(card, 'name', eventService.changeCardOnServer )">{{card.name}}
+    <div class="card-header" [style.display]="!eventService.isContainerWidthSmall() ? 'inherit' : 'none'">
+        <div appLongPress
+             (onLongPress)="eventService.openModalToChangeValue(card, 'name', eventService.changeCardOnServer )">{{card.name}}</div>
         <!--({{cardNumberToShow}})-->
         <div class="card-actions-div"  [style.display]="card.type < 0 ? 'none' : 'inherit'">
             <span (click)="deleteCardButtonClick()"><i class="fas fa-trash" ></i></span>

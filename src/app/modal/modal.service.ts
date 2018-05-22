@@ -20,5 +20,15 @@ export class ModalService {
         this.openModalSubject.next(modalData);
     }
 
-
+    public listenToNewValueAndOpenModal(component: any, modalData: ModalParams, callback: any) {
+        setTimeout(() => {
+            let modalSubscription = this.newValueSubject$.subscribe(value => {
+                if (value) {
+                    callback(value);
+                }
+                modalSubscription.unsubscribe();
+            });
+            this.openModal(modalData);
+        }, 50);
+    }
 }

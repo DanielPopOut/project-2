@@ -1,9 +1,9 @@
 <div class="card-element-container">
 
     <div class="card-element-options-container ">
-        <div class="card-element-option">
+        <div class="card-element-option" (click)="showCardDetails()">
 
-            <div *ngIf="cardElement.voters.length > 0" (click)="showCardDetails()">
+            <div *ngIf="cardElement.voters.length > 0" >
                 <div class="vote-data-div">
                     {{getTotalVotersNumber(1)}} <span><i class="fas fa-poo fa-lg "></i></span></div>
                 <div class="vote-data-div">

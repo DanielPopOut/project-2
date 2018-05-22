@@ -11,7 +11,6 @@ import { FormsModule } from '@angular/forms';
 import { EventService } from './event.service';
 import { EventComponent } from './event/event.component';
 import { GuestComponent } from './guest/guest.component';
-import { CardCreationComponent } from './card-creation/card-creation.component';
 import { CardComponent } from './card/card.component';
 import { CardElementService } from './card-element.service';
 import { CardElementListFilterPipe } from './card-element-list-filter.pipe';
@@ -21,7 +20,6 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { TestComponent } from './test/test.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ServerService } from './server.service';
-import { CardElementModalComponent } from './card-element-modal/card-element-modal.component';
 import { ModalsService } from './modals.service';
 import { ShowNoNamePipe } from './pipeDir/show-no-name.pipe';
 import { ModalComponent } from './modal/modal.component';
@@ -37,13 +35,11 @@ import { LongPressDirective } from './long-press.directive';
         CardElementComponent,
         EventComponent,
         GuestComponent,
-        CardCreationComponent,
         CardComponent,
         CardElementListFilterPipe,
         CardElementDetailsComponent,
         NavbarComponent,
         TestComponent,
-        CardElementModalComponent,
         ShowNoNamePipe,
         ModalComponent,
         LongPressDirective

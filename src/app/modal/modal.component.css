@@ -28,6 +28,11 @@
     flex-direction: column;
 }
 
+.modal-body input {
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
+
 .modal-div {
     background-color: #ffffff;
 }

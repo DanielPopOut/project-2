@@ -1,8 +1,6 @@
 <div class="app-container" [style.height]="eventService.isContainerWidthSmall() ? '100%' : 'initial' ">
     <app-navbar></app-navbar>
     <app-guest></app-guest>
-    <app-card-creation></app-card-creation>
-    <app-card-element-modal></app-card-element-modal>
 
     <div class="container card-container " (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')"
          (touchmove)="swipe($event, 'move')"
