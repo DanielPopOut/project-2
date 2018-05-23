@@ -25,6 +25,7 @@ import { ShowNoNamePipe } from './pipeDir/show-no-name.pipe';
 import { ModalComponent } from './modal/modal.component';
 import { ModalService } from './modal/modal.service';
 import { LongPressDirective } from './long-press.directive';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { LongPressDirective } from './long-press.directive';
         TestComponent,
         ShowNoNamePipe,
         ModalComponent,
-        LongPressDirective
+        LongPressDirective,
+        PageNotFoundComponent
     ],
     imports: [
         BrowserModule,

@@ -1,5 +1,5 @@
 <div class=" modal-container fade" [style.opacity]="modalOpacity"
-     ngClass="{{modalState}}" (keydown.enter)="returnNewValue()" (click)="sendValueAndCloseModal(null)" #modalContainer>
+     ngClass="{{modalState}}" (click)="sendValueAndCloseModal(null)" #modalContainer>
     <div class="modal-div "
          (click)="$event.stopPropagation()">
         <div *ngIf="modalData.title" class="modal-title">
@@ -18,7 +18,3 @@
         </div>
     </div>
 </div>
-
-<div (click)="fakeShowModal()">Test</div>
-<div (click)="fakeShowModal2()">Test</div>
-<div (click)="fakeShowModal3()">Test</div>

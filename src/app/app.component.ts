@@ -26,11 +26,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.routerUrl = this.router.url;
-        setTimeout(() => {
-            console.log(this.router.url);
-        }, 300);
-        console.log(window.location.href);
-
     }
 
     ngOnDestroy() {
@@ -44,7 +39,9 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     public eventNotFound(): void {
-        console.log("event non trouvé");
+        this.router.navigate(['error']);
+
+        // console.log("event non trouvé");
     }
 
 }

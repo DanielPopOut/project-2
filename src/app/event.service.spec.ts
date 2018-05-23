@@ -18,12 +18,12 @@ describe('EventService', () => {
   });
 
   it('should create new event', () => {
-    //service.createNewEvent(new HomeCookEvent());
-    expect(service.createNewEvent(new HomeCookEvent())).toBe(true);
+    //service.setEvent(new HomeCookEvent());
+    expect(service.setEvent(new HomeCookEvent())).toBe(true);
   });
 
   it('should return event with _id 12345678910', () => {
-    service.createNewEvent(new HomeCookEvent());
+    service.setEvent(new HomeCookEvent());
     expect(service.event._id).toContain("12345678910");
   });
 });

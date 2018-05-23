@@ -122,12 +122,8 @@ export class EventService {
         }
     }
 
-    public createNewEvent(homeCookEvent: HomeCookEvent): boolean {
-        //TODO envoi requete vers server
-
-        //Version test
+    public setEvent(homeCookEvent: HomeCookEvent): boolean {
         this.event = homeCookEvent;
-        // this.event['id'] = "12345678910";
         return true
     }
 
@@ -167,21 +163,14 @@ export class EventService {
 
     public openModalToChangeValue(object: any, key: string, callback: any, dataInputType: string = 'text') {
         if (this.username === this.event.host_name) {
-            let modalSubscription = this.modalService.newValueSubject$.subscribe(value => {
-                if (value) {
-                    let objectChanged = Object.assign({}, object);
-                    objectChanged[key] = value;
-                    callback(objectChanged, this);
-
-                    // this.changeObjectValue(this.event, key, value, this.changeEventOnServer);
-                }
-                modalSubscription.unsubscribe();
-            });
             let modalParams = new ModalParams();
             modalParams.setModalIput('Modifer ' + key, '', object[key], dataInputType);
-            this.modalService.openModal(modalParams);
+            this.modalService.listenToNewValueAndOpenModal(this, modalParams, (value) => {
+                this.changeObjectValue(object, key, value, callback);
+            });
         }
     }
+
 
     public changeObjectValue(object: any, key: string, value: string, callback: any): void {
         let objectChanged = Object.assign({}, object);
@@ -189,35 +178,74 @@ export class EventService {
         callback(objectChanged, this);
     }
 
-    public changeEventOnServer(newObject: any, self) {
-        self.serverService.replaceHomeCookEventRequest(newObject).subscribe(response => {
-            if (response.status === 200 || response.status === 304) {
-                self.event = newObject;
-            } else {
-                console.log("erreur");
-            }
-        })
+    // public changeEventOnServer(newObject: any, self) {
+    //     self.serverService.replaceHomeCookEventRequest(newObject).subscribe(response => {
+    //         if (response.status === 200 || response.status === 304) {
+    //             self.event = newObject;
+    //         } else {
+    //             console.log("erreur");
+    //         }
+    //     })
+    // }
+
+    public changeEventOnServer(object: object, key: string, inputType : string = 'text') {
+        this.openModalToChangeValue(object, key, (newObject) => {
+            this.serverService.replaceHomeCookEventRequest(newObject).subscribe(response => {
+                if (response.status === 200 || response.status === 304) {
+                    this.event = newObject;
+                } else {
+                    console.log("erreur");
+                }
+            })
+        }, inputType);
     }
 
-    public changeCardOnServer(newObject: any, self) {
-        self.serverService.replaceHomeCookCardRequest(newObject).subscribe(response => {
-            if (response.status === 200 || response.status === 304) {
-                // console.log("alalala");
-                let cardToChange = self.event.cards.findIndex(card => card._id === newObject._id);
-                self.event.cards[cardToChange] = newObject;
-            } else {
-                console.log("erreur");
-            }
-        })
+    public changeCardOnServer(object: any, key: string, inputType : string = 'text'): void {
+        this.openModalToChangeValue(object, key, (newCard) => {
+            this.serverService.replaceHomeCookCardRequest(newCard).subscribe(response => {
+                if (response.status === 200 || response.status === 304) {
+                    // console.log("alalala");
+                    let cardToChange = this.event.cards.findIndex(card => card._id === newCard._id);
+                    this.event.cards[cardToChange] = newCard;
+                } else {
+                    console.log("erreur");
+                }
+            })
+        }, inputType)
     }
 
-    public changeCardElementOnServer(newObject: any, self) {
-        self.serverService.replaceCardElementRequest(newObject).subscribe(response => {
-            if (response.status === 200 || response.status === 304) {
-                self.cardElementService.mettreAJourCardElement(newObject);
-            } else {
-                console.log("erreur ");
-            }
-        })
+    public changeCardElementOnServer(object: any, key: string, inputType : string = 'text') {
+        this.openModalToChangeValue(object, key, (newCardElement) => {
+            this.serverService.replaceCardElementRequest(newCardElement).subscribe(response => {
+                if (response.status === 200 || response.status === 304) {
+                    this.cardElementService.mettreAJourCardElement(newCardElement);
+                } else {
+                    console.log("erreur ");
+                }
+            })
+        }, inputType)
     }
+
+
+
+    // public changeCardOnServer(newObject: any, self) {
+    //     self.serverService.replaceHomeCookCardRequest(newObject).subscribe(response => {
+    //         if (response.status === 200 || response.status === 304) {
+    //             let cardToChange = self.event.cards.findIndex(card => card._id === newObject._id);
+    //             self.event.cards[cardToChange] = newObject;
+    //         } else {
+    //             console.log("erreur");
+    //         }
+    //     })
+    // }
+
+    // public changeCardElementOnServer(newObject: any, self) {
+    //     self.serverService.replaceCardElementRequest(newObject).subscribe(response => {
+    //         if (response.status === 200 || response.status === 304) {
+    //             self.cardElementService.mettreAJourCardElement(newObject);
+    //         } else {
+    //             console.log("erreur ");
+    //         }
+    //     })
+    // }
 }

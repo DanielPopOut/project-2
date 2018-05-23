@@ -13,7 +13,7 @@
         <div class="card-element-option card-center"
              appLongPress
              (onSmallPress)="checkUsernameValidAndVoteForCard()"
-             (onLongPress)="eventService.openModalToChangeValue(cardElement, 'title', eventService.changeCardElementOnServer)">
+             (onLongPress)="eventService.changeCardElementOnServer(cardElement, 'title')">
             <div>
                 <div class="div-scroll" [style.color]="color">{{cardElement.title}}</div>
                 <!--appLongPress (onLongPress)="eventService.openModalToChangeValue(cardElement, 'title', eventService.changeCardElementOnServer)"-->

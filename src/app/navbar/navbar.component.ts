@@ -15,6 +15,11 @@ import { ModalService } from '../modal/modal.service';
 })
 export class NavbarComponent implements OnInit {
     public event: HomeCookEvent;
+    public executionFunctionsArray = {
+        'New card': () => {this.newCardClick()},
+        'New choice': () => {this.newCardElementClick()},
+        'Delete card': () => {this.deleteCardClick()}
+    };
 
     constructor(private eventService: EventService, private userService: UserService, private modalService: ModalService, private modalsService: ModalsService, private router: Router) {
 
@@ -35,7 +40,6 @@ export class NavbarComponent implements OnInit {
         this.eventService.setCardNumberToShow(0);
         return
     }
-
 
     public newCardClick() {
         this.modalsService.showNewCardModal();
@@ -86,19 +90,22 @@ export class NavbarComponent implements OnInit {
     }
 
     public executeActionChosen(actionChosen: string) {
-        switch (actionChosen) {
-            case 'New card':
-                this.newCardClick();
-                break;
+        // switch (actionChosen) {
+        //     case 'New card':
+        //         this.newCardClick();
+        //         break;
+        //
+        //     case 'New choice':
+        //         this.newCardElementClick();
+        //         break;
+        //
+        //     case 'Delete card':
+        //         this.deleteCardClick();
+        //         break;
+        //
+        // }
+        this.executionFunctionsArray[actionChosen]();
+        // console.log(actionChosen, this.executionFunctionsArray[actionChosen]);
 
-            case 'New choice':
-                this.newCardElementClick();
-                break;
-
-            case 'Delete card':
-                this.deleteCardClick();
-                break;
-
-        }
     }
 }

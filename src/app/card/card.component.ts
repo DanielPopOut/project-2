@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HomeCookCard } from '../home-cook-card';
 import { CardElementService } from '../card-element.service';
 import { EventService } from '../event.service';
+import { ModalParams } from '../modal/modalClass';
+import { ModalService } from '../modal/modal.service';
 
 @Component({
     selector: 'app-card',
@@ -10,22 +12,32 @@ import { EventService } from '../event.service';
 })
 export class CardComponent implements OnInit {
 
+    @Output() onNewElementClick = new EventEmitter<HomeCookCard>();
     @Input() private card: HomeCookCard;
     @Input() private cardNumberToShow: string;
-    @Output() onNewElementClick = new EventEmitter<HomeCookCard>();
 
-    constructor(private cardElementService: CardElementService, private eventService: EventService) {
+    constructor(private cardElementService: CardElementService, private eventService: EventService, private modalService: ModalService) {
     }
 
     ngOnInit() {
     }
 
-    public newElementButtonClick() : void {
+    public newElementButtonClick(): void {
         this.onNewElementClick.emit(this.card);
     }
 
-    public deleteCardButtonClick() : void {
-        this.eventService.deleteCard(this.card);
+    public deleteCardButtonClick(): void {
+        this.openModalToDeleteCard(this.card);
     }
+
+    public openModalToDeleteCard(cardToDelete: HomeCookCard): void {
+        let modalData = new ModalParams();
+        modalData.setQuestion("Voulez vous vraiment supprimer cette carte ?", 'Attention, cela est irréversible', 'Oui');
+        this.modalService.listenToNewValueAndOpenModal(this, modalData, (valueReturned) => {
+            if (valueReturned) {
+                this.eventService.deleteCard(cardToDelete);
+            }
+        });
+    };
 
 }

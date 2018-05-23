@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ModalService } from './modal.service';
 import { ModalParams } from './modalClass';
 import { ServerService } from '../server.service';
@@ -15,8 +15,18 @@ export class ModalComponent implements OnInit {
     public initialModalData: ModalParams;
     public modalOpacity: number = 0;
 
-    @ViewChild('modalContainer') modalContainer: ElementRef;
+    // @ViewChild('modalContainer') modalContainer: ElementRef;
     @ViewChild('newDataInput') newDataInput: ElementRef;
+
+    @HostListener('document:keydown', ['$event'])
+    handleKeyboardEvent(event: KeyboardEvent) {
+        let x = event.keyCode;
+        if (x === 27) { //Escape
+            this.sendValueAndCloseModal(null);
+        } else if (x=== 13) {
+            this.returnNewValue();
+        }
+    }
 
 
     constructor(private modalService: ModalService, private serverService: ServerService, private eventService: EventService) {
@@ -52,7 +62,7 @@ export class ModalComponent implements OnInit {
         this.closeModal();
     }
 
-    public returnNewValue(valueToReturn: string) {
+    public returnNewValue(valueToReturn: string = null) {
 
         switch (this.modalData.modalType) {
             case ModalParams.QUESTION_MODAL :
@@ -94,28 +104,5 @@ export class ModalComponent implements OnInit {
         }, 400)
     }
 
-    fakeShowModal() {
-        let modalData = new ModalParams();
-        modalData.setModalIput("Modifier", '', 'Banana');
-        // modalData.setQuestion("Veux tu vraiment supprimer cette carte ?", 'Attention ce sera irréversible');
-        // modalData.setOneChoice("Que veux tu ? ", ['Banane', 'Avocat', 'Lait']);
-        this.modalService.openModal(modalData);
-    }
-
-    fakeShowModal2() {
-        let modalData = new ModalParams();
-        // modalData.setModalIput("Modifier", '', 'Banana');
-        modalData.setQuestion("Veux tu vraiment supprimer cette carte ?");
-        // modalData.setOneChoice("Que veux tu ? ", ['Banane', 'Avocat', 'Lait']);
-        this.modalService.openModal(modalData);
-    }
-
-    fakeShowModal3() {
-        let modalData = new ModalParams();
-        // modalData.setModalIput("Modifier", '', 'Banana');
-        // modalData.setQuestion("Veux tu vraiment supprimer cette carte ?", 'Attention ce sera irréversible');
-        modalData.setOneChoice("Que veux tu ? ", ['Banane', 'Avocat', 'Lait']);
-        this.modalService.openModal(modalData);
-    }
 }
 

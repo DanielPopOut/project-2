@@ -22,7 +22,6 @@ export class UserService {
 
     public retrieveUsername() {
         let nameFound = localStorage.getItem(this.eventService.event._id);
-        console.log(nameFound, this.eventService.event._id);
         if(nameFound){
             this.setUsername(nameFound);
         }else {

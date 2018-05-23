@@ -14,7 +14,8 @@ export class GuestComponent implements OnInit {
 
     public event: HomeCookEvent;
     public userName: string;
-    private subscription: Subscription;
+    public inputNewGuestVisible: boolean;
+    public newGuestNameTyped: string;
     @ViewChild('newGuestName') newGuestNameInput: ElementRef;
     @ViewChild('buttonModal') buttonModal: ElementRef;
 
@@ -27,21 +28,32 @@ export class GuestComponent implements OnInit {
 
     ngOnInit() {
         this.event = this.eventService.event;
+        this.inputNewGuestVisible = false;
     }
 
     public chooseName(guest: string): void {
         this.userName = guest;
         this.userService.setUsername(guest);
         console.log("new user " + this.userName);
+        this.buttonModal.nativeElement.click();
+        // this.newGuestNameInput.nativeElement.setAttribute('value', "nuir");
     }
 
     public addNewGuest(newGuestName: string): void {
         if (!this.validGuestName(newGuestName)) {
             return;
         }
-        this.serverService.addHomeCookGuestRequest(this.eventService.event._id, newGuestName).subscribe(resp => {
-            console.log(resp);
-            this.userService.addNewGuest(newGuestName);
+        this.serverService.addHomeCookGuestRequest(this.eventService.event._id, newGuestName).subscribe(response => {
+            if (response.status === 200 || response.status === 304) {
+                this.userName = newGuestName;
+                this.userService.addNewGuest(newGuestName);
+                this.newGuestNameTyped = '';
+                this.hideInputNewGuest();
+                this.buttonModal.nativeElement.click();
+            } else {
+                console.log("erreur ajout de nom");
+            }
+
         });
     }
 
@@ -62,5 +74,14 @@ export class GuestComponent implements OnInit {
 
     public showConnexionModal() : void {
          this.buttonModal.nativeElement.click();
+    }
+
+    public showInputNewGuest() : void {
+        this.inputNewGuestVisible = true;
+        this.newGuestNameInputFocus();
+    }
+
+    public hideInputNewGuest() : void {
+        this.inputNewGuestVisible = false;
     }
 }

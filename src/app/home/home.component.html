@@ -1,11 +1,22 @@
-<div class="container research-bar-container">
-    <div class="research-bar">
-        <input type="text" class="form-control research-input" placeholder="Event code" aria-label="Recipient's username"
-               aria-describedby="basic-addon2" [(ngModel)]="eventCodeInput">
-            <button class="btn btn-outline-secondary research-button" type="button" (click)="findEvent()">Find Event</button>
+<!--<div class="container research-bar-container">-->
+    <!--<div class="research-bar">-->
+        <!--<input type="text" class="form-control research-input" placeholder="Event code" aria-label="Recipient's username"-->
+               <!--aria-describedby="basic-addon2" [(ngModel)]="eventCodeInput">-->
+            <!--<button class="btn btn-outline-secondary research-button" type="button" (click)="findEvent()">Find Event</button>-->
 
-        <span class="btn-primary new-event-button" (click)="newEvent()"> <i class="fas fa-plus fa-lg"></i></span>
+        <!--<span class="btn-primary new-event-button" (click)="newEventClick()"> <i class="fas fa-plus fa-lg"></i></span>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div class="main-container">
+    <span class="huge-text"><i class="fas fa-poo fa-10x color-brown"></i></span>
+    <div class="app-title-div">
+        Easy Poo
     </div>
+    <div class="app-aim-div">
+        Simplifiez l'organisation des évènements de groupe !
+    </div>
+    <button class="btn btn-outline-primary new-event-button" (click)="newEventClick()">Creer un evenement</button>
 </div>
 
 

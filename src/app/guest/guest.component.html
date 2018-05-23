@@ -1,6 +1,5 @@
 <button
-    class="display-none" [style.display]="'none'"
-    (click)="newGuestNameInputFocus()" data-toggle="modal" data-target="#guestListModal" #buttonModal>
+    class="display-none" [style.display]="'none'" data-toggle="modal" data-target="#guestListModal" #buttonModal>
     <div *ngIf=" userService.isUserNameValid(); else elseBlock"><span
         class="padding-right">{{userService.username}}</span> <i class="fas fa-sync"></i></div>
     <ng-template #elseBlock>
@@ -19,7 +18,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h4>Guests list</h4>
+                <!--<h4>Guests list</h4>-->
                 <div>
                     <!--Ici j'affiche le nom de l'hote et ensuite tous les invités-->
                     <button class="btn btn-primary btn-guest"
@@ -27,17 +26,21 @@
                         {{ event.host_name }}
                     </button>
                     <button *ngFor="let guest of event.guests" class="btn btn-primary btn-guest"
-                            (click)="chooseName(guest)" [class.active]="guest===userName">
+                            (click)="chooseName(guest)" [class.active]="guest  === userName">
                         {{ guest }}
                     </button>
+                    <button class="btn btn-outline-primary btn-guest"
+                            (click)="showInputNewGuest(guest)">
+                        <i class="fas fa-plus "></i>
+                    </button>
                 </div>
-                <hr>
-                <h4>New ?</h4>
 
-                <form>
+                <form [style.display] = "inputNewGuestVisible ? '' : 'none' " #newNameForm="ngForm">
+                    <hr>
+                    <h4>New ?</h4>
                     <div class="new-guest-div">
-                        <input type="text" class="form-control" id="inputName" placeholder="Your name" #newGuestName>
-                        <button class="btn btn-primary" (click)="addNewGuest(newGuestName.value)" data-dismiss="modal">
+                        <input type="text" class="form-control" id="inputName" placeholder="Your name" name ='newGuestNameTyped' [(ngModel)] = 'newGuestNameTyped' #newGuestName>
+                        <button class="btn btn-primary" (click)="addNewGuest(newGuestNameTyped)" data-dismiss="modal">
                             Join
                         </button>
                     </div>
